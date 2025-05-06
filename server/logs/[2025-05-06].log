@@ -1,0 +1,20 @@
+
+[2025-05-06 22:19:03] Request: ::1 POST /auth/register 400 - 11.804 ms PostmanRuntime/7.43.2
+[2025-05-06 22:19:36] Request: ::1 POST /auth/register 400 - 5.694 ms PostmanRuntime/7.43.2
+[2025-05-06 22:19:49] Request: ::1 POST /auth/register 400 - 1.324 ms PostmanRuntime/7.43.2
+[2025-05-06 22:19:56] Request: ::1 POST /auth/register 400 - 4.721 ms PostmanRuntime/7.43.2
+[2025-05-06 22:20:13] Request: ::1 POST /auth/register 400 - 1.538 ms PostmanRuntime/7.43.2
+[2025-05-06 22:20:25] Request: ::1 POST /auth/register 400 - 3.549 ms PostmanRuntime/7.43.2
+[2025-05-06 22:20:42] Request: ::1 POST /auth/register 400 - 12.047 ms PostmanRuntime/7.43.2
+[2025-05-06 22:21:00] Request: ::1 POST /auth/register 400 - 16.255 ms PostmanRuntime/7.43.2
+[2025-05-06 22:21:00] Request: ::1 POST /auth/register 400 - 48.906 ms PostmanRuntime/7.43.2
+[2025-05-06 22:26:25] Request: ::1 POST /auth/register 500 - 12.106 ms PostmanRuntime/7.43.2
+[2025-05-06 22:26:26] Request: ::1 POST /auth/register 500 - 10.874 ms PostmanRuntime/7.43.2
+[2025-05-06 22:43:31] Request: ::1 POST /auth/register 500 - 96.133 ms PostmanRuntime/7.43.2
+[2025-05-06 22:44:59] Request: ::1 POST /auth/register 404 - 91.161 ms PostmanRuntime/7.43.2
+[2025-05-06 22:45:00] Request: ::1 POST /auth/register 404 - 87.197 ms PostmanRuntime/7.43.2
+[2025-05-06 22:45:10] Request: ::1 POST /auth/register 404 - 83.347 ms PostmanRuntime/7.43.2
+[2025-05-06 22:45:59] Request: ::1 POST /auth/register 404 - 96.287 ms PostmanRuntime/7.43.2
+[2025-05-06 22:46:00] Request: ::1 POST /auth/register 404 - 85.181 ms PostmanRuntime/7.43.2
+[2025-05-06 22:58:02] Request: ::1 POST /auth/register 404 - 93.697 ms PostmanRuntime/7.43.2
+[2025-05-06 23:41:25] Request: ::1 POST /auth/register 404 - 101.536 ms PostmanRuntime/7.43.2
