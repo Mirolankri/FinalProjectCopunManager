@@ -5,6 +5,7 @@ import { Layout } from "./components/layout/Layout";
 import { UserProvider } from "./components/providers/UserProvider";
 import { AlertProvider } from "@/providers/AlertProvider/AlertProvider";
 import RouteGuard from "@/providers/AuthProviders/RouteGuard";
+import { ModalProvider } from "@/providers/ModalProvider/ModalProvider";
 
 const geistSans = Geist({
   variable: "--font-geist-sans",
@@ -23,17 +24,19 @@ export const metadata = {
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="he" className="h-full bg-gray-100" dir="rtl">
+    <html lang="he" className="h-full " dir="rtl">
       <body
-        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full `}
+        className={`${geistSans.variable} ${geistMono.variable} antialiased h-full bg-red-500`}
       >
         <AlertProvider>
-          <UserProvider>
-            {/* <RouteGuard> */}
-              <Layout>
-                {children}
-              </Layout>
+            <UserProvider>
+              <ModalProvider>
+              {/* <RouteGuard> */}
+                <Layout>
+                  {children}
+                </Layout>
             {/* </RouteGuard> */}
+            </ModalProvider>
           </UserProvider>
         </AlertProvider>
       </body>

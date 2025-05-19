@@ -34,7 +34,7 @@ export const NavBar = () => {
 
 
   return (
-    <nav className=" fixed top-0 w-full">
+    <nav className=" fixed top-0 w-full z-80">
         <div className="bg-gray-600 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="w-full flex items-center">

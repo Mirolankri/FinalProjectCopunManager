@@ -1,8 +1,11 @@
 import React from 'react'
 
 const ToolTip = ({children, tip, position = 'bottom'}) => {
+  const pos = `tooltip-${position}`
   return (
-    <div className={`tooltip tooltip-${position}`} data-tip={tip}>{children}</div>
+    <div className={`tooltip ${pos}`} data-tip={tip}>
+      {children}
+    </div>
   )
 }
 

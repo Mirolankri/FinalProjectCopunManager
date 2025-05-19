@@ -16,6 +16,7 @@ const Input = ({
   ...rest
 }) => {
    
+    console.log("data", data);
     
 
   return (
@@ -23,8 +24,9 @@ const Input = ({
       <div className="flex items-center justify-between ">
         <label
           htmlFor={name}
-          className="block text-sm/6 font-medium text-gray-900 "
+          className="block text-sm/6 font-medium text-gray-900"
         >
+          {required && <span className="text-red-400">*</span>}
           {label}
           </label>
         {/* <div className="text-sm">
@@ -41,6 +43,8 @@ const Input = ({
           <div className="mr-2 shrink-0 text-base text-gray-500 select-none sm:text-sm/6 size-5">
             {Icon && Icon}
           </div>
+         
+
           <input
             id={name}
             name={name}

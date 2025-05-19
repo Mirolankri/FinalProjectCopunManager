@@ -19,21 +19,23 @@ const Form = ({
     
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center px-6 py-12 lg:px-8">
-        <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-          <h2 className="mt-10 text-center text-2xl/9 tracking-tight text-gray-900">
-            {title}
-          </h2>
-        </div>
-        <div className="mt-10 sm:mx-auto sm:w-full sm:max-w-sm">
+    <div className="flex min-h-full flex-1 flex-col justify-center p-6">
+            {title && (
+              <div className="sm:mx-auto sm:w-full sm:max-w-sm">
+              <h2 className="mt-10 text-center text-2xl/9 tracking-tight text-gray-900">
+                {title}
+              </h2>
+              </div>
+            )}
+        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
           <form className="space-y-6">
             <div className={`grid grid-cols-1 md:grid-cols-${spacing} gap-4`}>
             {children}
             </div>
-            <div className="flex justify-center">
+            <div className="flex justify-center gap-2">
                 <Button onClick={onSubmit} disabled={!!onChange()}>{SubmitButtonName}</Button>
                 {onReset && (
-                    <Button onClick={onReset} >{'איפוס'}</Button>
+                    <Button onClick={onReset} className={`bg-red-500 hover:bg-red-600`} >{'איפוס'}</Button>
                 )}
             </div>
           </form>

@@ -2,6 +2,7 @@
 import React, { useState, useContext, useEffect, useMemo } from "react";
 import { node } from "prop-types";
 import { getToken, getUser, removeToken } from "@/app/services/localStorageService";
+import { useRouter } from "next/navigation";
 
 const UserContext = React.createContext(null);
 
@@ -9,14 +10,18 @@ export const UserProvider = ({ children }) => {
   const [user, setUser] = useState(null);
   const [loading, setLoading] = useState(true);
   const [token, setToken] = useState(getToken);  
+  const router = useRouter();
   useEffect(() => {
     console.log("token change", token);
     
   }, [token]);
   useEffect(() => {
-    console.log("user", user);
     if (!user) {
       const userFromLocalStorage = getUser();
+      if(!userFromLocalStorage) {
+        setLoading(false);
+        return router.push('/auth/login');
+      }
       setUser(userFromLocalStorage);
       setLoading(false);
     }
@@ -39,6 +44,7 @@ export const UserProvider = ({ children }) => {
         removeToken();
         setUser(null);
         setLoading(false);
+        router.push('/auth/login');
       }
     }
   }, [user]);

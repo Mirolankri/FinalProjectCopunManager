@@ -41,7 +41,7 @@ function AlertCard({ type, message }) {
     }}
 
     // exit={{ y: 300, opacity: 0 }}
-    className={`fixed w-full z-50 mt-8 flex justify-center`}
+    className={`fixed w-full z-[1000] mt-8 flex justify-center`}
   >
     <div className={`w-fit rounded-lg p-3 ${bgColor}`}>
         <div>{message}</div>
