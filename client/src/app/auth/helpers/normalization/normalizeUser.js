@@ -5,7 +5,7 @@ const normalizeUser = (user) => ({
   },
   phone: user.phone,
   email: user.email,
-  password: user.password,
+  password: user.password || "",
 });
 
 export default normalizeUser;

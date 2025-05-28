@@ -76,13 +76,19 @@ const DeleteCoupon = async (id,authUser) => {
     return Promise.resolve('Not in mongoDB');
 }
 
-const UpdateCoupon = async (id, couponData, authUser) => {
+const UpdateCoupon = async (id, couponData, authUser) => {    
     if(DB === 'mongoDB'){
         try {
+            const { code } = couponData
+            const codeHash = generateCodeHash(code);
+            
             const FindCoupon = await CouponSchema.findById(id,{userId:1});
             if (!FindCoupon) throw new Error('לא נמצאו קופונים');
             if (FindCoupon.userId !== authUser._id && !authUser.isAdmin) throw new Error('אתה לא מורשה לעדכן קופון');
-
+            if (code) {
+                couponData.code = encrypt(code);
+            }
+            couponData.codeHash = codeHash;
             const updatedCoupon = await CouponSchema.findByIdAndUpdate(id, couponData, { new: true });
             if (!updatedCoupon) throw new Error('לא נמצאו קופונים');
             return Promise.resolve(updatedCoupon);
@@ -114,5 +120,22 @@ const ShareCoupon = async (couponId, sharedData, authUser) => {
     }
     return Promise.resolve('Not in mongoDB');
 }
+const GetSharedCoupon = async (id) => {
+    if(DB === 'mongoDB'){
+        try {
+            const sharedCoupon = await SharedCouponSchema.findById(id);
+            if (!sharedCoupon) throw new Error('קופון לא נמצא');
+            const coupon = await CouponSchema.findById(sharedCoupon.couponId);
+            if (!coupon) throw new Error('קופון לא נמצא');            
+            let couponDoc = coupon.toObject();
+            if (couponDoc.code) couponDoc.code = decrypt(couponDoc.code);
+            return Promise.resolve(couponDoc);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+    return Promise.resolve('Not in mongoDB');
+}
 
-module.exports = { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon,ShareCoupon };
+module.exports = { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon,ShareCoupon,GetSharedCoupon };

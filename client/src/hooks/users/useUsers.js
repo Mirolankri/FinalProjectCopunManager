@@ -40,21 +40,34 @@ const useUsers = () => {
           requestStatus(false, error, null);
         }
       }, []);
-      const handleRegister = useCallback(
-        async (userFromClient) => {
-          try {
-            const normalizedUser = normalizeUser(userFromClient);
-            const { data } = await AuthServiceInstance.Register(normalizedUser);
-            await handleLogin({
-              phone: userFromClient.phone,
-              password: userFromClient.password,
-            });
-          } catch (error) {
-            requestStatus(false, error, null);
-          }
-        },
-        [requestStatus, handleLogin]
-      );
+    const handleRegister = useCallback(
+      async (userFromClient) => {
+        try {
+          const normalizedUser = normalizeUser(userFromClient);
+          const { data } = await AuthServiceInstance.Register(normalizedUser);
+          await handleLogin({
+            phone: userFromClient.phone,
+            password: userFromClient.password,
+          });
+        } catch (error) {
+          requestStatus(false, error, null);
+        }
+      },
+      [requestStatus, handleLogin]
+    );
+    const handleUpdateUser = useCallback(
+      async (userFromClient) => {
+        try {
+          const normalizedUser = normalizeUser(userFromClient);
+          const { data } = await AuthServiceInstance.UpdateUser(normalizedUser);
+          requestStatus(false, null, null, data);
+        } catch (error) {
+          requestStatus(false, error, null);
+        }
+      },
+      []
+    );
+      
     
       const value = useMemo(
         () => ({ isLoading, error, user, users }),
@@ -66,6 +79,7 @@ const useUsers = () => {
         handleLogin,
         // handleLogout,
         handleRegister,
+        handleUpdateUser,
         // handleEdit,
         // handleGetUser,
         // handleGetAllUsers,

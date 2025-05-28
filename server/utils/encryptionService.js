@@ -25,9 +25,10 @@ const encrypt = (text) => {
  * @param {string} encryptedText הטקסט המוצפן בפורמט IV.EncryptedText
  * @returns {string} הטקסט המקורי לאחר פענוח
  */
-const decrypt = (encryptedText) => {
+const decrypt = (encryptedText) => {  
   try {
     const textParts = encryptedText.split('.');
+    
     if (textParts.length !== 2) {
       throw new Error('פורמט הצפנה לא תקין');
     }

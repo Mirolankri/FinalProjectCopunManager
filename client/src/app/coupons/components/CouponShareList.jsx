@@ -1,10 +1,14 @@
 import ToolTip from '@/app/components/Elements/ToolTip/Index';
-import { ArrowTopRightOnSquareIcon, ChatBubbleOvalLeftEllipsisIcon, LinkIcon, LinkSlashIcon, Square2StackIcon, TrashIcon } from '@heroicons/react/24/outline';
+import { copyToClipboard } from '@/helpers/Clipboard/copyToClipboard';
+import { ShareData } from '@/helpers/Share/Share';
+import { useAlert } from '@/providers/AlertProvider/AlertProvider';
+import { ArrowTopRightOnSquareIcon, ArrowUpOnSquareIcon, ArrowUpTrayIcon, ChatBubbleOvalLeftEllipsisIcon, LinkIcon, LinkSlashIcon, Square2StackIcon, TrashIcon } from '@heroicons/react/24/outline';
 import { format } from 'date-fns';
 import Link from 'next/link';
 import React from 'react'
 
 const CouponShareList = ({sharedCoupons}) => {
+    const AlertInstance = useAlert();
     const url = window.location.origin;
     sharedCoupons = [...sharedCoupons].reverse();
   return (
@@ -21,13 +25,21 @@ const CouponShareList = ({sharedCoupons}) => {
                     <div className="inline-flex items-center text-base font-semibold text-gray-900 dark:text-white">
                         <div className="flex items-center gap-2">
                         
-                        <ToolTip tip="קישור" position='right'>
-                            <Link href={`${url}${sharedCoupon.url}`}><ArrowTopRightOnSquareIcon className="size-8" /></Link>
+                        <ToolTip tip="שיתוף" position='right'>
+                            <ArrowUpOnSquareIcon className="size-8 cursor-pointer" onClick={() => ShareData({title: "Coupoint", text: "משתף איתך קופון שלי", url: `${url}${sharedCoupon.url}`, AlertInstance})}/>
                         </ToolTip>
                         
-                        <ToolTip tip="העתקה" position='right'><Square2StackIcon className="size-8" /></ToolTip>
-                        <ToolTip tip="שיתוף בהודעה" position='right'><ChatBubbleOvalLeftEllipsisIcon className="size-8" /></ToolTip>
-                        <ToolTip tip="מחיקה" position='right'><TrashIcon className="size-8 text-red-500" /></ToolTip>
+                        <ToolTip tip="העתקה" position='right'>
+                            <Square2StackIcon className="size-8 cursor-pointer" onClick={() => copyToClipboard(`${url}${sharedCoupon.url}`,AlertInstance)}/>
+                        </ToolTip>
+                        <ToolTip tip="שיתוף Whatsapp" position='right'>
+                            <ChatBubbleOvalLeftEllipsisIcon className="size-8 cursor-pointer"  onClick={() => {
+                                window.open(`https://wa.me/?text=משתף איתך קופון שלי %0A ${url}${sharedCoupon.url}`);
+                            }}/>
+                            </ToolTip>
+                        {/* <ToolTip tip="מחיקה" position='right'>
+                            <TrashIcon className="size-8 text-red-500 cursor-pointer" />
+                            </ToolTip> */}
                         </div>
                     </div>
                 </div>

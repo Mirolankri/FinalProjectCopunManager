@@ -9,19 +9,19 @@ import ToolTip from "@/app/components/Elements/ToolTip/Index";
 import { useModal } from "@/providers/ModalProvider/ModalProvider";
 import CouponDelete from "./CouponDelete";
 import CouponShare from "./CouponShare";
+import { copyToClipboard } from "@/helpers/Clipboard/copyToClipboard";
+import { useUser } from "@/app/components/providers/UserProvider";
 
 export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
     const AlertInstance = useAlert();
+    const {user} = useUser();
     const { setModal } = useModal();
     const isExpired = (date) => {        
         if (!date) return false;
         return new Date(date) < new Date();
     };
 
-  const copyToClipboard = (code) => {
-    navigator.clipboard.writeText(code);
-    AlertInstance("SUCCESS", "הקוד הועתק ללוח");
-  };
+  
   const getDaysRemaining = (date) => {
     if (!date) return null;
     const today = new Date();
@@ -49,7 +49,7 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
   };
 
   return (
-    <div className=" transition-all hover:shadow-md border border-gray-200 rounded-lg shadow-sm">
+    <div className="bg-white transition-all hover:shadow-lg rounded-xl shadow-sm">
       <div className="p-0">
         <div className="p-4">
             <div className="">
@@ -97,7 +97,7 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
                     {coupon.used ? (
                         <Badge color="bg-blue-700" className="bg-blue-50 text-blue-700">נוצל</Badge>
                     ) : isExpired(coupon.expiryDate) ? (
-                        <Badge color="bg-red-700" className="bg-red-50 text-red-700">פג תוקף</Badge>
+                        <Badge color="bg-red-100" className=" text-red-700">פג תוקף</Badge>
                     ) : null}
                     </div>
                 </div>
@@ -113,7 +113,7 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
               <ToolTip tip="העתק קוד">
                 <div
                 className="cursor-pointer hover:text-gray-600"
-                onClick={() => copyToClipboard(coupon.code)}>
+                onClick={() => copyToClipboard(coupon.code,AlertInstance)}>
                   <ClipboardIcon className="size-5" />
                 </div>
               </ToolTip>
@@ -145,7 +145,7 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
           </div>
         </div>
         
-        <div className="flex border-t">
+        {user && <div className="flex border-t">
           <Button
             variant="link"
             className=""
@@ -166,14 +166,13 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
           <div className="w-px bg-gray-200"></div>
           <Button
             variant="link"
-            className=" text-red-600 hover:text-red-800 hover:bg-red-50"
+            className="!rounded-bl-lg text-red-600 hover:text-red-800 hover:bg-red-50 "
             onClick={HandleDelete}
           >
             <TrashIcon className="w-4 h-4 ml-2" />
             מחיקה
           </Button>
-        </div>
-
+        </div>}
         {coupon.website && (
           <a
             href={coupon.website}

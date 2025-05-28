@@ -83,5 +83,38 @@ const loginUser = async ({email, phone, password}) => {
 
     return Promise.resolve('Not in mongoDB');
 };
+const GetMe = async ({userId}) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.findById(userId).select("-password -__v");
+            if (!user) throw new Error('לא נמצאו משתמשים');
+            return Promise.resolve(user);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
 
-module.exports = { registerUser, loginUser };
+    return Promise.resolve('Not in mongoDB');
+};
+const UpdateUser = async ({userId, data}) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.findById(userId);
+            if (!user) throw new Error('לא נמצאו משתמשים');
+            user.name.first = data.name.first;
+            user.name.last = data.name.last;
+            user.phone = data.phone;
+            user.email = data.email;
+            await user.save();
+            return Promise.resolve(user);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
+
+module.exports = { registerUser, loginUser, GetMe, UpdateUser };

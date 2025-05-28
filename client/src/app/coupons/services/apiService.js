@@ -20,6 +20,15 @@ class CouponService {
             return Promise.reject(error)
         }
     }
+    getSharedCoupon = async (couponId) => {
+        try {
+            const { data } = await axios.get(`${apiUrl}/coupons/share/${couponId}`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
     Create = async (coupon) => {
         try {
             const { data } = await axios.post(`${apiUrl}/coupons`, coupon)

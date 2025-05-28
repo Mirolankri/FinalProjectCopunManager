@@ -8,16 +8,13 @@ const Input = ({
   data = {},
   label,
   required,
-  error,
+  error = [],
   onChange,
   placeholder = "",
   Icon = null,
   colSpan = 1,
   ...rest
-}) => {
-   
-    console.log("data", data);
-    
+}) => {    
 
   return (
     <div className={`col-span-${colSpan}`}>

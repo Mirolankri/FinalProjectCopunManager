@@ -1,4 +1,5 @@
 'use client'
+import { getToken } from '@/app/services/localStorageService';
 import axios from 'axios'
 // axios.defaults.withCredentials = true;
 
@@ -29,6 +30,27 @@ class AuthService {
     Register = async (_body) => {
         try {
             const { data } = await axios.post(`${apiUrl}/auth/register`, _body)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    GetMe = async () => {
+        const GetToken = getToken();
+        if(!GetToken) return Promise.reject(new Error('No token found'));
+        axios.defaults.headers.common["x-auth-token"] = GetToken;
+        try {
+            const { data } = await axios.get(`${apiUrl}/users/me`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    UpdateUser = async (_body) => {
+        try {
+            const { data } = await axios.put(`${apiUrl}/users`, _body)
             return data
         }
         catch (error) {

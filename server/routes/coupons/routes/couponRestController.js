@@ -5,7 +5,7 @@ const { handleError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
 const { validateNewCoupon, validateSharedCoupon } = require('../validations/couponValidationService');
 const normalizeCoupon = require('../helpers/normalizeCoupon');
-const { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon, ShareCoupon } = require('../models/couponAccessDataService');
+const { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon, ShareCoupon, GetSharedCoupon } = require('../models/couponAccessDataService');
 const normalizeSharedCoupon = require('../helpers/normalizeSharedCoupon');
 
 router.get('/', auth, async (req, res) => {
@@ -78,6 +78,16 @@ router.post('/share/:couponId', auth, async (req, res) => {
         
         const sharedCoupon = await ShareCoupon(couponId, sharedData, user);
         return res.status(200).send(sharedCoupon);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.get('/share/:couponId', async (req, res) => {
+    const { couponId } = req.params;
+    try {
+        // if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        const sharedCoupon = await GetSharedCoupon(couponId);
+        return res.send(sharedCoupon);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
     }

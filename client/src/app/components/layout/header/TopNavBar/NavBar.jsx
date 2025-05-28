@@ -6,19 +6,9 @@ import Link from "next/link";
 import { useUser } from '@/app/components/providers/UserProvider';
 import { Skeleton } from '@/app/components/Elements/Skeleton/Index';
 import { removeToken } from '@/app/services/localStorageService';
+import { navigation, userNavigation } from './Menu';
+import Search from './Search';
 
-const navigation = [
-  { key: 'home', name: 'בית', href: '/', current: false,requiredLogin:false },
-  { key: 'coupons', name: 'קופונים שלי', href: '/coupons', current: false,requiredLogin:true },
-  { key: 'account', name: 'החשבון שלי', href: '/auth/account', current: false,requiredLogin:true },
-  { key: 'contact', name: 'יצירת קשר', href: '/contact', current: false,requiredLogin:false },
-  { key: 'about', name: 'אודות', href: '/about', current: false,requiredLogin:false },
-]
-const userNavigation = [
-  { key: 'login', name: 'התחברות', href: '/auth/login',requiredLogin:false,onClick:null },
-  { key: 'register', name: 'הרשמה', href: '/auth/register',requiredLogin:false,onClick:null },
-  { key: 'logout', name: 'התנתקות', href: '/',requiredLogin:true,onClick:null },
-]
 export const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
@@ -46,8 +36,9 @@ export const NavBar = () => {
               </Link>
               <div className="w-full hidden md:block">
                 <div className=' flex justify-between'>
-                  <div className="mr-4 flex items-center space-x-4 ">
+                  <div className="mr-4 flex items-center space-x-4">
                     {navigation.map((item) => {
+                      if(!item.ShowInMenu) return null;
                       if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
                       if(item.requiredLogin && !user) return null;
                     
@@ -62,6 +53,7 @@ export const NavBar = () => {
                       </Link>
                     )})}
                   </div>
+                  <Search />
                   <div className="mr-4 flex items-center space-x-4">
                     {userNavigation.map((item) => {
                       if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
@@ -81,6 +73,9 @@ export const NavBar = () => {
                   </div>
                 </div>
                 
+              </div>
+              <div className="w-full md:hidden block">
+                <Search />
               </div>
             </div>
             {/* user profile */}
@@ -138,9 +133,21 @@ export const NavBar = () => {
         <div className={`md:hidden ${mobileMenuOpen?'block':'hidden'}`}>
           <div className="bg-gray-600">
             <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
-              {navigation.map((item) => (
-                <Link key={item.name} href={item.href} onClick={() => setMobileMenuOpen(false)} className={`${item.requiredLogin ? 'hidden' : 'block'} block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white`} aria-current={item.current ? 'page' : undefined}>{item.name}</Link>
-              ))}
+              {navigation.map((item) => {
+                if(!item.ShowInMenu) return null;
+                if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
+                if(item.requiredLogin && !user) return null;
+                
+                return(
+                <Link 
+                  key={item.name} 
+                  href={item.href} 
+                  onClick={() => setMobileMenuOpen(false)} 
+                  className={`${item.requiredLogin ? 'hidden' : 'block'} block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white`} 
+                  aria-current={item.current ? 'page' : undefined}>
+                    {item.name}
+                </Link>
+              )})}
             </div>
             <div className="border-t border-gray-700 pt-4 pb-3">
               <div className="space-y-1 px-2">

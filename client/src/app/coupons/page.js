@@ -14,8 +14,10 @@ export default function Coupons() {
   const {user} = useUser();
   const router = useRouter();
   const {setModal} = useModal();
-  const { value:{ isLoading, coupons,coupon, error }, handleGetCoupons, handleCreateCoupon, handleDeleteCoupon,handleUpdateCoupon,handleShareCoupon } = useCoupon();
+  const { value:{ isLoading, coupons,coupon, error, filteredCoupons }, handleGetCoupons, handleCreateCoupon, handleDeleteCoupon,handleUpdateCoupon,handleShareCoupon } = useCoupon();
 
+  // console.log("filteredCoupons",filteredCoupons);
+  
   useEffect(() => {
     handleGetCoupons();
   }, []);
@@ -50,7 +52,7 @@ export default function Coupons() {
 
     <CouponPage
     isLoading={isLoading}
-    coupons={coupons}
+    coupons={filteredCoupons || coupons}
     onDelete={OnDeleteCoupon}
     error={error}
     onEdit={(coupon) => {
@@ -59,7 +61,7 @@ export default function Coupons() {
     onShare={OnShareCoupon}
  />
  <div className="fixed start-6 bottom-6 group">
- <ToolTip tip="הוסף קופון חדש">
+ <ToolTip tip="הוספת קופון חדש">
   <Button onClick={() => setModal('הוספת קופון חדש', <CouponAddOrEdit type="add" OnSubmitCoupon={OnCreateCoupon}/>)} variant="circle">
     <PlusIcon className="size-7 transition-transform group-hover:rotate-45" />
   </Button>

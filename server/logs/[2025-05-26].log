@@ -1,0 +1,10 @@
+[2025-05-26 21:59:32] Request: ::1 GET /users/me 500 - 3.886 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 21:59:42] Request: ::1 POST /auth/login 400 - 119.043 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 22:08:53] Request: ::1 POST /auth/login 400 - 101.499 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 22:51:07] Request: ::1 GET /coupons 500 - 1.206 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+[2025-05-26 22:51:16] Request: ::1 GET /coupons 500 - 0.994 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+[2025-05-26 22:51:26] Request: ::1 GET /coupons 500 - 1.197 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/134.0.0.0 Safari/537.36
+[2025-05-26 23:51:37] Request: ::1 PUT /users 404 - 0.542 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 23:56:53] Request: ::1 PUT /users 400 - 17.068 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 23:59:40] Request: ::1 PUT /users 404 - 19.685 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-26 23:59:47] Request: ::1 PUT /users 404 - 9.535 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15

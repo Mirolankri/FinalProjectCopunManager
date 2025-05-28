@@ -1,9 +1,10 @@
 import React from 'react'
 import PropTypes from 'prop-types'
+import { twMerge } from 'tailwind-merge'
 
-const Container = ({children}) => {
+const Container = ({children, className}) => {
   return (
-    <div className="mx-auto">
+    <div className={twMerge("mx-auto", className)}>
             {children}
         </div>
   )

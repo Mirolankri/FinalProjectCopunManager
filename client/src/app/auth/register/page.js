@@ -23,7 +23,7 @@ export default function Register() {
 
   
   return (
-    <Container>
+    <Container className={`sm:max-w-2xl`}>
       <Form 
       title="הרשמה" 
       SubmitButtonName='הרשמה' 

@@ -6,3 +6,10 @@
       box-shadow: var(--shadow-xl);
     }
   }
+
+.rtl-grid {
+    direction: rtl;
+  }
+.ltr-grid {
+    direction: ltr;
+  }

@@ -1,10 +1,10 @@
 'use client'
 import { useUser } from "@/app/components/providers/UserProvider"
-import { useCallback, useMemo, useState } from "react";
+import { useCallback, useEffect, useMemo, useState } from "react";
 import CouponService from "../services/apiService";
 import useAxios from "@/hooks/Axios/useAxios";
 import normalizeCoupon from "../helpers/normalization/normalizeCoupon";
-import { useRouter } from "next/navigation";
+import { useRouter, useSearchParams } from "next/navigation";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";
 import { useModal } from "@/providers/ModalProvider/ModalProvider";
 const CouponInstance = new CouponService();
@@ -20,7 +20,20 @@ const useCoupon = () => {
     const [filteredCoupons, setFilteredCoupons] = useState(null)
     const router = useRouter();
     const AlertInstance = useAlert();
+    const searchParams = useSearchParams();
     useAxios();
+    useEffect(()=>{      
+      setQuery(searchParams.get('q') ?? '')
+    }, [searchParams])
+
+    useEffect(()=>{
+      if (coupons) {
+        setFilteredCoupons(
+          coupons.filter(coupon => coupon.name.includes(query) || String(coupon.code).includes(query))
+        )
+      }
+    },[coupons, query])
+  
   
     const requestStatus = (loading, errorMessage, coupons, coupon = null) => {
         setLoading(loading);
@@ -29,6 +42,19 @@ const useCoupon = () => {
         setCoupon(coupon);
       };
 
+      const handleGetCoupon = useCallback(async (couponId) => {
+        try {
+          // i want add setTimeout 5000ms to request to demmy api
+          
+          setLoading(true);
+          // setTimeout(async () => {
+            const coupon = await CouponInstance.getSharedCoupon(couponId);
+            requestStatus(false, null, [...(coupons || []), coupon], coupon);
+          // }, 5000);
+        } catch (error) {
+          requestStatus(false, error, null);
+        }
+      }, []);
       const handleGetCoupons = useCallback(async () => {
         try {
           setLoading(true);
@@ -103,7 +129,7 @@ const useCoupon = () => {
         value,
         handleGetCoupons,
         handleCreateCoupon,
-        // handleGetCoupon,
+        handleGetCoupon,
         // handleGetMyCards,
         handleDeleteCoupon,
         handleUpdateCoupon,

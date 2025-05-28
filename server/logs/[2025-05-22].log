@@ -1,0 +1,4 @@
+[2025-05-22 00:01:20] Request: ::1 GET /users/me 500 - 3.413 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-22 00:01:22] Request: ::1 GET /users/me 500 - 1.018 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-22 00:01:50] Request: ::1 GET /users/me 500 - 0.695 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15
+[2025-05-22 00:16:46] Request: ::1 POST /auth/login 400 - 117.811 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.3 Safari/605.1.15

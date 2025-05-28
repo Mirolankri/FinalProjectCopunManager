@@ -33,7 +33,7 @@ export default function Login() {
   if (user) return null;
   
   return (
-    <Container>
+    <Container className={`sm:max-w-sm`}>
       <Form 
       title="התחברות" 
       SubmitButtonName='התחברות' 

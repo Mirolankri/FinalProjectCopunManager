@@ -27,7 +27,7 @@ const Form = ({
               </h2>
               </div>
             )}
-        <div className="mt-5 sm:mx-auto sm:w-full sm:max-w-sm">
+        <div className="mt-5 sm:mx-auto sm:w-full ">
           <form className="space-y-6">
             <div className={`grid grid-cols-1 md:grid-cols-${spacing} gap-4`}>
             {children}
