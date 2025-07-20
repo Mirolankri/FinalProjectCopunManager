@@ -2,6 +2,8 @@
 import React, { useCallback, useContext, useEffect, useState } from "react";
 import { node } from "prop-types";
 import AlertCard from "./components/AlertCard";
+import { Toaster } from "@/components/ui/sonner";
+import { toast } from "sonner";
 
 const AlertContext = React.createContext(null);
 
@@ -29,6 +31,7 @@ export const AlertProvider = ({ children }) => {
     setSnackColor(color);
     setSnackVariant(variant);
     setSnackMessage(message);
+    
   }, []);
 
   const closeSnack = useCallback(() => {
@@ -41,6 +44,7 @@ export const AlertProvider = ({ children }) => {
       <AlertContext.Provider value={setSnack}>
         {children}
       </AlertContext.Provider>
+      {/* <Toaster /> */}
     </>
   );
 };

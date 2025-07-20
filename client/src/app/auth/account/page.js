@@ -20,24 +20,22 @@ import { useUser } from '@/app/components/providers/UserProvider'
 import Spinner from '@/app/components/Elements/Spinner/Spinner'
 import { PencilIcon, PencilSquareIcon, PlusIcon } from '@heroicons/react/24/outline'
 import AccountPage from './components/AccountPage'
+import ListMyUsersPage from './components/ListMyUsersPage'
+import ListAllUsersPage from './components/ListAllUsersPage'
 
 export default function Account() {
   const { userData,user,loading } = useUser()
-  // if(loading || !userData) return <Spinner/>
-  if(loading || !userData) return <>Loading...</>
-
-  // console.log("user", user);
-  // console.log("userData", userData);
+  if(loading || !userData) return <Spinner/>
   
   return (
     <Tabs defaultValue="account" className="w-full">
-      <TabsList className="grid w-full grid-cols-3">
+      <TabsList className=" w-full ">
+        <TabsTrigger value="account">חשבון</TabsTrigger>
+        <TabsTrigger value="plan">תוכנית</TabsTrigger>
+        <TabsTrigger value="users">משתמשים</TabsTrigger>
       {userData.isSuperAdmin && (
         <TabsTrigger value="allusers">כל המשתמשים</TabsTrigger>
       )}
-        <TabsTrigger value="users">משתמשים</TabsTrigger>
-        <TabsTrigger value="plan">תוכנית</TabsTrigger>
-        <TabsTrigger value="account">חשבון</TabsTrigger>
       </TabsList>
       
       <TabsContent value="plan">
@@ -67,42 +65,11 @@ export default function Account() {
         <AccountPage userData={userData} />
       </TabsContent>
       <TabsContent value="users">
-        <Card>
-          <CardHeader>
-            <CardTitle>משתמשים</CardTitle>
-            <CardDescription>
-              צפייה וניהול משתמשים
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {!userData.isAdmin && <div className="text-red-500">אינך מורשה לצפייה וניהול משתמשים</div>}
-            {userData.isAdmin && <div className="text-green-500">
-              אתה מורשה לצפייה וניהול משתמשים
-              <Button variant="outline" className="flex items-center gap-2">
-                <PlusIcon className="size-4" />
-                משתמש חדש
-              </Button>
-              </div>}
-          </CardContent>
-        </Card>
+        <ListMyUsersPage userData={userData} />
       </TabsContent>
       {userData.isSuperAdmin && (
       <TabsContent value="allusers">
-        <Card>
-          <CardHeader>
-            <CardTitle>משתמשים</CardTitle>
-            <CardDescription>
-              צפייה וניהול משתמשים
-            </CardDescription>
-          </CardHeader>
-          <CardContent className="space-y-2">
-          אתה מורשה לצפייה וניהול משתמשים
-              <Button variant="outline" className="flex items-center gap-2">
-                <PlusIcon className="size-4" />
-                משתמש חדש
-              </Button>
-          </CardContent>
-        </Card>
+        <ListAllUsersPage userData={userData} />
       </TabsContent>)}
     </Tabs>
   )

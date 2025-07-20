@@ -48,9 +48,45 @@ class AuthService {
             return Promise.reject(error)
         }
     }
-    UpdateUser = async (_body) => {
+    UpdateUser = async ({userId,_body}) => {
         try {
-            const { data } = await axios.put(`${apiUrl}/users`, _body)
+            const { data } = await axios.put(`${apiUrl}/users/${userId}`, _body)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    GetMyUsers = async () => {
+        try {
+            const { data } = await axios.get(`${apiUrl}/users/my-users`)            
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    GetAllUsers = async () => {
+        try {
+            const { data } = await axios.get(`${apiUrl}/users`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    MakeAdmin = async (userId) => {
+        try {
+            const { data } = await axios.patch(`${apiUrl}/users/make-admin/${userId}`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    DeleteUser = async (userId) => {
+        try {
+            const { data } = await axios.delete(`${apiUrl}/users/${userId}`)
             return data
         }
         catch (error) {

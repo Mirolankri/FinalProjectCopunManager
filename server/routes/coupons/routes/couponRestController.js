@@ -10,6 +10,8 @@ const normalizeSharedCoupon = require('../helpers/normalizeSharedCoupon');
 
 router.get('/', auth, async (req, res) => {
     const user = req.user;
+    console.log("user", user);
+    
     try {
         if(!user.isAdmin) throw new Error('אתה לא מורשה');
         const coupons = await GetMyCoupons(user._id);

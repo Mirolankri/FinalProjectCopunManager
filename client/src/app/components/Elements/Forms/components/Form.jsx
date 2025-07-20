@@ -14,9 +14,9 @@ const Form = ({
     spacing = 1,
     styles,
     children,
-    SubmitButtonName = "שליחת טופס"
-  }) => {
-    
+    SubmitButtonName = "שליחת טופס",
+    ResetButtonName = "איפוס"
+  }) => {    
 
   return (
     <div className="flex min-h-full flex-1 flex-col justify-center p-6">
@@ -35,7 +35,7 @@ const Form = ({
             <div className="flex justify-center gap-2">
                 <Button onClick={onSubmit} disabled={!!onChange()}>{SubmitButtonName}</Button>
                 {onReset && (
-                    <Button onClick={onReset} className={`bg-red-500 hover:bg-red-600`} >{'איפוס'}</Button>
+                    <Button onClick={onReset} className={`bg-red-500 hover:bg-red-600`} >{ResetButtonName}</Button>
                 )}
             </div>
           </form>
@@ -54,6 +54,7 @@ Form.propTypes = {
     onChange: PropTypes.func.isRequired,
     title: PropTypes.string.isRequired,
     styles: PropTypes.object.isRequired,
-    SubmitButtonName: PropTypes.string.isRequired
+    SubmitButtonName: PropTypes.string.isRequired,
+    ResetButtonName: PropTypes.string.isRequired
   };
 export default React.memo(Form);

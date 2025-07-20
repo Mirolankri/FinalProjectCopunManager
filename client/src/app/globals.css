@@ -47,6 +47,9 @@
 html {
   background: var(--background);
 }
+html[dir="rtl"] * {
+  direction: rtl;
+}
 
 :root {
   --radius: 0.625rem;

@@ -7,6 +7,8 @@ const connectToDB = require('./db/dbService');
 const router = require('./router/router');
 const cors = require('./middlewares/cors');
 const logger = require('./middlewares/logger/loggerService');
+const { generateUserPassword } = require('./routes/auth/helpers/bcrypt');
+const { updateUsersActiveField } = require('./updateUsersActiveField');
 
 const PORT = process.env.PORT || 5555;
 const ENV = process.env.NODE_ENV;
@@ -17,9 +19,11 @@ app.use(logger);
 app.use(express.json());
 app.use(express.static('./public'));
 app.use(router);
+// console.log(generateUserPassword("Aa1234!"));
 
 app.listen(PORT, async () => {
-    console.log(chalk.bgRedBright(`Server Listening on: ${API_URL}:${PORT}`));
+    console.log(chalk.bgGreen(`Server Listening on: ${API_URL}:${PORT}`));
     connectToDB(ENV);
+    // await updateUsersActiveField();
     // await generateInitialCards();
 });

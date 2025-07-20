@@ -2,9 +2,22 @@ require('dotenv').config();
 const express = require('express');
 const { handleError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
-const { GetMe, UpdateUser } = require('../../auth/models/usersAccessDataService');
+const { GetMe, UpdateUser, GetMyUsers, GetAllUsers, MakeAdmin, DeleteUser } = require('../../auth/models/usersAccessDataService');
 const userUpdateValidation = require('../../auth/validations/Joi/userUpdateValidation');
 const router = express.Router();
+
+router.get('/',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        if(!user) throw new Error('משתמש לא נמצא');
+        if(!user.isSuperAdmin) throw new Error('אתה לא מורשה');
+        const GetAllUsersData = await GetAllUsers();
+        return res.status(200).send(GetAllUsersData);
+        
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
 
 router.get('/me',auth, async(req, res) => {
     try {
@@ -17,17 +30,62 @@ router.get('/me',auth, async(req, res) => {
         return handleError(res, error.status || 500, error.message);
     }
 });
-
-router.put('/',auth, async(req, res) => {
+router.get('/my-users',auth, async(req, res) => {
     try {
         const user = req.user;
+        if(!user) throw new Error('משתמש לא נמצא');
+        if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        const GetMyUsersData = await GetMyUsers({userId: user._id});
+        return res.status(200).send(GetMyUsersData);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.patch('/make-admin/:userId',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        if(!user) throw new Error('משתמש לא נמצא');
+        if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        const { userId } = req.params;
+        const updatedUser = await MakeAdmin(userId);
+        return res.status(200).send(updatedUser);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.delete('/:userId',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        const { userId } = req.params;
+
+        if(!user) throw new Error('משתמש לא נמצא');
+        if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        if(userId === user._id) throw new Error('אתה לא יכול למחוק את עצמך');
+        const GetMeData = await GetMe({userId});        
+        if(!GetMeData) throw new Error('משתמש לא נמצא');
+        console.log("user._id", user._id);
+        console.log("GetMeData.parentId", GetMeData.parentuserId);
+        
+        if(GetMeData.parentuserId !== user._id) throw new Error('אתה לא יכול למחוק את המשתמש');
+
+        const deletedUser = await DeleteUser(userId);
+        return res.status(200).send(deletedUser);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+
+router.put('/:userId',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        const { userId } = req.params;
         if(!user) throw new Error('משתמש לא נמצא');
         let updatedUser = req.body;
         delete updatedUser.password;
         // updatedUser._id = user._id;
         const { error } = userUpdateValidation(updatedUser);
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
-        updatedUser = await UpdateUser({userId: user._id, data: req.body});
+        updatedUser = await UpdateUser({userId: userId, data: req.body});
         return res.status(200).send(updatedUser);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);

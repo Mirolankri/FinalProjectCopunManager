@@ -28,22 +28,26 @@ import mapUser from '../../helpers/normalization/mapUser'
 // remove password from registerSchema
 const { password, ...rest } = registerSchema;
 const AccountPage = ({userData}) => {
-  
-  
   const [EditMode, setEditMode] = useState(false)
-  const { handleUpdateUser,value: { isLoading, error } } = useUsers();
-
+  const { handleUpdateUser,value: { isLoading, error,user, users } } = useUsers();
+  
   const { value, handleChange, handleReset, validateForm, onSubmit,setData } = useForm(
     initialRegisterForm,
     rest,
-    handleUpdateUser
+    ()=>{
+      handleUpdateUser(userData._id,value.data)      
+      setEditMode(false)
+    }
   );
+  const handleCancelEdit = () => {
+    setEditMode(false)
+  }
   useEffect(() => {
     if (EditMode) {
       const MapUserData = mapUser(userData);
       setData(MapUserData);
     }
-  }, [EditMode]);
+  }, [EditMode, userData]);
 
   return (
     <Card>
@@ -81,9 +85,10 @@ const AccountPage = ({userData}) => {
             <Form 
                   title="" 
                   SubmitButtonName='עדכון' 
+                  ResetButtonName='ביטול'
                   onSubmit={onSubmit} 
                   spacing={2}
-                  onReset={null}
+                  onReset={EditMode ? handleCancelEdit : null}
                   onChange={validateForm}
                   >
             
@@ -185,8 +190,8 @@ const AccountPage = ({userData}) => {
           <CardFooter className="items-start w-full">
             {EditMode && (
               <div className="flex gap-2 w-1/2">
-                <Button className={`bg-red-500 hover:bg-red-600`} onClick={() => setEditMode(false)}>ביטול</Button>
-                <Button >שמירת שינויים</Button>
+                {/* <Button className={`bg-red-500 hover:bg-red-600`} onClick={() => setEditMode(false)}>ביטול</Button> */}
+                {/* <Button >שמירת שינויים</Button> */}
               </div>
             )}
           </CardFooter>

@@ -1,6 +1,8 @@
 'use client'
 import React, { useEffect, useState } from "react";
 import { motion } from "framer-motion";
+import { toast } from "sonner";
+
 const notificationAction = {
   SUCCESS: "SUCCESS",
   WARNING: "WARNING",
@@ -29,6 +31,13 @@ function AlertCard({ type, message }) {
     }
   }, [type, message]);
 
+  // return toast("Event has been created", {
+  //   description: "Sunday, December 03, 2023 at 9:00 AM",
+  //   action: {
+  //     label: "Undo",
+  //     onClick: () => console.log("Undo"),
+  //   },
+  // })
   return (
     <motion.div 
     initial={{ y: -30, opacity: 0 }}

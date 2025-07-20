@@ -43,7 +43,7 @@ const UserSchema = mongoose.Schema({
     },
     isAdmin: {
         type: Boolean,
-        default: false
+        default: true
     },
     isUser: {
         type: Boolean,
@@ -57,6 +57,10 @@ const UserSchema = mongoose.Schema({
     createdAt: {
         type: Date,
         default: new Date()
+    },
+    active: {
+        type: Boolean,
+        default: true
     }
 });
 

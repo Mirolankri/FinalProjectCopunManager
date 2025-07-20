@@ -4,6 +4,7 @@ const UserSchema = require('../../users/models/mongoDB/UserSchema');
 const AuditLoginUserSchema = require('../models/mongoDB/auditLogin');
 const { comparePassword } = require('../helpers/bcrypt');
 const { generateAuthToken } = require('../providers/jwt');
+const DuplicatePhoneError = require('../../../Handler/errors/DuplicatePhoneError');
 const DB = process.env.DB;
 
 const registerUser = async (normalizeUser) => {
@@ -34,6 +35,7 @@ const loginUser = async ({email, phone, password}) => {
             const nowTime = new Date();
 
             const user = await UserSchema.findOne({phone});
+            if(!user.active) throw new Error('משתמש לא נמצא');
             if (!user) throw new Error('מספר טלפון או סיסמא אינם תקינים');
 
             const validPassword = comparePassword(password, user.password);
@@ -97,16 +99,83 @@ const GetMe = async ({userId}) => {
 
     return Promise.resolve('Not in mongoDB');
 };
+
+const GetAllUsers = async () => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.find({}).select("-password -__v");
+            if (!user.length) return Promise.resolve([]);
+            return Promise.resolve(user);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
+const GetMyUsers = async ({userId}) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.find({parentuserId: userId}).select("-password -__v");
+            if (!user.length) return Promise.resolve([]);
+            // after get users return only userId is not same parentuserId in all users with loop
+            const filteredUsers = user.filter(user => user._id.toString() !== userId);
+            return Promise.resolve(filteredUsers);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
 const UpdateUser = async ({userId, data}) => {
     if(DB === 'mongoDB'){
         try {
             const user = await UserSchema.findById(userId);
             if (!user) throw new Error('לא נמצאו משתמשים');
+            if(data.phone !== user.phone){
+                const existing = await UserSchema.exists({ phone: data.phone });
+                if (existing) {
+                    throw new DuplicatePhoneError('מספר הטלפון שהזנת כבר קיים במערכת');
+                }
+            }
             user.name.first = data.name.first;
             user.name.last = data.name.last;
             user.phone = data.phone;
             user.email = data.email;
             await user.save();
+            return Promise.resolve(user);
+        } catch (error) {            
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
+const MakeAdmin = async (userId) => {
+    if(DB === 'mongoDB'){
+        try {
+            let user = await UserSchema.findById(userId).select("isAdmin");
+            if (!user) throw new Error('לא נמצאו משתמשים');
+            user = await UserSchema.findByIdAndUpdate(userId, {isAdmin: !user.isAdmin}, {new: true}).select(["-password","-__v"]);
+            return Promise.resolve(user);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
+const DeleteUser = async (userId) => {
+    if(DB === 'mongoDB'){
+        try {
+            let user = await UserSchema.findById(userId).select("active");
+            if (!user) throw new Error('לא נמצאו משתמשים');
+            user = await UserSchema.findByIdAndUpdate(userId, {active: !user.active}, {new: true}).select(["-password","-__v"]);
             return Promise.resolve(user);
         } catch (error) {
             error.status = 404;
@@ -117,4 +186,4 @@ const UpdateUser = async ({userId, data}) => {
     return Promise.resolve('Not in mongoDB');
 };
 
-module.exports = { registerUser, loginUser, GetMe, UpdateUser };
+module.exports = { registerUser, loginUser, GetMe, GetMyUsers, UpdateUser, GetAllUsers, MakeAdmin, DeleteUser };

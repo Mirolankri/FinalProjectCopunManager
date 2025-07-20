@@ -1,3 +1,4 @@
+"use client"
 import AuthService from "@/app/auth/services/apiService";
 import { useUser } from "@/app/components/providers/UserProvider";
 import { getUser, setTokenInLocalStorage } from "@/app/services/localStorageService";
@@ -5,6 +6,7 @@ import { useRouter } from "next/navigation";
 import { useState, useCallback, useMemo } from "react";
 import useAxios from "../Axios/useAxios";
 import normalizeUser from "@/app/auth/helpers/normalization/normalizeUser";
+import { useAlert } from "@/providers/AlertProvider/AlertProvider";
 
 const AuthServiceInstance = new AuthService();
 
@@ -13,6 +15,8 @@ const useUsers = () => {
     const [isLoading, setLoading] = useState(true);
     const [error, setError] = useState(null);
     const router = useRouter();
+    const AlertInstance = useAlert();
+    
 
 
     useAxios();
@@ -56,16 +60,60 @@ const useUsers = () => {
       [requestStatus, handleLogin]
     );
     const handleUpdateUser = useCallback(
-      async (userFromClient) => {
+      async (userId, userFromClient) => {
         try {
           const normalizedUser = normalizeUser(userFromClient);
-          const { data } = await AuthServiceInstance.UpdateUser(normalizedUser);
+          const { data } = await AuthServiceInstance.UpdateUser({userId, _body: normalizedUser});
           requestStatus(false, null, null, data);
+          AlertInstance("SUCCESS", "פרטי המשתמש עודכנו בהצלחה")
         } catch (error) {
           requestStatus(false, error, null);
         }
       },
       []
+    );
+    const handleGetMyUsers = useCallback(async () => {
+        try {
+          const data = await AuthServiceInstance.GetMyUsers();          
+          requestStatus(false, null, data, null);
+        } catch (error) {
+          requestStatus(false, error, null, null);
+        }
+      },
+      [requestStatus]
+    );
+    const handleGetAllUsers = useCallback(
+      async () => {
+        try {
+          const data = await AuthServiceInstance.GetAllUsers();
+          requestStatus(false, null, data);
+        } catch (error) {
+          requestStatus(false, error, null);
+        }
+      },
+      [requestStatus]
+    );
+    const handleMakeAdmin = useCallback(async (userId) => {
+      try {
+        const { data } = await AuthServiceInstance.MakeAdmin(userId);
+        requestStatus(false, null, null, data);
+        AlertInstance("SUCCESS", "פרטי המשתמש עודכנו בהצלחה")
+      } catch (error) {
+        requestStatus(false, error, null);
+      }
+    },
+    [requestStatus]
+    );
+    const handleDeleteUser = useCallback(async (userId) => {
+      try {
+        const { data } = await AuthServiceInstance.DeleteUser(userId);
+        requestStatus(false, null, null, data);
+        AlertInstance("SUCCESS", "פרטי המשתמש עודכנו בהצלחה")
+      } catch (error) {
+        requestStatus(false, error, null);
+      }
+    },
+    [requestStatus]
     );
       
     
@@ -80,11 +128,12 @@ const useUsers = () => {
         // handleLogout,
         handleRegister,
         handleUpdateUser,
+        handleGetMyUsers,
+        handleGetAllUsers,
+        handleMakeAdmin,
+        handleDeleteUser
         // handleEdit,
         // handleGetUser,
-        // handleGetAllUsers,
-        // handleDeleteUser,
-        // handleBusinessUser
       };
     
   

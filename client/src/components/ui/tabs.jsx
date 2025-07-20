@@ -5,6 +5,13 @@ import * as TabsPrimitive from "@radix-ui/react-tabs"
 
 import { cn } from "@/lib/utils"
 
+/**
+ * A component that renders a Root element for Tabs using Radix UI's TabsPrimitive.
+ * It applies a default flexbox layout with a vertical direction and gap between children.
+ * 
+ * @param {string} className - Additional class names to apply to the Tabs component.
+ * @param {object} props - Additional props to be spread onto the TabsPrimitive.Root element.
+ */
 function Tabs({
   className,
   ...props

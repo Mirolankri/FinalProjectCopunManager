@@ -1,2 +1,2 @@
-# React-FinalProject
+# React-FinalProject Coupon Manager
  
