@@ -27,21 +27,12 @@ const TextArea = ({
           className="block text-sm/6 font-medium text-gray-900 "
         >
           <div className="flex items-center">
-            <div className="shrink-0 text-base text-gray-500 select-none sm:text-sm/6 size-5">
+            <div className="ml-1 shrink-0 text-base text-gray-500 select-none sm:text-sm/6 size-5">
               {Icon && Icon}
             </div>
             {label}
           </div>
         </label>
-          
-        {/* <div className="text-sm">
-          <a
-            href="#"
-            className="font-semibold text-gray-600 hover:text-gray-500"
-          >
-            שכחת סיסמא?
-          </a>
-        </div> */}
       </div>
       <div className="mt-2">
         <div className={`flex items-center `}>

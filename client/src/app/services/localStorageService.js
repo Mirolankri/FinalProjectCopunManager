@@ -18,4 +18,7 @@ export const getUser = () => {
 export const removeToken = () => isBrowser() && localStorage.removeItem(TOKEN);
 
 export const getToken = () => isBrowser() && localStorage.getItem(TOKEN);
-    
+
+export const SetValueLocalStorage = (key, value) => isBrowser() && localStorage.setItem(key, value);
+
+export const GetValueLocalStorage = (key) => isBrowser() && localStorage.getItem(key);

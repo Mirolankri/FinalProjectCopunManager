@@ -7,6 +7,7 @@ import { useState, useCallback, useMemo } from "react";
 import useAxios from "../Axios/useAxios";
 import normalizeUser from "@/app/auth/helpers/normalization/normalizeUser";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";
+import { useModal } from "@/providers/ModalProvider/ModalProvider";
 
 const AuthServiceInstance = new AuthService();
 
@@ -16,21 +17,18 @@ const useUsers = () => {
     const [error, setError] = useState(null);
     const router = useRouter();
     const AlertInstance = useAlert();
-    
-
+    const {closeModal} = useModal();
 
     useAxios();
 
     const { user, setUser, setToken } = useUser();
-    const requestStatus = useCallback(
-        (loading, errorMessage, users, user = null) => {
+    const requestStatus = (loading, errorMessage, users, user = null) => {
           setLoading(loading);
           setUsers(users);
           setUser(user);
           setError(errorMessage);
-        },
-        [setUser]
-      );
+        }
+      
 
     const handleLogin = useCallback(async (user) => {
         try {
@@ -44,6 +42,7 @@ const useUsers = () => {
           requestStatus(false, error, null);
         }
       }, []);
+
     const handleRegister = useCallback(
       async (userFromClient) => {
         try {
@@ -58,6 +57,20 @@ const useUsers = () => {
         }
       },
       [requestStatus, handleLogin]
+    );
+    const handleCreateUser = useCallback(
+      async (userFromClient) => {
+        try {
+          const normalizedUser = normalizeUser(userFromClient);
+          const { data } = await AuthServiceInstance.CreateUser(normalizedUser);
+          requestStatus(false, null, null, data);
+          closeModal();
+          AlertInstance("SUCCESS", "משתמש נוצר בהצלחה");
+        } catch (error) {          
+          requestStatus(false, error.response.data, null, null);
+        }
+      },
+      [requestStatus, AlertInstance]
     );
     const handleUpdateUser = useCallback(
       async (userId, userFromClient) => {
@@ -125,18 +138,14 @@ const useUsers = () => {
       return {
         value,
         handleLogin,
-        // handleLogout,
         handleRegister,
+        handleCreateUser,
         handleUpdateUser,
         handleGetMyUsers,
         handleGetAllUsers,
         handleMakeAdmin,
         handleDeleteUser
-        // handleEdit,
-        // handleGetUser,
       };
-    
-  
 }
 
 export default useUsers;

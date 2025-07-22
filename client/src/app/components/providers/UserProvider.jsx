@@ -19,8 +19,9 @@ export const UserProvider = ({ children }) => {
   const [token, setToken] = useState(getToken);  
   const router = useRouter();
   const pathname = usePathname();
-  // useAxios();
-  const HandleGetMe = useCallback(async (user) => {    
+  
+  
+  const HandleGetMe = useCallback(async (user) => {
     try {
       const userData = await AuthServiceInstance.GetMe();
       const mergedUser = {...userData, exp: user.exp, iat: user.iat };
@@ -34,6 +35,7 @@ export const UserProvider = ({ children }) => {
     
   }, [token]);
   useEffect(() => {
+    
     if (!user) {
       const userFromLocalStorage = getUser();
       
@@ -49,51 +51,17 @@ export const UserProvider = ({ children }) => {
     }
     if (user) {
       if (!user.exp || user.exp * 1000 < Date.now()) {
-        console.log(new Date(Date.now()));
-        console.log("Date.now()", Date.now());
-        
-        console.log("user.exp < Date.now()", user.exp * 1000 < Date.now());
-        console.log("user.exp", user.exp);
-        console.log("user.exp", user.exp * 1000);
-        
-        // user.exp to date
         const expDate = new Date(user.exp * 1000);
-        console.log("expDate", expDate);
         
         removeToken();
         setUser(null);
         setLoading(false);
         router.push('/auth/login');
+      } else {
+        HandleGetMe(user);
       }
-      
-      // HandleGetMe(user);
     }
   }, [user]);
-  // useEffect(() => {
-  //   if (user) {
-  //     // HandleGetMe();
-  //     // check user validity user.exp
-  //     if (!user.exp || user.exp * 1000 < Date.now()) {
-  //       console.log(new Date(Date.now()));
-  //       console.log("Date.now()", Date.now());
-        
-  //       console.log("user.exp < Date.now()", user.exp * 1000 < Date.now());
-  //       console.log("user.exp", user.exp);
-  //       console.log("user.exp", user.exp * 1000);
-        
-  //       // user.exp to date
-  //       const expDate = new Date(user.exp * 1000);
-  //       console.log("expDate", expDate);
-        
-  //       removeToken();
-  //       setUser(null);
-  //       setLoading(false);
-  //       router.push('/auth/login');
-  //     }
-  //     HandleGetMe();
-  //     console.log("user", user);
-  //   }
-  // }, [user]);
   
 
   const value = useMemo(

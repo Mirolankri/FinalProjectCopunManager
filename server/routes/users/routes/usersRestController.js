@@ -2,8 +2,11 @@ require('dotenv').config();
 const express = require('express');
 const { handleError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
-const { GetMe, UpdateUser, GetMyUsers, GetAllUsers, MakeAdmin, DeleteUser } = require('../../auth/models/usersAccessDataService');
+const { GetMe, UpdateUser, GetMyUsers, GetAllUsers, MakeAdmin, DeleteUser, registerUser } = require('../../auth/models/usersAccessDataService');
 const userUpdateValidation = require('../../auth/validations/Joi/userUpdateValidation');
+const { validateRegistration } = require('../../auth/validations/authValidationService');
+const normalizeUser = require('../../auth/helpers/normalizeUser');
+const { generateUserPassword } = require('../../auth/helpers/bcrypt');
 const router = express.Router();
 
 router.get('/',auth, async(req, res) => {
@@ -74,7 +77,24 @@ router.delete('/:userId',auth, async(req, res) => {
         return handleError(res, error.status || 500, error.message);
     }
 });
-
+router.post('/',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        let userData = req.body;
+        if(!user) throw new Error('משתמש לא נמצא');
+        if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        userData.parentuserId = user._id;
+        const { error } = validateRegistration(userData);
+        if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
+        userData = normalizeUser(userData);
+        userData.password = generateUserPassword(userData.password);
+        userData = await registerUser(userData);
+        return res.status(201).send(userData);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+    
 router.put('/:userId',auth, async(req, res) => {
     try {
         const user = req.user;

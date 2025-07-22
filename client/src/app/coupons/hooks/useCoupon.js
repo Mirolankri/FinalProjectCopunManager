@@ -4,7 +4,7 @@ import { useCallback, useEffect, useMemo, useState } from "react";
 import CouponService from "../services/apiService";
 import useAxios from "@/hooks/Axios/useAxios";
 import normalizeCoupon from "../helpers/normalization/normalizeCoupon";
-import { useRouter, useSearchParams } from "next/navigation";
+import { useSearchParams } from "next/navigation";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";
 import { useModal } from "@/providers/ModalProvider/ModalProvider";
 const CouponInstance = new CouponService();
@@ -18,7 +18,6 @@ const useCoupon = () => {
     const [error, setError] = useState(null);
     const [query, setQuery] = useState('')
     const [filteredCoupons, setFilteredCoupons] = useState(null)
-    const router = useRouter();
     const AlertInstance = useAlert();
     const searchParams = useSearchParams();
     useAxios();
@@ -28,9 +27,13 @@ const useCoupon = () => {
 
     useEffect(()=>{
       if (coupons) {
-        setFilteredCoupons(
-          coupons.filter(coupon => coupon.name.includes(query) || String(coupon.code).includes(query))
-        )
+        const filtered = coupons.filter(coupon => coupon.name.includes(query) || String(coupon.code).includes(query));
+        const sorted = [...filtered].sort((a, b) => {
+          if (a.used && !b.used) return 1;
+          if (!a.used && b.used) return -1;
+          return 0;
+        });
+        setFilteredCoupons(sorted);
       }
     },[coupons, query])
   
@@ -44,13 +47,9 @@ const useCoupon = () => {
 
       const handleGetCoupon = useCallback(async (couponId) => {
         try {
-          // i want add setTimeout 5000ms to request to demmy api
-          
           setLoading(true);
-          // setTimeout(async () => {
             const coupon = await CouponInstance.getSharedCoupon(couponId);
             requestStatus(false, null, [...(coupons || []), coupon], coupon);
-          // }, 5000);
         } catch (error) {
           requestStatus(false, error, null);
         }
@@ -69,12 +68,9 @@ const useCoupon = () => {
           setLoading(true);
           const normalizedCoupon = normalizeCoupon(coupon);
           const newCoupon = await CouponInstance.Create(normalizedCoupon);
-          // const coupons = await CouponInstance.getCoupons();
           requestStatus(false, null, null, newCoupon);
-          // await handleGetCoupons();
           closeModal();
           AlertInstance("SUCCESS", "קופון נוסף בהצלחה")
-          // router.push("/coupons");
         } catch (errorMessage) {
           requestStatus(false, errorMessage.response.data || 'שגיאה בהוספת קופון', null);
         }
@@ -120,6 +116,26 @@ const useCoupon = () => {
           requestStatus(false, errorMessage.response.data || 'שגיאה בשיתוף קופון', null);
         }
       }, []);
+      const handleMarkUsed_UnUsed = useCallback(async (couponId) => {
+        try {
+          // setLoading(true);
+          const updatedCoupon = await CouponInstance.MarkUsed_UnUsed(couponId);
+          requestStatus(false, null, null, updatedCoupon);
+          // AlertInstance("SUCCESS", "קופון עודכן בהצלחה");
+        } catch (errorMessage) {
+          requestStatus(false, errorMessage.response.data || 'שגיאה בעדכון קופון', null);
+        }
+      }, []);
+      const handleMarkFavorite_UnFavorite = useCallback(async (couponId) => {
+        try {
+          // setLoading(true);
+          const updatedCoupon = await CouponInstance.MarkFavorite_UnFavorite(couponId);
+          requestStatus(false, null, null, updatedCoupon);
+          // AlertInstance("SUCCESS", "קופון עודכן בהצלחה");
+        } catch (errorMessage) {
+          requestStatus(false, errorMessage.response.data || 'שגיאה בעדכון קופון', null);
+        }
+      }, []);
     
       const value = useMemo(() => {
         return { isLoading, coupons, coupon, error, filteredCoupons };
@@ -130,12 +146,11 @@ const useCoupon = () => {
         handleGetCoupons,
         handleCreateCoupon,
         handleGetCoupon,
-        // handleGetMyCards,
+        handleMarkUsed_UnUsed,
         handleDeleteCoupon,
         handleUpdateCoupon,
         handleShareCoupon,
-        // handleLikeCard,
-        // handleGetFavCards,
+        handleMarkFavorite_UnFavorite,
       };
 }
 

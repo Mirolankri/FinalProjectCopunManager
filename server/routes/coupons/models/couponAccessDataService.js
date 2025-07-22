@@ -5,6 +5,8 @@ const DB = process.env.DB;
 const CouponSchema = require('./mongoDB/CouponSchema');
 const { encrypt, generateCodeHash, decrypt } = require('../../../utils/encryptionService');
 const SharedCouponSchema = require('./mongoDB/SharedCouponSchema');
+const { GetCompaniesById } = require('./companiesAccessDataService');
+const CompaniesSchema = require('./mongoDB/CompaniesSchema');
 
 const CreateCoupon = async (couponData) => {
     if(DB === 'mongoDB'){
@@ -16,6 +18,20 @@ const CreateCoupon = async (couponData) => {
             if (couponData.code) {
                 couponData.code = encrypt(couponData.code);
             }
+            // check couponData.category is objectId?
+            if (!mongoose.Types.ObjectId.isValid(couponData.category)) {
+                // const { _id } = await GetCompaniesById(couponData.category);
+            // if (!_id){
+                const newCompany = new CompaniesSchema({
+                    name: couponData.category,
+                    active: true
+                });
+                await newCompany.save();
+                couponData.category = newCompany._id;
+            // }
+            }
+            
+            
             couponData.codeHash = codeHash;
             coupon = new CouponSchema(couponData);
             coupon = await coupon.save();
@@ -129,6 +145,12 @@ const GetSharedCoupon = async (id) => {
             if (!coupon) throw new Error('קופון לא נמצא');            
             let couponDoc = coupon.toObject();
             if (couponDoc.code) couponDoc.code = decrypt(couponDoc.code);
+            const sharedCoupons = await SharedCouponSchema.find({couponId: couponDoc._id}).select('-__v');
+            const sharedCouponsData = sharedCoupons.map(doc => doc.toObject());
+
+            couponDoc.sharedCoupons = sharedCouponsData || [];
+            couponDoc.totalSharedCoupons = sharedCouponsData ? sharedCouponsData.length : 0;
+
             return Promise.resolve(couponDoc);
         } catch (error) {
             error.status = 404;
@@ -137,5 +159,43 @@ const GetSharedCoupon = async (id) => {
     }
     return Promise.resolve('Not in mongoDB');
 }
-
-module.exports = { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon,ShareCoupon,GetSharedCoupon };
+const MarkUsed_UnUsed = async (id) => {
+    if(DB === 'mongoDB'){
+        try {
+            let coupon = await CouponSchema.findById(id);
+            if (!coupon) throw new Error('קופון לא נמצא');
+            coupon.used = !coupon.used;
+            const updatedCoupon = await coupon.save();
+            return Promise.resolve(updatedCoupon);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+    return Promise.resolve('Not in mongoDB');
+};
+const MarkFavorite_UnFavorite = async (id) => {
+    if(DB === 'mongoDB'){
+        try {
+            let coupon = await CouponSchema.findById(id);
+            if (!coupon) throw new Error('קופון לא נמצא');
+            coupon.favorite = !coupon.favorite;
+            const updatedCoupon = await coupon.save();
+            return Promise.resolve(updatedCoupon);
+        } catch (error) {
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+    return Promise.resolve('Not in mongoDB');
+}
+module.exports = { 
+    CreateCoupon,
+    GetMyCoupons, 
+    DeleteCoupon, 
+    UpdateCoupon,
+    ShareCoupon,
+    GetSharedCoupon,
+    MarkUsed_UnUsed,
+    MarkFavorite_UnFavorite
+ };

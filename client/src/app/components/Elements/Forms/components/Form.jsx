@@ -2,6 +2,7 @@ import React from "react";
 import { useRouter } from 'next/navigation';
 import PropTypes from "prop-types";
 import Button from "../../Button/Index";
+import { cn } from "@/lib/utils";
 
 
 const Form = ({
@@ -15,14 +16,17 @@ const Form = ({
     styles,
     children,
     SubmitButtonName = "שליחת טופס",
-    ResetButtonName = "איפוס"
-  }) => {    
+    ResetButtonName = "איפוס",
+    ...rest
+  }) => {
+    // in rest there is className mearge with className
+    const { className } = rest;
 
   return (
-    <div className="flex min-h-full flex-1 flex-col justify-center p-6">
+    <div className={cn(`flex min-h-full flex-1 flex-col justify-center p-6`, className)}>
             {title && (
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <h2 className="mt-10 text-center text-2xl/9 tracking-tight text-gray-900">
+              <h2 className="text-center text-2xl/9 tracking-tight text-gray-900">
                 {title}
               </h2>
               </div>

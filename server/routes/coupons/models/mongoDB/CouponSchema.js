@@ -53,6 +53,10 @@ const CouponSchema = new mongoose.Schema({
         type: Boolean,
         default: false
     },
+    favorite: {
+        type: Boolean,
+        default: false
+    },
     website: {
         type: String,
         default: ''

@@ -12,7 +12,7 @@ const registerUser = async (normalizeUser) => {
         try {
             const { phone, parentuserId } = normalizeUser;
             let user = await UserSchema.findOne({phone});
-            if (user) throw new Error('This Phone is already registered!');
+            if (user) throw new DuplicatePhoneError('טלפון רשום כבר במערכת');
             user = new UserSchema(normalizeUser);
             user = await user.save();
             if(!parentuserId){
@@ -22,7 +22,7 @@ const registerUser = async (normalizeUser) => {
             user = pick(user, ['name', 'email','phone', '_id', 'parentuserId']);
             return Promise.resolve(user);
         } catch (error) {
-            error.status = 404;
+            error.status = error.status || 404;
             return Promise.reject(error);
         }
     }
@@ -99,7 +99,6 @@ const GetMe = async ({userId}) => {
 
     return Promise.resolve('Not in mongoDB');
 };
-
 const GetAllUsers = async () => {
     if(DB === 'mongoDB'){
         try {

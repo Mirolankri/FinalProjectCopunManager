@@ -26,6 +26,15 @@ export const ModalProvider = ({ children }) => {
   //   };
   // }, [isSnackOpen, autoHideDuration]);
 
+  useEffect(() => {
+    if (isModalOpen) {
+      document.body.classList.add("overflow-hidden");
+    } else {
+      document.body.classList.remove("overflow-hidden");
+    }
+    return () => document.body.classList.remove("overflow-hidden");
+  }, [isModalOpen]);
+  
   const setModal = useCallback((title, body) => {
     setModalOpen(true);
     setModalBody(body);

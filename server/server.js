@@ -9,6 +9,7 @@ const cors = require('./middlewares/cors');
 const logger = require('./middlewares/logger/loggerService');
 const { generateUserPassword } = require('./routes/auth/helpers/bcrypt');
 const { updateUsersActiveField } = require('./updateUsersActiveField');
+const { loadInitialData } = require('./InitialData/LoadInitialData');
 
 const PORT = process.env.PORT || 5555;
 const ENV = process.env.NODE_ENV;
@@ -24,6 +25,7 @@ app.use(router);
 app.listen(PORT, async () => {
     console.log(chalk.bgGreen(`Server Listening on: ${API_URL}:${PORT}`));
     connectToDB(ENV);
+    await loadInitialData();
     // await updateUsersActiveField();
     // await generateInitialCards();
 });

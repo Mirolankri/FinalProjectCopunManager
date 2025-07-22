@@ -67,8 +67,8 @@ const AccountPage = ({userData}) => {
               </div>
               <div className='flex items-center gap-2'>
                 <div>
-                  <p>{userData.name.first} {userData.name.last}</p>
-                  <p>{userData.phone}</p>
+                  <div>{userData.name.first} {userData.name.last}</div>
+                  <div>{userData.phone}</div>
                 </div>
                 <div>
                   <Avatar className="size-15">

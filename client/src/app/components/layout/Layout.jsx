@@ -2,14 +2,14 @@
 import React from 'react'
 import { Main } from './main/Main'
 import { Header } from './header/Header'
-import BottomMenu from './header/BottomMenu/BottomMenu'
+import FooterSection from './footer/FooterSection'
 
 export const Layout = ({ children }) => {
   return (
     <div className="min-h-full ">
         <Header />
         <Main>{children}</Main>
-        <BottomMenu />
+        <FooterSection />
     </div>
   )
 }

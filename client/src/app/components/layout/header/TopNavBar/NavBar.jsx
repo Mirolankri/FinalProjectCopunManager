@@ -1,6 +1,6 @@
 'use client'
 
-import { Bars2Icon, BellIcon, GiftIcon, XMarkIcon } from '@heroicons/react/24/outline'
+import { Bars2Icon, BellIcon, XMarkIcon } from '@heroicons/react/24/outline'
 import { useCallback, useState } from "react";
 import Link from "next/link";
 import { useUser } from '@/app/components/providers/UserProvider';
@@ -8,11 +8,14 @@ import { Skeleton } from '@/app/components/Elements/Skeleton/Index';
 import { removeToken } from '@/app/services/localStorageService';
 import { navigation, userNavigation } from './Menu';
 import Search from './Search';
+import { GiftIcon } from 'lucide-react';
+import Image from 'next/image';
+import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel, DropdownMenuSeparator, DropdownMenuTrigger } from '@/components/ui/dropdown-menu';
 
 export const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
   const [dropdownOpen, setDropdownOpen] = useState(false)
-  const { user, loading,setToken,setUser } = useUser();
+  const { user, loading,setToken,setUser,userData } = useUser();
 
   const handleLogout = useCallback(() => {
     removeToken();
@@ -24,14 +27,14 @@ export const NavBar = () => {
 
 
   return (
-    <nav className=" fixed top-0 w-full z-80">
-        <div className="bg-gray-600 mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
+    <nav className="fixed top-0 w-full z-80 bg-gray-600">
+        <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="w-full flex items-center">
               <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                 <div className="shrink-0 flex items-center gap-2">
                   <GiftIcon className="size-8 text-white" />
-                  <span className="text-white">CouPoint</span>
+                  <div className="text-white">CouPoint</div>
                 </div>
               </Link>
               <div className="w-full hidden md:block">
@@ -55,7 +58,7 @@ export const NavBar = () => {
                   </div>
                   <Search />
                   <div className="mr-4 flex items-center space-x-4">
-                    {userNavigation.map((item) => {
+                    {false && userNavigation.map((item) => {
                       if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
                       if(item.requiredLogin && !user) return null;
                       if(!item.requiredLogin && user) return null;
@@ -79,7 +82,7 @@ export const NavBar = () => {
               </div>
             </div>
             {/* user profile */}
-            <div className="hidden">
+            <div className="">
               <div className="ml-4 flex items-center md:ml-6">
                 <button type="button" className="hidden cursor-pointer relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
                   <span className="absolute -inset-1.5"></span>
@@ -89,25 +92,35 @@ export const NavBar = () => {
 
                 {/* <!-- Profile dropdown --> */}
                 <div className="relative ml-3">
-                  <div>
-                    <button
-                      type="button"
-                      onClick={() => setDropdownOpen(!dropdownOpen)}
-                      className="relative cursor-pointer flex max-w-xs items-center rounded-full bg-gray-800 text-sm focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden"
-                    >
-                      <span className="sr-only">Open main menu</span>
-                      <img className="size-8 rounded-full" src="https://images.unsplash.com/photo-1472099645785-5658abf4ff4e?ixlib=rb-1.2.1&ixid=eyJhcHBfaWQiOjEyMDd9&auto=format&fit=facearea&facepad=2&w=256&h=256&q=80" alt="" />
-                    </button>
+                  <div className='hidden md:block'>
+                    <DropdownMenu>
+                        <DropdownMenuTrigger>
+                          <Image alt='User Profile' src="/assets/images/rabbit.png" className=" rounded-full" width={40} height={40} />
+                        </DropdownMenuTrigger>
+                        <DropdownMenuContent className="z-120">
+                          <DropdownMenuLabel>{userData && userData.name.first}</DropdownMenuLabel>
+                          <DropdownMenuSeparator />
+                          {userNavigation.map((item) => {                            
+                              if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
+                              if(item.requiredLogin && !user) return null;
+                              if(!item.requiredLogin && user) return null;
+                              return(
+                                <DropdownMenuItem key={item.key}>
+                                  <Link
+                                    key={item.key}
+                                    href={item.href}
+                                    aria-current={item.current ? 'page' : undefined}
+                                    onClick={() => {
+                                      item.onClick?.();
+                                    }}
+                                  >
+                                    {item.name}
+                                  </Link>
+                                </DropdownMenuItem>
+                          )})}
+                          </DropdownMenuContent>
+                    </DropdownMenu>
                   </div>
-
-                  
-                    <div className={`absolute transition ease-out duration-100 ${dropdownOpen ? 'opacity-100 scale-100' : 'opacity-0 scale-90 pointer-events-none'} right-0 z-100 mt-2 w-24 origin-top-right text-center rounded-md bg-white p-3 shadow-lg ring-1 ring-black/5 focus:outline-hidden`} role="menu" aria-orientation="vertical" aria-labelledby="user-menu-button">
-                      {/* <!-- Active: "bg-gray-100 outline-hidden", Not Active: "" --> */}
-                      {userNavigation.map((item) => (
-                        <Link key={item.name} href={item.href} className="rounded-md block px-4 py-2 text-sm text-gray-700 hover:bg-gray-100" role="menuitem" id="user-menu-item-0">{item.name}</Link>
-                      ))}
-                    </div>
-                  
                 </div>
               </div>
             </div>

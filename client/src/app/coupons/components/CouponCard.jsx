@@ -3,7 +3,7 @@ import React from "react";
 import { format } from "date-fns";
 import Badge from "@/app/components/Elements/Badge/Badge";
 import Button from "@/app/components/Elements/Button/Index";
-import { ArrowTopRightOnSquareIcon, BuildingStorefrontIcon, CalendarIcon, ClipboardIcon, ClockIcon, CreditCardIcon, PencilIcon, ShareIcon, TagIcon, TrashIcon } from "@heroicons/react/24/outline";
+import { ArrowTopRightOnSquareIcon, BuildingStorefrontIcon, CalendarIcon, ClockIcon, CreditCardIcon, PencilIcon, ShareIcon, TagIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";
 import ToolTip from "@/app/components/Elements/ToolTip/Index";
 import { useModal } from "@/providers/ModalProvider/ModalProvider";
@@ -11,12 +11,22 @@ import CouponDelete from "./CouponDelete";
 import CouponShare from "./CouponShare";
 import { copyToClipboard } from "@/helpers/Clipboard/copyToClipboard";
 import { useUser } from "@/app/components/providers/UserProvider";
+import { ShortString } from "@/helpers/Strings/StringsHelpers";
+import { CouponDescription } from "./coupon/CouponDescription";
+import { Barcode, Clipboard, ScanQrCode, Star } from "lucide-react";
+import QrCodeModal from "./coupon/QrCodeModal";
+import BarcodeModal from "./coupon/BarcodeModal";
+import MarkUsed from "./coupon/MarkUsed";
+import MarkFavorite from "./coupon/MarkFavorite";
+import Link from "next/link";
+import { CouponAction } from "./coupon/CouponAction";
+import { CouponWebSite } from "./coupon/CouponWebSite";
 
-export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
+export default function CouponCard({ coupon, onEdit, onDelete, onShare, companies, categories, onMarkUsed_UnUsed,onFavorite }) {
     const AlertInstance = useAlert();
     const {user} = useUser();
     const { setModal } = useModal();
-    const isExpired = (date) => {        
+    const isExpired = (date) => {
         if (!date) return false;
         return new Date(date) < new Date();
     };
@@ -42,25 +52,39 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
   };
   const HandleDelete = () => {
     setModal("מחיקת קופון",<CouponDelete coupon={coupon} onDelete={onDelete} />);
-    // onDelete(coupon._id);
   };
   const HandleShare = () => {
     setModal("שיתוף קופון",<CouponShare coupon={coupon} onShare={onShare} getDaysRemaining={getDaysRemaining} />);
   };
+  const handleCopyCoupon = () => {
+    copyToClipboard(coupon.code, AlertInstance);
+  };
+  const handleShowQrCode = () => {
+    setModal("תצוגת QR Code", <QrCodeModal coupon={coupon} />);
+  };
+  const handleShowBarcode = () => {
+    setModal("תצוגת ברקוד", <BarcodeModal coupon={coupon} />);
+  };
 
   return (
-    <div className="bg-white transition-all hover:shadow-lg rounded-xl shadow-sm">
+    <div className="bg-white transition-all hover:shadow-lg rounded-xl shadow-sm border border-gray-200 ">
       <div className="p-0">
         <div className="p-4">
-            <div className="">
+            {/* <div className=""> */}
                 <div className="flex items-center justify-between mb-2">
                     <div>
                         <div className="text-xl">
-                            שם קופון: {coupon.name}
+                          {coupon.name}
                         </div>
                         <div className="flex items-center mb-2">
                             <BuildingStorefrontIcon className="size-5 text-gray-500 ml-2" />
-                            <h3 className="font-bold text-2xl">{coupon.store}</h3>
+                            <h3 className="font-bold text-2xl">
+                            {coupon.store && (
+                              <>
+                              {companies.find((option) => option.value === coupon.store)?.label}
+                              </>
+                            )}
+                            </h3>
                         </div>
                     </div>
                     
@@ -81,46 +105,52 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
                             </Badge>
                             </ToolTip>
                         )}
+                        
                     </div>
 
                 </div>
-                <div>
-                    <div className="flex flex-wrap gap-2 mb-3">
-                    {coupon.category && (
-                        <ToolTip tip="קטגוריה">
-                        <Badge  className="flex items-center gap-1">
-                            <TagIcon className="size-5" />
-                            {coupon.category}
-                        </Badge>
-                        </ToolTip>
-                    )}
-                    {coupon.used ? (
-                        <Badge color="bg-blue-700" className="bg-blue-50 text-blue-700">נוצל</Badge>
-                    ) : isExpired(coupon.expiryDate) ? (
-                        <Badge color="bg-red-100" className=" text-red-700">פג תוקף</Badge>
-                    ) : null}
+                
+            {/* </div> */}
+
+          
+          {/* body */}
+          <div className="flex items-center justify-between mb-3">
+            <div className="w-full bg-gray-100 p-3 rounded-md  border border-gray-200 cursor-pointer hover:rounded-3xl transition-all hover:bg-gray-50">
+              <div className="flex items-center justify-between">
+                <div className="font-mono font-bold">{coupon.code}</div>
+                <div className="flex items-center gap-2">
+                  <ToolTip tip="העתק קוד">
+                    <div className="cursor-pointer hover:text-gray-600"
+                    onClick={handleCopyCoupon}>
+                      <Clipboard className="size-7" />
                     </div>
+                  </ToolTip>
+                  <ToolTip tip="הצגת QR Code">
+                    <div className="cursor-pointer hover:text-gray-600"
+                    onClick={handleShowQrCode}>
+                      <ScanQrCode className="size-7" />
+                    </div>
+                  </ToolTip>
+                  <ToolTip tip="הצגת ברקוד">
+                    <div className="cursor-pointer hover:text-gray-600"
+                    onClick={handleShowBarcode}>
+                      <Barcode className="size-7" />
+                    </div>
+                  </ToolTip>
                 </div>
+              </div>
+              
             </div>
-
-          {coupon.description && (
-            <p className="text-gray-600 text-sm mb-3">{coupon.description}</p>
-          )}
-
-          <div className="bg-gray-100 p-3 rounded-md mb-3 border border-gray-200">
-            <div className="flex items-center justify-between">
-              <div className="font-mono font-bold">{coupon.code}</div>
-              <ToolTip tip="העתק קוד">
-                <div
-                className="cursor-pointer hover:text-gray-600"
-                onClick={() => copyToClipboard(coupon.code,AlertInstance)}>
-                  <ClipboardIcon className="size-5" />
-                </div>
-              </ToolTip>
-            </div>
+            
           </div>
+          {/* body */}
 
-          <div className="flex items-center justify-between text-xs text-gray-500">
+          <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
+            <MarkUsed coupon={coupon} onMarkUsed_UnUsed={onMarkUsed_UnUsed} />
+          </div>
+          {/* footer */}
+          {/* footer expiry date and  days remaining */}
+          <div className="flex items-center justify-between text-xs text-gray-500 mb-3">
             <div className="flex items-center gap-1">
                 <ToolTip tip="תאריך תוקף">
                     <CalendarIcon className="size-5"  />
@@ -135,7 +165,16 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
                           <ClockIcon className="size-4 ml-1" />
                           {getDaysRemaining(coupon.expiryDate)} ימים
                         </Badge>
-                      )}
+              )}
+              
+            </div>
+            <div className="flex items-center gap-1">
+            {coupon.used ? (
+              <Badge color="bg-blue-100" className="bg-blue-50 text-blue-700">נוצל</Badge>
+              ) : isExpired(coupon.expiryDate) ? (
+              <Badge color="bg-red-100" className=" text-red-700">פג תוקף</Badge>
+              ) : null
+            }
             </div>
             {coupon.shared_by && (
               <div className="text-blue-600">
@@ -143,49 +182,36 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare }) {
               </div>
             )}
           </div>
+          
+
+          {/* footer categories and description */}
+          <div className="flex items-center justify-between text-xs">
+            {coupon.description && 
+              <CouponDescription description={coupon.description} />
+            }
+              <div>
+                <div className="flex flex-wrap gap-2 items-center">
+                {coupon.category && (
+                    <ToolTip tip="קטגוריה">
+                    <Badge  className="flex items-center gap-1">
+                        <TagIcon className="size-5" />
+                        {categories.find((option) => option.value === coupon.category)?.label}
+                    </Badge>
+                    </ToolTip>
+                )}
+                <MarkFavorite coupon={coupon} onFavorite={onFavorite} />
+                </div>
+              </div>
+          </div>
+          {/* footer */}
         </div>
         
-        {user && <div className="flex border-t">
-          <Button
-            variant="link"
-            className=""
-            onClick={() => onEdit(coupon)}
-          >
-            <PencilIcon className="w-4 h-4 ml-2" />
-            עריכה
-          </Button>
-          <div className="w-px bg-gray-200"></div>
-          <Button
-            variant="link"
-            className=""
-            onClick={HandleShare}
-          >
-            <ShareIcon className="w-4 h-4 ml-2" />
-            שיתוף ({coupon.totalSharedCoupons})
-          </Button>
-          <div className="w-px bg-gray-200"></div>
-          <Button
-            variant="link"
-            className="!rounded-bl-lg text-red-600 hover:text-red-800 hover:bg-red-50 "
-            onClick={HandleDelete}
-          >
-            <TrashIcon className="w-4 h-4 ml-2" />
-            מחיקה
-          </Button>
-        </div>}
-        {coupon.website && (
-          <a
-            href={coupon.website}
-            target="_blank"
-            rel="noopener noreferrer"
-            className="block p-2 bg-blue-50 text-blue-600 text-center text-sm hover:bg-blue-100 transition-colors"
-          >
-            <div className="flex items-center justify-center">
-              <ArrowTopRightOnSquareIcon className="w-4 h-4 ml-2" />
-              לאתר החנות
-            </div>
-          </a>
-        )}
+        {user &&
+         <CouponAction user={user} coupon={coupon} onEdit={onEdit} HandleDelete={HandleDelete} HandleShare={HandleShare} />
+        }
+        {coupon.website && 
+          <CouponWebSite coupon={coupon} />
+        }
       </div>
     </div>
   );

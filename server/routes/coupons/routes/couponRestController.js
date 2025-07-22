@@ -5,16 +5,20 @@ const { handleError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
 const { validateNewCoupon, validateSharedCoupon } = require('../validations/couponValidationService');
 const normalizeCoupon = require('../helpers/normalizeCoupon');
-const { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon, ShareCoupon, GetSharedCoupon } = require('../models/couponAccessDataService');
+const { CreateCoupon, GetMyCoupons, DeleteCoupon, UpdateCoupon, ShareCoupon, GetSharedCoupon, MarkUsed_UnUsed, MarkFavorite_UnFavorite } = require('../models/couponAccessDataService');
 const normalizeSharedCoupon = require('../helpers/normalizeSharedCoupon');
+const { GetMe } = require('../../auth/models/usersAccessDataService');
 
 router.get('/', auth, async (req, res) => {
     const user = req.user;
-    console.log("user", user);
-    
+    let GetCouponsBy = user._id;
     try {
-        if(!user.isAdmin) throw new Error('אתה לא מורשה');
-        const coupons = await GetMyCoupons(user._id);
+        const GetMyData = await GetMe({userId: user._id});
+        if(GetMyData.parentuserId != user._id){
+            GetCouponsBy = GetMyData.parentuserId;
+        }
+        // if(!user.isAdmin) throw new Error('אתה לא מורשה');
+        const coupons = await GetMyCoupons(GetCouponsBy);
         return res.send(coupons);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
@@ -24,11 +28,17 @@ router.post('/', auth, async(req, res) => {
     try {
         let couponData = req.body;
         const user = req.user;
-        if(!user.isAdmin) throw new Error('אתה לא מורשה להוסיף קופון');
+        let CreateCouponTo = user._id;
+        const GetMyData = await GetMe({userId: user._id});
+        if(GetMyData.parentuserId != user._id){
+            CreateCouponTo = GetMyData.parentuserId;
+        }
+
+        // if(!user.isAdmin) throw new Error('אתה לא מורשה להוסיף קופון');
 
         const { error } = validateNewCoupon(couponData);
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
-        couponData = normalizeCoupon(couponData, user._id);
+        couponData = normalizeCoupon(couponData, CreateCouponTo);
         
         
         couponData = await CreateCoupon(couponData);
@@ -90,6 +100,28 @@ router.get('/share/:couponId', async (req, res) => {
         // if(!user.isAdmin) throw new Error('אתה לא מורשה');
         const sharedCoupon = await GetSharedCoupon(couponId);
         return res.send(sharedCoupon);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.put('/:couponId/mark-used-unused', auth, async (req, res) => {
+    try {
+        const { couponId } = req.params;
+        const user = req.user;
+        if(!user) throw new Error('משתמש לא נמצא');
+        const updatedCoupon = await MarkUsed_UnUsed(couponId);
+        return res.status(200).send(updatedCoupon);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.put('/:couponId/mark-favorite-unfavorite', auth, async (req, res) => {
+    try {
+        const { couponId } = req.params;
+        const user = req.user;
+        if(!user) throw new Error('משתמש לא נמצא');
+        const updatedCoupon = await MarkFavorite_UnFavorite(couponId);
+        return res.status(200).send(updatedCoupon);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
     }

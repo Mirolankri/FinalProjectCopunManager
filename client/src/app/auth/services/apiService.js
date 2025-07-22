@@ -36,6 +36,15 @@ class AuthService {
             return Promise.reject(error)
         }
     }
+    CreateUser = async (_body) => {
+        try {
+            const { data } = await axios.post(`${apiUrl}/users`, _body)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
     GetMe = async () => {
         const GetToken = getToken();
         if(!GetToken) return Promise.reject(new Error('No token found'));

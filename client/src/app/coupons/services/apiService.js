@@ -65,6 +65,24 @@ class CouponService {
             return Promise.reject(error)
         }
     }
+    MarkUsed_UnUsed = async (couponId) => {
+        try {
+            const { data } = await axios.put(`${apiUrl}/coupons/${couponId}/mark-used-unused`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
+    MarkFavorite_UnFavorite = async (couponId) => {
+        try {
+            const { data } = await axios.put(`${apiUrl}/coupons/${couponId}/mark-favorite-unfavorite`)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
     
 }
 export default CouponService

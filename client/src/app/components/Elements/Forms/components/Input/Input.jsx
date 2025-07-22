@@ -26,14 +26,7 @@ const Input = ({
           {required && <span className="text-red-400">*</span>}
           {label}
           </label>
-        {/* <div className="text-sm">
-          <a
-            href="#"
-            className="font-semibold text-gray-600 hover:text-gray-500"
-          >
-            שכחת סיסמא?
-          </a>
-        </div> */}
+        
       </div>
       <div className="mt-2">
         <div className={` ${error[name] ? 'outline-red-400' : 'outline-gray-300'} flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1  has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-gray-600`}>

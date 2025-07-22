@@ -2,13 +2,13 @@
 import React, { useEffect } from 'react'
 import {
   Card,
+  CardAction,
   CardContent,
   CardDescription,
   CardFooter,
   CardHeader,
   CardTitle,
 } from "@/components/ui/card"
-// import Button from '@/app/components/Elements/Button/Index'
 import { PlusIcon } from '@heroicons/react/24/outline'
 import { DataTable } from '@/app/components/Elements/Table/DataTable/data-table'
 import { BadgeCheckIcon, MoreHorizontal } from "lucide-react"
@@ -36,8 +36,10 @@ import { Badge } from '@/components/ui/badge'
 import { useAlert } from '@/providers/AlertProvider/AlertProvider'
 import { copyToClipboard } from '@/helpers/Clipboard/copyToClipboard'
 import { useModal } from '@/providers/ModalProvider/ModalProvider'
-import AccountPage from './AccountPage'
 import EditUser from '@/app/components/users/EditUser'
+import Container from '@/app/components/Elements/Container/Index'
+import { ErrorAlert } from '@/app/components/Elements/Alert/ErrorAlert'
+import CreateUser from '@/app/components/users/CreateUser'
 
 const createColumns = (userActions) => [
   {
@@ -49,9 +51,6 @@ const createColumns = (userActions) => [
  
       const handleEdit = () => {
         setModal('עריכת משתמש', <EditUser userData={user} onEditUser={onEditUser} />)
-        // כאן תוכל להוסיף לוגיקה לעריכת משתמש
-        console.log('עריכת משתמש:', user);
-        // לדוגמה: פתיחת מודל עריכה או ניווט לעמוד עריכה
       };
 
 
@@ -168,14 +167,21 @@ const createColumns = (userActions) => [
 ]
 const ListMyUsersPage = ({userData}) => {
   const AlertInstance = useAlert();
-  const {setModal} = useModal();
-  const { handleGetMyUsers, handleUpdateUser, handleMakeAdmin, handleDeleteUser, value } = useUsers();
+  const {setModal,closeModal} = useModal();
+  const { value,handleGetMyUsers, handleUpdateUser, handleMakeAdmin, handleDeleteUser,handleCreateUser } = useUsers();
   const { isLoading, error, users } = value;
 
   const onEditUser = async (userId,userData) => {
     await handleUpdateUser(userId, userData);
     await handleGetMyUsers();
   };
+  const onCreateUser = async (userData) => {
+    await handleCreateUser(userData);
+    await handleGetMyUsers();    
+  };
+  const handleCreateNewUser = ()=>{
+    setModal('יצירת משתמש', <CreateUser onCreateUser={onCreateUser} />)
+  }
   
   const columns = createColumns({
     handleUpdateUser,
@@ -196,26 +202,31 @@ const ListMyUsersPage = ({userData}) => {
   return (
     <Card>
           <CardHeader>
+            
             <CardTitle>משתמשים</CardTitle>
             <CardDescription>
               צפייה וניהול משתמשים
             </CardDescription>
+            <CardAction>
+              {
+                userData.isAdmin && (
+                  <Button variant="outline" className="flex items-center gap-2" onClick={handleCreateNewUser}>
+                    <PlusIcon className="size-4" />
+                    משתמש חדש
+                  </Button>
+                )
+              }
+            </CardAction>
           </CardHeader>
           <CardContent className="space-y-2">
-            
-            {(!userData.isAdmin && !userData.isSuperAdmin) && <div className="text-red-500">אינך מורשה לצפייה וניהול משתמשים</div>}
-            {(userData.isAdmin || userData.isSuperAdmin) && <div className="text-green-500">
-              אתה מורשה לצפייה וניהול משתמשים
-              <Button variant="outline" className="flex items-center gap-2">
-                <PlusIcon className="size-4" />
-                משתמש חדש
-              </Button>
-              </div>}
-              {(userData.isAdmin || userData.isSuperAdmin) && (
-                <div className="container mx-auto py-10">
+            {!userData.isAdmin && <Container className={`max-w-sm mx-auto`}>
+              <ErrorAlert message="אינך מורשה לצפייה וניהול משתמשים" />
+            </Container>}
+            {userData.isAdmin && (
+              <div className="container mx-auto py-10">
                 <DataTable columns={columns} data={users} />
-                </div>
-              )}
+              </div>
+            )}
           </CardContent>
         </Card>
   )

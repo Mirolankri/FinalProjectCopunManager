@@ -24,7 +24,7 @@ import ListMyUsersPage from './components/ListMyUsersPage'
 import ListAllUsersPage from './components/ListAllUsersPage'
 
 export default function Account() {
-  const { userData,user,loading } = useUser()
+  const { userData,user,loading } = useUser()  
   if(loading || !userData) return <Spinner/>
   
   return (

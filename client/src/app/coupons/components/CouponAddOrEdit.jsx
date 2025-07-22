@@ -16,8 +16,12 @@ import TextArea from '@/app/components/Elements/Forms/components/TextArea/TextAr
 import useCoupon from '../hooks/useCoupon';
 import Spinner from '@/app/components/Elements/Spinner/Spinner';
 import normalizeCoupon from '../helpers/normalization/normalizeCoupon';
+import { Banknote, Barcode, BarcodeIcon, CalendarCheck, ChartColumnStacked, Globe, LetterText, Percent, TicketPercent } from 'lucide-react';
+import { SelectSearch } from '@/app/components/Elements/Forms/components/Select/SelectSearch';
+import { Checkbox } from "@/components/ui/checkbox"
+import { Label } from "@/components/ui/label"
 
-export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
+export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,companies,categories}) {
   const { user } = useUser();
   const { value, handleChange, handleReset, validateForm, onSubmit,setData } = useForm(
     initialCouponAdd,
@@ -36,9 +40,11 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
       setData(normalizedCoupon);
     }
   }, []);
+  if(!companies || !categories) return <Spinner />;
   
   return (
     <Container>
+      
       <Form 
       title="" 
       SubmitButtonName={type === 'edit' ? 'עדכון' : 'הוספה'} 
@@ -56,7 +62,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<LockClosedIcon />}
+          Icon={<Barcode />}
           colSpan={2}
 
         />
@@ -70,9 +76,24 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<UserIcon />}
+          Icon={<TicketPercent />}
+          
         />
-        <Input 
+        <SelectSearch 
+          options={companies}
+          value={value.data.store}
+          onChange={(value, name) => handleChange({target: {value, name}})}
+          placeholder="בחר חנות"
+          searchPlaceholder="חפש חנות..."
+          emptyMessage="לא נמצאו חנות"
+          Icon={<ChartColumnStacked />}
+          name="store"
+          className="w-full"
+          label={'חברה'}
+          required={true}
+          allowCustomInput={true}
+        />
+        {/* <Input 
           variant="default"
           type="text"
           name="store"
@@ -82,9 +103,9 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<UserIcon />}
+         
 
-        />
+        /> */}
         <Input 
           variant="default"
           type="text"
@@ -94,10 +115,10 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<UserIcon />}
+          Icon={<Globe />}
 
         />
-        <Input 
+        {/* <Input 
           variant="default"
           type="text"
           name="category"
@@ -106,8 +127,22 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<PhoneIcon />}
+          Icon={<ChartColumnStacked />}
 
+        /> */}
+        <SelectSearch 
+          options={categories}
+          value={value.data.category}
+          onChange={(value, name) => handleChange({target: {value, name}})}
+          placeholder="בחר קטגוריה"
+          searchPlaceholder="חפש קטגוריה..."
+          emptyMessage="לא נמצאו קטגוריות"
+          Icon={<ChartColumnStacked />}
+          name="category"
+          className="w-full"
+          label={'קטגוריה'}
+          required={true}
+          allowCustomInput={true}
         />
         <Input 
           variant="default"
@@ -119,7 +154,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<PhoneIcon />}
+          Icon={<Banknote />}
 
         />
         <Input 
@@ -130,7 +165,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<LockClosedIcon />}
+          Icon={<Percent />}
         />
         <Input 
           variant="default"
@@ -140,7 +175,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<LockClosedIcon />}
+          Icon={<CalendarCheck />}
         />
         <TextArea 
           name="description"
@@ -148,13 +183,22 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type}) {
           onChange={handleChange}
           data={value.data}
           error={value.errors}
-          Icon={<LockClosedIcon />}
+          Icon={<LetterText />}
           colSpan={2}
         />
         {type === 'edit' && (
-          <>
-          סמן כשומש
-          </>
+          <div className="flex items-center space-x-2">
+          <Checkbox
+              id="used"
+              checked={value.data.used}
+              onCheckedChange={(checked) => {
+                return checked
+                  ? handleChange({target: {value: true, name: 'used'}})
+                  : handleChange({target: {value: false, name: 'used'}})
+              }}
+            />
+          <Label htmlFor="used">סמן קופון כמומש</Label>
+        </div>
           )}
       </Form>
       

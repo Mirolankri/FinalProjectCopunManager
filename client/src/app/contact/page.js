@@ -78,7 +78,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="font-semibold mb-2">אימייל</h3>
-                <p className="text-gray-600 text-sm">support@example.com</p>
+                <p className="text-gray-600 text-sm">support@Coupoint.me</p>
                 <p className="text-gray-500 text-sm mt-1">
                   זמן תגובה ממוצע: 24 שעות
                 </p>
@@ -93,7 +93,7 @@ export default function Contact() {
               </div>
               <div>
                 <h3 className="font-semibold mb-2">טלפון</h3>
-                <p className="text-gray-600 text-sm">03-1234567</p>
+                <p className="text-gray-600 text-sm">054-2412241</p>
                 <p className="text-gray-500 text-sm mt-1">
                   א'-ה' | 9:00-17:00
                 </p>
@@ -187,14 +187,6 @@ export default function Contact() {
               )}
             </Button>
           </form>
-        </div>
-        <div className="mt-12 text-center text-gray-600">
-          <p className="mb-4">
-            מוזמנים גם לעקוב אחרינו ברשתות החברתיות
-          </p>
-          <div className="flex justify-center gap-4">
-            {/* כאן אפשר להוסיף אייקונים של רשתות חברתיות */}
-          </div>
         </div>
       </div>
     </div>

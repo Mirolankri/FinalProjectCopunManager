@@ -20,11 +20,14 @@ const geistMono = Geist_Mono({
 export const metadata = {
   title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
   description: "קופונים? רק עם נקודת שליטה.",
+  icons: {
+    icon: "/favicon.svg",
+  }
 };
 
 export default function RootLayout({ children }) {
   return (
-    <html lang="he" className="h-full " dir="rtl">
+    <html lang="he" className="h-full" dir="rtl">
       <body
         className={`${geistSans.variable} ${geistMono.variable} antialiased h-full`}
       >
@@ -39,6 +42,7 @@ export default function RootLayout({ children }) {
             </ModalProvider>
           </UserProvider>
         </AlertProvider>
+        <script src="https://website-widgets.pages.dev/dist/sienna.min.js" defer></script>
       </body>
     </html>
   );
