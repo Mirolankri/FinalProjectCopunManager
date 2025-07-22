@@ -5,7 +5,7 @@ const Coupons = ({view,coupons, onDelete, onEdit, onShare, companies, categories
   
   return (
     <div className={view === 'grid' ? 'grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4' : 'flex flex-col gap-4'}>
-        {coupons.map(coupon => (
+        {coupons?.map(coupon => (
             <CouponCard
                 key={coupon._id}
                 coupon={coupon}

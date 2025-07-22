@@ -13,18 +13,29 @@ import { ShowFavorite } from './Layout/Filters/ShowFavorite'
 const CouponPage = ({isLoading, coupons, error,onDelete,onEdit,onShare,companies,categories,onMarkUsed_UnUsed,onFavorite}) => {
     const [view, setView] = useState('grid');
     const [filteredCoupons, setFilteredCoupons] = useState(coupons);
+    const [showFavoriteOnly, setShowFavoriteOnly] = useState(false);
+    
+    useEffect(() => {
+        if (showFavoriteOnly) {
+            setFilteredCoupons(coupons?.filter(coupon => coupon.favorite) || []);
+        } else {
+            setFilteredCoupons(coupons);
+        }
+    }, [coupons, showFavoriteOnly]);
+
     useEffect(() => {
         const GetViewFromLocalStorage = GetValueLocalStorage('view');
         if (GetViewFromLocalStorage) {
             setView(GetViewFromLocalStorage);
         }
+        
     }, []);
     const HandleViewChange = (view) => {
         setView(view);
         SetValueLocalStorage('view', view);
     };
     const HandleShowFavorite = (showFavorite) => {
-        
+        setShowFavoriteOnly(showFavorite);
     };
     if (isLoading) return <Spinner/>
     if (error) return <ErrorPage error={error.message}/>
@@ -42,7 +53,7 @@ const CouponPage = ({isLoading, coupons, error,onDelete,onEdit,onShare,companies
         </div>
         <Coupons
             view={view}
-            coupons={coupons}
+            coupons={filteredCoupons}
             onDelete={onDelete}
             onEdit={onEdit}
             onShare={onShare}
