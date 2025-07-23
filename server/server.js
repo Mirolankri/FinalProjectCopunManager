@@ -25,7 +25,8 @@ app.use(router);
 app.listen(PORT, async () => {
     console.log(chalk.bgGreen(`Server Listening on: ${API_URL}:${PORT}`));
     connectToDB(ENV);
-    await loadInitialData();
+    if(ENV === 'development'){
+        await loadInitialData();
+    }
     // await updateUsersActiveField();
-    // await generateInitialCards();
 });

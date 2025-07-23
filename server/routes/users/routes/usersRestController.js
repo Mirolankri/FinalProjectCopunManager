@@ -75,11 +75,10 @@ router.delete('/:userId',auth, async(req, res) => {
         if(userId === user._id) throw new Error('אתה לא יכול למחוק את עצמך');
         const GetMeData = await GetMe({userId});        
         if(!GetMeData) throw new Error('משתמש לא נמצא');
-        console.log("user._id", user._id);
-        console.log("GetMeData.parentId", GetMeData.parentuserId);
         
-        if(GetMeData.parentuserId !== user._id) throw new Error('אתה לא יכול למחוק את המשתמש');
-
+        if(!user.isSuperAdmin) {
+            if(GetMeData.parentuserId !== user._id) throw new Error('אתה לא יכול למחוק את המשתמש');
+        }
         const deletedUser = await DeleteUser(userId);
         return res.status(200).send(deletedUser);
     } catch (error) {
