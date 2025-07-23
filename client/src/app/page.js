@@ -1,13 +1,29 @@
 'use client'
-import { motion } from "framer-motion";
+import { motion, useInView } from "framer-motion";
+import { useUser } from '@/app/components/providers/UserProvider';
+
 import Button from "./components/Elements/Button/Index";
 import Link from "next/link";
 import { ArrowLeftIcon, ChartPieIcon, CheckIcon, GiftIcon, ShareIcon } from "@heroicons/react/24/outline";
+import { useRef } from "react";
 
 export default function Home() {
+    const {user} = useUser();
+    const HeroRef = useRef(null);
+    const HeroInView = useInView(HeroRef, { once: true, threshold: 0.1 });
+    const FutureRef1 = useRef(null);
+    const FutureInView1 = useInView(FutureRef1, { once: true, threshold: 0.1 });
+    const FutureRef2 = useRef(null);
+    const FutureInView2 = useInView(FutureRef2, { once: true, threshold: 0.1 });
   return (
     <div className="min-h-screen">
       {/* Hero Section */}
+      <motion.div
+        ref={HeroRef}
+        initial={{ opacity: 0, y: 50 }}
+        animate={HeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+        transition={{ duration: 0.6, ease: "easeOut" }}
+      >
       <div className="bg-gradient-to-r from-gray-500 to-gray-700 text-white py-20 rounded-xl">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
@@ -18,7 +34,7 @@ export default function Home() {
             לעולם לא תפספס עוד שובר או תאריך תפוגה!
           </p>
           <div className="max-w-2xs mx-auto">
-            <Link href="/auth/login">
+            <Link href={`${user ? '/coupons' : '/auth/login'}`}>
               <Button variant="outline" className="bg-white text-blue-600 hover:bg-blue-50">
                 התחל עכשיו
                 <ArrowLeftIcon className="mr-2 w-5 h-5" />
@@ -27,12 +43,19 @@ export default function Home() {
           </div>
         </div>
       </div>
+      </motion.div>
 
       {/* Features Section */}
       <div className="py-20 ">
         <div className="container mx-auto px-4">
           <h2 className="text-3xl font-bold text-center mb-12">תכונות מרכזיות</h2>
           <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
+            <motion.div
+              ref={FutureRef1}
+              initial={{ opacity: 0, y: 50 }}
+              animate={FutureInView1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
               <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <GiftIcon className="w-6 h-6" />
@@ -42,7 +65,14 @@ export default function Home() {
                 נהל את כל השוברים והקופונים שלך במקום אחד. הוסף, ערוך ועקוב אחר תאריכי תפוגה בקלות.
               </p>
             </div>
-            
+            </motion.div>
+            <motion.div
+              ref={FutureRef2}
+              initial={{ opacity: 0, y: 50 }}
+              animate={FutureInView2 ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+
+            >
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
               <div className="w-12 h-12 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center mb-4">
                 <ShareIcon className="w-6 h-6" />
@@ -52,6 +82,7 @@ export default function Home() {
                 שתף שוברים עם משפחה וחברים בקלות. מערכת שיתוף מתקדמת עם אפשרות לאישור ומעקב.
               </p>
             </div>
+            </motion.div>
             
             {/* <div className="bg-white p-6 rounded-xl shadow-sm">
               <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4">
@@ -118,7 +149,7 @@ export default function Home() {
             הצטרף לאלף משתמשים שכבר מנהלים את השוברים שלהם בצורה חכמה יותר
           </p>
           <div className="max-w-2xs mx-auto">
-            <Link href="/auth/login">
+            <Link href={`${user ? '/coupons' : '/auth/login'}`}>
               <Button size="lg" className="bg-blue-600 text-white hover:bg-blue-700">
                 התחל להשתמש חינם
                 <ArrowLeftIcon className="mr-2 w-5 h-5" />

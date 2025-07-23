@@ -5,6 +5,7 @@ import {  GiftIcon } from "lucide-react";
 import { Input } from "@/components/ui/input";
 import { Button } from "@/components/ui/button";
 import Link from "next/link";
+import { Subscription } from "./Subscription";
 
 const FooterData = {
     logo : <GiftIcon />,
@@ -53,12 +54,9 @@ export default function FooterSection() {
               <div className="flex items-center gap-2">
                 <h3 className="text-xl font-bold">הישאר מעודכן</h3>
               </div>
-              <div className="flex w-full max-w-md items-center gap-2">
-                <Input type="email" placeholder="דואר אלקטרוני" />
-                <Button type="submit" variant="outline">
-                  הרשם
-                </Button>
-              </div>
+              
+                <Subscription/>
+              
             </FooterColumn>
           </FooterContent>
           <FooterBottom>
