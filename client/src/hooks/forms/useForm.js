@@ -22,9 +22,7 @@ const useForm = (initialForm, schema, handleSubmit) => {
       );
     
       const handleChange = useCallback(
-        ({ target }) => {
-          console.log("target", target);
-          
+        ({ target }) => {          
           const { name, value } = target;
           
           const errorMessage = validateProperty(target);          

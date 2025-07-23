@@ -1,6 +1,6 @@
 'use client'
-import { useUser } from "@/app/components/providers/UserProvider"
 import { useCallback, useEffect, useMemo, useState } from "react";
+import { useUser } from "@/app/components/providers/UserProvider"
 import CouponService from "../services/apiService";
 import useAxios from "@/hooks/Axios/useAxios";
 import normalizeCoupon from "../helpers/normalization/normalizeCoupon";
@@ -27,7 +27,7 @@ const useCoupon = () => {
 
     useEffect(()=>{
       if (coupons) {
-        const filtered = coupons.filter(coupon => coupon.name.includes(query) || String(coupon.code).includes(query));
+        const filtered = coupons.filter(coupon => coupon.name.toLowerCase().includes(query.toLowerCase()) || String(coupon.code).toLowerCase().includes(query.toLowerCase()) || String(coupon.description).toLowerCase().includes(query.toLowerCase()) || String(coupon.categoryName).toLowerCase().includes(query.toLowerCase()) || String(coupon.storeName).toLowerCase().includes(query.toLowerCase()));
         const sorted = [...filtered].sort((a, b) => {
           if (a.used && !b.used) return 1;
           if (!a.used && b.used) return -1;
@@ -118,20 +118,16 @@ const useCoupon = () => {
       }, []);
       const handleMarkUsed_UnUsed = useCallback(async (couponId) => {
         try {
-          // setLoading(true);
           const updatedCoupon = await CouponInstance.MarkUsed_UnUsed(couponId);
           requestStatus(false, null, null, updatedCoupon);
-          // AlertInstance("SUCCESS", "קופון עודכן בהצלחה");
         } catch (errorMessage) {
           requestStatus(false, errorMessage.response.data || 'שגיאה בעדכון קופון', null);
         }
       }, []);
       const handleMarkFavorite_UnFavorite = useCallback(async (couponId) => {
         try {
-          // setLoading(true);
           const updatedCoupon = await CouponInstance.MarkFavorite_UnFavorite(couponId);
           requestStatus(false, null, null, updatedCoupon);
-          // AlertInstance("SUCCESS", "קופון עודכן בהצלחה");
         } catch (errorMessage) {
           requestStatus(false, errorMessage.response.data || 'שגיאה בעדכון קופון', null);
         }

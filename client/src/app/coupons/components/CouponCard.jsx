@@ -2,8 +2,7 @@
 import React from "react";
 import { format } from "date-fns";
 import Badge from "@/app/components/Elements/Badge/Badge";
-import Button from "@/app/components/Elements/Button/Index";
-import { ArrowTopRightOnSquareIcon, BuildingStorefrontIcon, CalendarIcon, ClockIcon, CreditCardIcon, PencilIcon, ShareIcon, TagIcon, TrashIcon } from "@heroicons/react/24/outline";
+import {  BuildingStorefrontIcon, CalendarIcon, ClockIcon, CreditCardIcon, PencilIcon, ShareIcon, TagIcon, TrashIcon } from "@heroicons/react/24/outline";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";
 import ToolTip from "@/app/components/Elements/ToolTip/Index";
 import { useModal } from "@/providers/ModalProvider/ModalProvider";
@@ -11,14 +10,12 @@ import CouponDelete from "./CouponDelete";
 import CouponShare from "./CouponShare";
 import { copyToClipboard } from "@/helpers/Clipboard/copyToClipboard";
 import { useUser } from "@/app/components/providers/UserProvider";
-import { ShortString } from "@/helpers/Strings/StringsHelpers";
 import { CouponDescription } from "./coupon/CouponDescription";
-import { Barcode, Clipboard, ScanQrCode, Star } from "lucide-react";
+import { Barcode, Clipboard, ScanQrCode } from "lucide-react";
 import QrCodeModal from "./coupon/QrCodeModal";
 import BarcodeModal from "./coupon/BarcodeModal";
 import MarkUsed from "./coupon/MarkUsed";
 import MarkFavorite from "./coupon/MarkFavorite";
-import Link from "next/link";
 import { CouponAction } from "./coupon/CouponAction";
 import { CouponWebSite } from "./coupon/CouponWebSite";
 
@@ -199,7 +196,9 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare, companie
                     </Badge>
                     </ToolTip>
                 )}
-                <MarkFavorite coupon={coupon} onFavorite={onFavorite} />
+                {user && 
+                  <MarkFavorite coupon={coupon} onFavorite={onFavorite} />
+                }
                 </div>
               </div>
           </div>

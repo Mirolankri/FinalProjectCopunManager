@@ -1,8 +1,6 @@
+const copyToClipboard = (code, AlertInstance) => {
+  navigator.clipboard.writeText(code);
+  AlertInstance("SUCCESS", "הקוד הועתק ללוח");
+};
 
-const copyToClipboard = (code,AlertInstance) => {
-    navigator.clipboard.writeText(code);
-    AlertInstance("SUCCESS", "הקוד הועתק ללוח");
-  };
-
-  export { copyToClipboard };
-
+export { copyToClipboard };

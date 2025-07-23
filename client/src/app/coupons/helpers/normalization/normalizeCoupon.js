@@ -10,7 +10,6 @@ const normalizeCoupon = (coupon) => {
         used: coupon.used,
         website: coupon.website,
         expiryDate: coupon.expiryDate
-        // userId: coupon.userId
     }
 }
 

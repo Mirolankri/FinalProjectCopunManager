@@ -27,9 +27,6 @@ import {
   DropdownMenuSubTrigger,
   DropdownMenuTrigger,
 } from "@/components/ui/dropdown-menu"
-import { Checkbox } from "@/components/ui/checkbox"
-import { labels, roles } from '@/app/components/Elements/Table/DataTable/data'
-import { DatePicker } from '@/app/components/Elements/DatePicker'
 import useUsers from '@/hooks/users/useUsers'
 import Spinner from '@/app/components/Elements/Spinner/Spinner'
 import { Badge } from '@/components/ui/badge'
@@ -102,9 +99,7 @@ const createColumns = (userActions) => [
     accessorKey: "name",
     header: () => <div className="text-right">שם מלא</div>,
     cell: ({ row }) => {
-      // const name = row.getValue("name")
-      const {first,last} = row.original.name
- 
+      const {first,last} = row.original.name 
       return <div className="text-right font-medium">{first} {last}</div>
     },
   },
@@ -113,7 +108,6 @@ const createColumns = (userActions) => [
     header: () => <div className="text-right">טלפון</div>,
     cell: ({ row }) => {
       const phone = row.getValue("phone")
- 
       return <div className="text-right font-medium">{phone}</div>
     },
   },
@@ -122,7 +116,6 @@ const createColumns = (userActions) => [
     header: () => <div className="text-right">Email</div>,
     cell: ({ row }) => {
       const email = row.getValue("email")
- 
       return <div className="text-right font-medium">{email}</div>
     },
   },
@@ -159,7 +152,6 @@ const createColumns = (userActions) => [
       </div>
     },
     filterFn: (row, id, value) => {
-      // המרת הערך הבוליאני למחרוזת לצורך הפילטר
       const rowValue = String(row.getValue(id));
       return value.includes(rowValue);
     },
@@ -167,7 +159,7 @@ const createColumns = (userActions) => [
 ]
 const ListMyUsersPage = ({userData}) => {
   const AlertInstance = useAlert();
-  const {setModal,closeModal} = useModal();
+  const {setModal} = useModal();
   const { value,handleGetMyUsers, handleUpdateUser, handleMakeAdmin, handleDeleteUser,handleCreateUser } = useUsers();
   const { isLoading, error, users } = value;
 
@@ -181,7 +173,7 @@ const ListMyUsersPage = ({userData}) => {
   };
   const handleCreateNewUser = ()=>{
     setModal('יצירת משתמש', <CreateUser onCreateUser={onCreateUser} />)
-  }
+  };
   
   const columns = createColumns({
     handleUpdateUser,
@@ -194,41 +186,38 @@ const ListMyUsersPage = ({userData}) => {
     onEditUser
   });  
   useEffect(() => {
-    // setTimeout(() => {
       handleGetMyUsers();
-    // }, 5000);
   }, []);
   if(isLoading) return <Spinner/>
   return (
     <Card>
-          <CardHeader>
-            
-            <CardTitle>משתמשים</CardTitle>
-            <CardDescription>
-              צפייה וניהול משתמשים
-            </CardDescription>
-            <CardAction>
-              {
-                userData.isAdmin && (
-                  <Button variant="outline" className="flex items-center gap-2" onClick={handleCreateNewUser}>
-                    <PlusIcon className="size-4" />
-                    משתמש חדש
-                  </Button>
-                )
-              }
-            </CardAction>
-          </CardHeader>
-          <CardContent className="space-y-2">
-            {!userData.isAdmin && <Container className={`max-w-sm mx-auto`}>
-              <ErrorAlert message="אינך מורשה לצפייה וניהול משתמשים" />
-            </Container>}
-            {userData.isAdmin && (
-              <div className="container mx-auto py-10">
-                <DataTable columns={columns} data={users} />
-              </div>
-            )}
-          </CardContent>
-        </Card>
+      <CardHeader>
+        <CardTitle>משתמשים</CardTitle>
+        <CardDescription>
+          צפייה וניהול משתמשים
+        </CardDescription>
+        <CardAction>
+          {
+            userData.isAdmin && (
+              <Button variant="outline" className="flex items-center gap-2" onClick={handleCreateNewUser}>
+                <PlusIcon className="size-4" />
+                משתמש חדש
+              </Button>
+            )
+          }
+        </CardAction>
+      </CardHeader>
+      <CardContent className="space-y-2">
+        {!userData.isAdmin && <Container className={`max-w-sm mx-auto`}>
+          <ErrorAlert message="אינך מורשה לצפייה וניהול משתמשים" />
+        </Container>}
+        {userData.isAdmin && (
+          <div className="container mx-auto py-10">
+            <DataTable columns={columns} data={users} />
+          </div>
+        )}
+      </CardContent>
+    </Card>
   )
 }
 

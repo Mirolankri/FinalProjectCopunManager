@@ -2,8 +2,6 @@
 import { Footer, FooterBottom, FooterColumn, FooterContent } from "@/components/ui/footer";
 import { cn } from "@/lib/utils";
 import {  GiftIcon } from "lucide-react";
-import { Input } from "@/components/ui/input";
-import { Button } from "@/components/ui/button";
 import Link from "next/link";
 import { Subscription } from "./Subscription";
 

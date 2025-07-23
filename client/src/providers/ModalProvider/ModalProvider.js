@@ -12,19 +12,6 @@ export const ModalProvider = ({ children }) => {
   const [modalMessage, setModalMessage] = useState("in snackbar!");
   const [modalBody, setModalBody] = useState(null);
   const [modalTitle, setModalTitle] = useState("");
-  const [autoHideDuration, setAutoHideDuration] = useState(5000);
-
-  // useEffect(() => {
-  //   let timer;
-  //   if (isSnackOpen && autoHideDuration) {
-  //     timer = setTimeout(() => {
-  //       setOpenSnack(false);
-  //     }, autoHideDuration);
-  //   }
-  //   return () => {
-  //     clearTimeout(timer);
-  //   };
-  // }, [isSnackOpen, autoHideDuration]);
 
   useEffect(() => {
     if (isModalOpen) {

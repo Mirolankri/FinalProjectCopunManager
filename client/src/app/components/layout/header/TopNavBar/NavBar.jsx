@@ -14,16 +14,16 @@ import { DropdownMenu, DropdownMenuContent, DropdownMenuItem, DropdownMenuLabel,
 
 export const NavBar = () => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
-  const [dropdownOpen, setDropdownOpen] = useState(false)
-  const { user, loading,setToken,setUser,userData } = useUser();
+  const { user, loading,userData,handleLogout } = useUser();
 
-  const handleLogout = useCallback(() => {
-    removeToken();
-    setToken(null);
-    setUser(null);
-  }, [setUser]);
+  
+  const logoutItem = userNavigation.find(item => item.key === 'logout');
+  if (logoutItem) {
+    logoutItem.onClick = handleLogout;
+  }
 
-  userNavigation[2].onClick = handleLogout;
+
+
 
 
   return (
@@ -58,21 +58,7 @@ export const NavBar = () => {
                   </div>
                   <Search />
                   <div className="mr-4 flex items-center space-x-4">
-                    {false && userNavigation.map((item) => {
-                      if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
-                      if(item.requiredLogin && !user) return null;
-                      if(!item.requiredLogin && user) return null;
-                      return(
-                      <Link
-                        key={item.key}
-                        href={item.href}
-                        className={` rounded-md px-3  text-center py-2 text-sm font-medium ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
-                        aria-current={item.current ? 'page' : undefined}
-                        onClick={item.onClick}
-                      >
-                        {item.name}
-                      </Link>
-                    )})}
+                    
                   </div>
                 </div>
                 
@@ -84,12 +70,6 @@ export const NavBar = () => {
             {/* user profile */}
             <div className="">
               <div className="ml-4 flex items-center md:ml-6">
-                <button type="button" className="hidden cursor-pointer relative rounded-full bg-gray-800 p-1 text-gray-400 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden">
-                  <span className="absolute -inset-1.5"></span>
-                  <span className="sr-only">View notifications</span>
-                  <BellIcon className="size-6 text-white" />
-                </button>
-
                 {/* <!-- Profile dropdown --> */}
                 <div className="relative ml-3">
                   <div className='hidden md:block'>
@@ -147,20 +127,20 @@ export const NavBar = () => {
           <div className="bg-gray-600">
             <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
               {navigation.map((item) => {
-                if(!item.ShowInMenu) return null;
-                if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
-                if(item.requiredLogin && !user) return null;
-                
-                return(
-                <Link 
-                  key={item.name} 
-                  href={item.href} 
-                  onClick={() => setMobileMenuOpen(false)} 
-                  className={`${item.requiredLogin ? 'hidden' : 'block'} block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white`} 
-                  aria-current={item.current ? 'page' : undefined}>
-                    {item.name}
-                </Link>
-              )})}
+                      if(!item.ShowInMenu) return null;
+                      if(loading) return <Skeleton key={item.key} className={`h-5 w-16 px-3 py-2`} />
+                      if(item.requiredLogin && !user) return null;
+                    
+                    return(
+                      <Link
+                        key={item.key}
+                        href={item.href}
+                        className={`block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
+                        aria-current={item.current ? 'page' : undefined}
+                      >
+                        {item.name}
+                      </Link>
+                    )})}
             </div>
             <div className="border-t border-gray-700 pt-4 pb-3">
               <div className="space-y-1 px-2">
@@ -181,7 +161,7 @@ export const NavBar = () => {
                       >
                         {item.name}
                       </Link>
-                    )})}
+                )})}
               
               </div>
             </div>

@@ -44,7 +44,6 @@ export const AlertProvider = ({ children }) => {
       <AlertContext.Provider value={setSnack}>
         {children}
       </AlertContext.Provider>
-      {/* <Toaster /> */}
     </>
   );
 };

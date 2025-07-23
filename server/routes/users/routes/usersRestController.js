@@ -35,11 +35,20 @@ router.get('/me',auth, async(req, res) => {
 });
 router.get('/my-users',auth, async(req, res) => {
     try {
+        let UsersData = [];
         const user = req.user;
         if(!user) throw new Error('משתמש לא נמצא');
         if(!user.isAdmin) throw new Error('אתה לא מורשה');
-        const GetMyUsersData = await GetMyUsers({userId: user._id});
-        return res.status(200).send(GetMyUsersData);
+
+        if(user.isSuperAdmin && user.isAdmin) UsersData = await GetAllUsers();
+        if(!user.isSuperAdmin && user.isAdmin){
+            const GetMeData = await GetMe({userId: user._id});
+            if(!GetMeData) throw new Error('משתמש לא נמצא');
+    
+            UsersData = await GetMyUsers({userId: GetMeData.parentuserId});
+        }
+
+        return res.status(200).send(UsersData);
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
     }
@@ -79,11 +88,14 @@ router.delete('/:userId',auth, async(req, res) => {
 });
 router.post('/',auth, async(req, res) => {
     try {
-        const user = req.user;
+        const user = req.user;        
         let userData = req.body;
         if(!user) throw new Error('משתמש לא נמצא');
         if(!user.isAdmin) throw new Error('אתה לא מורשה');
-        userData.parentuserId = user._id;
+        const GetMeData = await GetMe({userId: user._id});
+        if(!GetMeData) throw new Error('משתמש לא נמצא');
+
+        userData.parentuserId = GetMeData.parentuserId;
         const { error } = validateRegistration(userData);
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
         userData = normalizeUser(userData);

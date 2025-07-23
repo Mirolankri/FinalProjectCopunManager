@@ -1,24 +1,29 @@
-'use client'
-import React, { useState } from 'react'
-import Button from '../components/Elements/Button/Index';
-import { EnvelopeIcon, MapPinIcon, PaperClipIcon, PhoneIcon } from '@heroicons/react/24/outline';
-import Input from '../components/Elements/Forms/components/Input/Input';
-import TextArea from '../components/Elements/Forms/components/TextArea/TextArea';
+"use client";
+import React, { useState } from "react";
+import {
+  EnvelopeIcon,
+  MapPinIcon,
+  PaperClipIcon,
+  PhoneIcon,
+} from "@heroicons/react/24/outline";
+import Input from "../components/Elements/Forms/components/Input/Input";
+import TextArea from "../components/Elements/Forms/components/TextArea/TextArea";
+import Button from "../components/Elements/Button/Index";
 
 export default function Contact() {
   const [formData, setFormData] = useState({
     name: "",
     email: "",
     subject: "",
-    message: ""
+    message: "",
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
 
   const handleChange = (e) => {
     const { name, value } = e.target;
-    setFormData(prev => ({
+    setFormData((prev) => ({
       ...prev,
-      [name]: value
+      [name]: value,
     }));
   };
 
@@ -37,7 +42,7 @@ export default function Contact() {
           
           הודעה:
           ${formData.message}
-        `
+        `,
       });
 
       toast({
@@ -48,7 +53,7 @@ export default function Contact() {
         name: "",
         email: "",
         subject: "",
-        message: ""
+        message: "",
       });
     } catch (error) {
       console.error("Error sending message:", error);
@@ -71,8 +76,8 @@ export default function Contact() {
         </div>
 
         <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
-          <div className="flex items-start gap-4">
+          <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
+            <div className="flex items-start gap-4">
               <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
                 <EnvelopeIcon className="w-5 h-5" />
               </div>
@@ -94,9 +99,7 @@ export default function Contact() {
               <div>
                 <h3 className="font-semibold mb-2">טלפון</h3>
                 <p className="text-gray-600 text-sm">054-2412241</p>
-                <p className="text-gray-500 text-sm mt-1">
-                  א'-ה' | 9:00-17:00
-                </p>
+                <p className="text-gray-500 text-sm mt-1">א'-ה' | 9:00-17:00</p>
               </div>
             </div>
           </div>
@@ -109,16 +112,14 @@ export default function Contact() {
               <div>
                 <h3 className="font-semibold mb-2">כתובת</h3>
                 <p className="text-gray-600 text-sm">רחוב הברזל 1, תל אביב</p>
-                <p className="text-gray-500 text-sm mt-1">
-                  קומה 4,משרד 405
-                </p>
+                <p className="text-gray-500 text-sm mt-1">קומה 4,משרד 405</p>
               </div>
             </div>
           </div>
         </div>
 
         <div className="bg-white p-6 rounded-xl shadow-sm">
-        <form onSubmit={handleSubmit} className="p-6 space-y-6">
+          <form onSubmit={handleSubmit} className="p-6 space-y-6">
             <div className="space-y-2">
               <label className="text-sm font-medium">שם מלא</label>
               <Input
@@ -169,8 +170,8 @@ export default function Contact() {
               />
             </div>
 
-            <Button 
-              type="submit" 
+            <Button
+              type="submit"
               className="w-full bg-blue-600 hover:bg-blue-700"
               disabled={isSubmitting}
             >

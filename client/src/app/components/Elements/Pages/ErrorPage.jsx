@@ -1,13 +1,13 @@
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import React from 'react'
+import React from "react";
+import { OctagonX } from "lucide-react";
 
-const ErrorPage = ({error}) => {
+const ErrorPage = ({ error }) => {
   return (
-    <div className='flex items-center justify-center h-dvw text-2xl gap-2'>
-        {error}
-        <MagnifyingGlassIcon className="size-7" />
-        </div>
-  )
-}
+    <div className="flex items-center justify-center h-full text-2xl gap-2">
+      {error}
+      <OctagonX className="size-7" />
+    </div>
+  );
+};
 
-export default ErrorPage
+export default ErrorPage;

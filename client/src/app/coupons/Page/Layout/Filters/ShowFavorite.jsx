@@ -1,8 +1,7 @@
 'use client'
 
-import React, { useState, useEffect } from 'react'
+import React, { useState } from 'react'
 import { Star } from 'lucide-react'
-import { GetValueLocalStorage, SetValueLocalStorage } from '@/app/services/localStorageService'
 
 export const ShowFavorite = ({onShowFavorite}) => {
   const [showFavorite, setShowFavorite] = useState(false);

@@ -1,6 +1,5 @@
 'use client'
 import axios from 'axios'
-// axios.defaults.withCredentials = true;
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 

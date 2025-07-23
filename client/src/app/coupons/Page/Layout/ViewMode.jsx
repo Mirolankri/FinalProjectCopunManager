@@ -1,3 +1,4 @@
+'use client'
 import { IconButton } from "@/components/animate-ui/buttons/icon";
 import { AlignJustify, LayoutGrid } from "lucide-react";
 import React from "react";

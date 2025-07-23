@@ -1,4 +1,3 @@
-import { Table } from "@tanstack/react-table"
 import {
   ChevronLeft,
   ChevronRight,
@@ -17,7 +16,6 @@ import { Button } from "@/components/ui/button"
 
 
 export function DataTablePagination({table}) {
-// check if column "select" exists
   const columns = table.getAllColumns();
   const hasSelectColumn = columns.some(column => column.id === "select");
   

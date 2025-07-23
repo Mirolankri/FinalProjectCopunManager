@@ -1,5 +1,5 @@
 "use client"
-import React from "react"
+import React, { useState } from "react"
 
 import {
   ColumnDef,
@@ -8,16 +8,9 @@ import {
   getFilteredRowModel,
   getCoreRowModel,
   getPaginationRowModel,
-  useReactTable,
-  VisibilityState
+  useReactTable
 } from "@tanstack/react-table"
 
-import {
-    DropdownMenu,
-    DropdownMenuCheckboxItem,
-    DropdownMenuContent,
-    DropdownMenuTrigger,
-  } from "@/components/ui/dropdown-menu"
 import {
   Table,
   TableBody,
@@ -26,19 +19,18 @@ import {
   TableHeader,
   TableRow,
 } from "@/components/ui/table"
-import { Button } from "@/components/ui/button"
 import { Input } from "@/components/ui/input"
 import { DataTablePagination } from "./DataTablePagination"
 import { DataTableViewOptions } from "./DataTableViewOptions"
 import { DataTableFacetedFilter } from "./data-table-faceted-filter"
-import { statuses,labels, activeStatuses } from "./data"
+import { activeStatuses } from "./data"
 
 
 
 export function DataTable({columns,data}) {
-  const [columnFilters, setColumnFilters] = React.useState([])
-  const [columnVisibility, setColumnVisibility] = React.useState({})
-  const [rowSelection, setRowSelection] = React.useState({})
+  const [columnFilters, setColumnFilters] = useState([])
+  const [columnVisibility, setColumnVisibility] = useState({})
+  const [rowSelection, setRowSelection] = useState({})
 
   const table = useReactTable({
     data,

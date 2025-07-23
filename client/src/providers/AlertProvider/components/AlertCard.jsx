@@ -31,13 +31,6 @@ function AlertCard({ type, message }) {
     }
   }, [type, message]);
 
-  // return toast("Event has been created", {
-  //   description: "Sunday, December 03, 2023 at 9:00 AM",
-  //   action: {
-  //     label: "Undo",
-  //     onClick: () => console.log("Undo"),
-  //   },
-  // })
   return (
     <motion.div 
     initial={{ y: -30, opacity: 0 }}
@@ -48,8 +41,6 @@ function AlertCard({ type, message }) {
       type: "spring",
       stiffness: 150
     }}
-
-    // exit={{ y: 300, opacity: 0 }}
     className={`fixed w-full z-[1000] mt-8 flex justify-center`}
   >
     <div className={`w-fit rounded-lg p-3 ${bgColor}`}>

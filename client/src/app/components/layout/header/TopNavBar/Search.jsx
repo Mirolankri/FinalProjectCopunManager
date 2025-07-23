@@ -1,54 +1,43 @@
-'use client'
-import React, { useState } from 'react'
-import Input from '@/app/components/Elements/Forms/components/Input/Input'
-import { useUser } from '@/app/components/providers/UserProvider';
-import { MagnifyingGlassIcon } from '@heroicons/react/24/outline'
-import { usePathname, useRouter, useSearchParams } from 'next/navigation';
+"use client";
+import React from "react";
+import { useUser } from "@/app/components/providers/UserProvider";
+import { usePathname, useRouter, useSearchParams } from "next/navigation";
+import { Input } from "@/components/ui/input";
+import { Search as SearchIcon } from "lucide-react";
 
 const Search = () => {
-    // const [search, setSearch] = useState('');
-    const router = useRouter();
-    const searchParams = useSearchParams()
-    const pathname = usePathname();
-    const handleChange = ({target}) => {
-        const ValueParams = target.value;        
-        if(ValueParams === ''){
-            const params = new URLSearchParams(searchParams.toString())
-            params.delete('q')
-            return router.push(`${pathname}`)
-        }
-        const params = new URLSearchParams(searchParams.toString())
-        params.set('q', ValueParams)
-        router.push(`/coupons?${params.toString()}`)
+  const router = useRouter();
+  const searchParams = useSearchParams();
+  const pathname = usePathname();
+  const { user } = useUser();
+
+  const handleChange = ({ target }) => {
+    const ValueParams = target.value;
+    if (ValueParams === "") {
+      const params = new URLSearchParams(searchParams.toString());
+      params.delete("q");
+      return router.push(`${pathname}`);
     }
-  
-    const { user } = useUser();
-    if(!user) return null;
+    const params = new URLSearchParams(searchParams.toString());
+    params.set("q", ValueParams);
+    router.push(`/coupons?${params.toString()}`);
+  };
+
+  if (!user) return null;
   return (
     <div className=" mr-4 flex items-center space-x-4">
-      <div className="">
-        <div className={` outline-gray-300 flex items-center rounded-md bg-white pl-3 outline-1 -outline-offset-1  has-[input:focus-within]:outline-2 has-[input:focus-within]:-outline-offset-2 has-[input:focus-within]:outline-gray-600`}>
-          <div className="mr-2 shrink-0 text-base text-gray-500 select-none sm:text-sm/6 size-5">
-            <MagnifyingGlassIcon className="size-5" />
-          </div>
-         
-
-          <input
-            id="search"
-            name="search"
-            type="text"
-            // value={searchParams.get('q') ?? ''}
-            onChange={ handleChange }
-            autoComplete='off'
-            placeholder="חיפוש"
-            className="block min-w-0 w-1/2 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
-            />
-          
-        </div>
-        
+      <div className="relative">
+        <Input
+          onChange={handleChange}
+          type="text"
+          placeholder="חיפוש"
+          autoComplete="off"
+          className="pr-10 bg-white"
+        />
+        <SearchIcon className="absolute top-1/2 right-3 -translate-y-1/2 h-4 w-4 text-gray-400" />
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Search
+export default Search;

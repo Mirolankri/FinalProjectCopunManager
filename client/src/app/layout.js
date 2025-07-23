@@ -22,7 +22,23 @@ export const metadata = {
   description: "קופונים? רק עם נקודת שליטה.",
   icons: {
     icon: "/favicon.svg",
-  }
+    apple: "/public/assets/icons/apple-touch-icon.png",
+  },
+  openGraph: {
+    title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
+    description: "קופונים? רק עם נקודת שליטה.",
+    url: "https://Coupoint.me",
+    siteName: "CouPoint",
+    images: [
+      {
+        url: "/public/assets/icons/apple-touch-icon.png",
+        width: 1200,
+        height: 630,
+      },
+    ],
+    locale: "he_IL",
+    type: "website",
+  },
 };
 
 export default function RootLayout({ children }) {

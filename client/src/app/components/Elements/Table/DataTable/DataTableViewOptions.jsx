@@ -1,5 +1,4 @@
 "use client"
-
 import { DropdownMenuTrigger } from "@radix-ui/react-dropdown-menu"
 import { Settings2 } from "lucide-react"
 
@@ -28,7 +27,7 @@ export function DataTableViewOptions({
         </Button>
       </DropdownMenuTrigger>
       <DropdownMenuContent align="end" className="w-[150px]">
-        <DropdownMenuLabel>Toggle columns</DropdownMenuLabel>
+        <DropdownMenuLabel>עמודות</DropdownMenuLabel>
         <DropdownMenuSeparator />
         {table
           .getAllColumns()

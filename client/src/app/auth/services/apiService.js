@@ -1,7 +1,6 @@
 'use client'
 import { getToken } from '@/app/services/localStorageService';
 import axios from 'axios'
-// axios.defaults.withCredentials = true;
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL
 

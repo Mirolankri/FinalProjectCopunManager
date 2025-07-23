@@ -3,17 +3,11 @@ import React, { useEffect, useState } from 'react'
 import Container from '@/app/components/Elements/Container/Index'
 import Form from '@/app/components/Elements/Forms/components/Form'
 import Input from '@/app/components/Elements/Forms/components/Input/Input';
-import { EnvelopeIcon, LockClosedIcon, PhoneIcon, UserIcon } from '@heroicons/react/24/outline';
-import Link from 'next/link';
 import useForm from '@/hooks/forms/useForm';
 import { useUser } from '@/app/components/providers/UserProvider';
-import useUsers from '@/hooks/users/useUsers';
-import initialRegisterForm from '@/app/auth/helpers/initialForms/initialRegisterForm';
-import registerSchema from '@/app/auth/helpers/models/joi/RegisterSchema';
 import initialCouponAdd from '../helpers/initialForms/initialCouponAdd';
 import CouponAddSchema from '../models/joi/CouponAddSchema';
 import TextArea from '@/app/components/Elements/Forms/components/TextArea/TextArea';
-import useCoupon from '../hooks/useCoupon';
 import Spinner from '@/app/components/Elements/Spinner/Spinner';
 import normalizeCoupon from '../helpers/normalization/normalizeCoupon';
 import { Banknote, Barcode, BarcodeIcon, CalendarCheck, ChartColumnStacked, Globe, LetterText, Percent, TicketPercent } from 'lucide-react';
@@ -93,19 +87,6 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           required={true}
           allowCustomInput={true}
         />
-        {/* <Input 
-          variant="default"
-          type="text"
-          name="store"
-          label="שם החנות"
-          required
-          autoComplete="off"
-          onChange={handleChange}
-          data={value.data}
-          error={value.errors}
-         
-
-        /> */}
         <Input 
           variant="default"
           type="text"
@@ -118,18 +99,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           Icon={<Globe />}
 
         />
-        {/* <Input 
-          variant="default"
-          type="text"
-          name="category"
-          label="קטגוריה"
-          autoComplete="off"
-          onChange={handleChange}
-          data={value.data}
-          error={value.errors}
-          Icon={<ChartColumnStacked />}
-
-        /> */}
+        
         <SelectSearch 
           options={categories}
           value={value.data.category}

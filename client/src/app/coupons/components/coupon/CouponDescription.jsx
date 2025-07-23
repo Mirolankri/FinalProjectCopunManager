@@ -1,3 +1,4 @@
+'use client'
 import React from 'react'
 import { HoverCard, HoverCardTrigger, HoverCardContent } from "@/components/ui/hover-card";
 import { Button } from "@/components/ui/button";

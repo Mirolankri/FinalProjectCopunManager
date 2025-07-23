@@ -3,8 +3,6 @@
 import React, { useState } from 'react'
 import { useUser } from '@/app/components/providers/UserProvider'
 import { CheckCircle, XCircle } from 'lucide-react'
-import { useModal } from '@/providers/ModalProvider/ModalProvider'
-import { useAlert } from '@/providers/AlertProvider/AlertProvider'
 import Spinner from '@/app/components/Elements/Spinner/Spinner'
 
 const MarkUsed = ({ coupon, onMarkUsed_UnUsed }) => {
@@ -15,11 +13,8 @@ const MarkUsed = ({ coupon, onMarkUsed_UnUsed }) => {
   const handleToggleUsed = async() => {
     setIsLoading(true)
     setLocalUsed(prev => !prev)
-    // setTimeout(async() => {
-        await onMarkUsed_UnUsed(coupon._id)
-        setIsLoading(false)
-    // }, 5000);
-    
+    await onMarkUsed_UnUsed(coupon._id)
+    setIsLoading(false)
   }
 
   return (

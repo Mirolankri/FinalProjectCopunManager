@@ -19,7 +19,6 @@ const Form = ({
     ResetButtonName = "איפוס",
     ...rest
   }) => {
-    // in rest there is className mearge with className
     const { className } = rest;
 
   return (

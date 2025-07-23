@@ -3,9 +3,6 @@ import React from 'react'
 import { twMerge } from 'tailwind-merge'
 
 const Button = ({children, onClick, disabled,variant,className}) => {
-  // this is outline
-
-  // <button type="button" class="">Dark</button>
 
   const variants = {
     default: 'inline-flex w-full justify-center items-center rounded-md bg-gray-600 px-3 py-2 text-sm font-semibold text-white shadow-xs  hover:bg-gray-500',
@@ -15,9 +12,6 @@ const Button = ({children, onClick, disabled,variant,className}) => {
   }
   const variantClass = variants[variant] || variants.default
   
-  // use with twmearge
-  // const className = twMerge(variantClass, className)
-
   return (
     <button
             disabled={disabled}
@@ -25,7 +19,6 @@ const Button = ({children, onClick, disabled,variant,className}) => {
             onClick={onClick}
             className={` ${variantClass} ${className} ${disabled ? 'opacity-50 cursor-not-allowed' : 'cursor-pointer'}`}
           >
-            {/* <PencilIcon aria-hidden="true" className="mr-1.5 -ml-0.5 size-5 text-gray-400" /> */}
             {children}
           </button>
   )

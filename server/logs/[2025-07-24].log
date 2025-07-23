@@ -1,0 +1,9 @@
+[2025-07-24 00:02:59] Request: ::1 GET /coupons 500 - 1.156 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15
+[2025-07-24 00:21:18] Request: 85.65.165.152 GET / 404 - 0.813 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.5 Safari/605.1.15
+[2025-07-24 00:21:22] Request: 85.65.165.152 GET /apple-touch-icon-precomposed.png 404 - 0.265 ms com.apple.WebKit.Networking/20621.2.5.11.8 Network/4277.121.5 macOS/15.5
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET /apple-touch-icon.png 404 - 1.761 ms com.apple.WebKit.Networking/20621.2.5.11.8 Network/4277.121.5 macOS/15.5
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET /favicon.ico 404 - 0.456 ms com.apple.WebKit.Networking/20621.2.5.11.8 Network/4277.121.5 macOS/15.5
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET /apple-touch-icon-precomposed.png 404 - 1.115 ms com.apple.WebKit.Networking/20621.2.5.11.8 CFNetwork/3826.500.131 Darwin/24.5.0
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET / 404 - 0.380 ms Mozilla/5.0 (Macintosh; Intel Mac OS X 10_11_1) AppleWebKit/601.2.4 (KHTML, like Gecko) Version/9.0.1 Safari/601.2.4 facebookexternalhit/1.1 Facebot Twitterbot/1.0
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET /favicon.ico 404 - 0.360 ms com.apple.WebKit.Networking/20621.2.5.11.8 CFNetwork/3826.500.131 Darwin/24.5.0
+[2025-07-24 00:21:23] Request: 85.65.165.152 GET /apple-touch-icon.png 404 - 0.385 ms com.apple.WebKit.Networking/20621.2.5.11.8 CFNetwork/3826.500.131 Darwin/24.5.0

@@ -25,7 +25,6 @@ import registerSchema from '../../helpers/models/joi/RegisterSchema'
 import Form from '@/app/components/Elements/Forms/components/Form'
 import mapUser from '../../helpers/normalization/mapUser'
 
-// remove password from registerSchema
 const { password, ...rest } = registerSchema;
 const AccountPage = ({userData}) => {
   const [EditMode, setEditMode] = useState(false)
@@ -70,9 +69,9 @@ const AccountPage = ({userData}) => {
                   <div>{userData.name.first} {userData.name.last}</div>
                   <div>{userData.phone}</div>
                 </div>
-                <div>
+                <div>                  
                   <Avatar className="size-15">
-                    {/* <AvatarImage src="https://github1.com/shadcn.png" alt="@shadcn" /> */}
+                    <AvatarImage src="/assets/images/rabbit.png" alt="User Profile" />
                     <AvatarFallback>
                       {userData.name.first[0] + userData.name.last[0]}
                     </AvatarFallback>

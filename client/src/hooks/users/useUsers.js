@@ -1,9 +1,9 @@
 "use client"
+import { useState, useCallback, useMemo } from "react";
+import { useRouter } from "next/navigation";
 import AuthService from "@/app/auth/services/apiService";
 import { useUser } from "@/app/components/providers/UserProvider";
 import { getUser, setTokenInLocalStorage } from "@/app/services/localStorageService";
-import { useRouter } from "next/navigation";
-import { useState, useCallback, useMemo } from "react";
 import useAxios from "../Axios/useAxios";
 import normalizeUser from "@/app/auth/helpers/normalization/normalizeUser";
 import { useAlert } from "@/providers/AlertProvider/AlertProvider";

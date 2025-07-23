@@ -1,10 +1,9 @@
 "use client"
 
-import * as React from "react"
+import React, { useEffect, useState } from "react"
 import { format } from "date-fns"
 import { Calendar as CalendarIcon } from "lucide-react"
 
-import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
 import { Calendar } from "@/components/ui/calendar"
 import {
@@ -14,9 +13,9 @@ import {
 } from "@/components/ui/popover"
 
 export function DatePicker({ value, onChange }) {
-  const [date, setDate] = React.useState(value)
+  const [date, setDate] = useState(value)
 
-  React.useEffect(() => {
+  useEffect(() => {
     onChange(date)
   }, [date])
     
@@ -29,7 +28,7 @@ export function DatePicker({ value, onChange }) {
           className="data-[empty=true]:text-muted-foreground w-[280px] justify-start text-left font-normal"
         >
           <CalendarIcon />
-          {date ? format(date, "PPP") : <span>Pick a date</span>}
+          {date ? format(date, "PPP") : <span>בחירת תאריך</span>}
         </Button>
       </PopoverTrigger>
       <PopoverContent className="w-auto p-0">

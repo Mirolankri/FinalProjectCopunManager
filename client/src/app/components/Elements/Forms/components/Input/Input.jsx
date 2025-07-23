@@ -48,22 +48,6 @@ const Input = ({
             className="block min-w-0 grow py-1.5 pr-3 pl-1 text-base text-gray-900 placeholder:text-gray-400 focus:outline-none sm:text-sm/6"
             />
           
-            <div className="hidden grid shrink-0 grid-cols-1 focus-within:relative">
-                <select
-                id="currency"
-                name="currency"
-                aria-label="Currency"
-                className="col-start-1 row-start-1 w-full appearance-none rounded-md py-1.5 pr-7 pl-3 text-base text-gray-500 placeholder:text-gray-400 focus:outline-2 focus:-outline-offset-2 focus:outline-gray-600 sm:text-sm/6"
-                >
-                <option>USD</option>
-                <option>CAD</option>
-                <option>EUR</option>
-                </select>
-                {/* <ChevronDownIcon
-                aria-hidden="true"
-                className="pointer-events-none col-start-1 row-start-1 mr-2 size-5 self-center justify-self-end text-gray-500 sm:size-4"
-                /> */}
-            </div>
         </div>
         
       </div>

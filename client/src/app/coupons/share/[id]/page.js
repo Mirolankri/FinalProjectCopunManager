@@ -8,20 +8,32 @@ import useCategories from '../../hooks/useCategories';
 export default function CouponSharePage({ params }) {
   const resolvedParams = use(params);
   const { id } = resolvedParams;
-  const {value:{coupons,coupon,isLoading,error},handleGetCoupon,handleShareCoupon} = useCoupon()
+  
+  const {value:{coupons,coupon,isLoading,error},handleGetCoupon,handleShareCoupon,handleMarkUsed_UnUsed,handleMarkFavorite_UnFavorite} = useCoupon()
   const { value:{ isLoading:isLoadingCompanies, companies, company, error:companiesError }, handleGetCompanies } = useCompanies();
   const { value:{ isLoading:isLoadingCategories, categories, category, error:categoriesError }, handleGetCategories } = useCategories();
 
-    const OnShareCoupon = async (couponId,sharedData) => {
+  const OnShareCoupon = async (couponId,sharedData) => {
     const sharedCoupon = await handleShareCoupon(couponId,sharedData);
     await handleGetCoupon(id);
     return sharedCoupon;
   }
+  const OnMarkUsed_UnUsed = async (couponId) => {
+    await handleMarkUsed_UnUsed(couponId);
+    await handleGetCoupon(id);
+  }
+  const OnFavorite = async (couponId) => {
+    await handleMarkFavorite_UnFavorite(couponId);
+    await handleGetCoupon(id);
+  }  
 
     useEffect(() => {
-      handleGetCompanies();
-      handleGetCategories();
-      handleGetCoupon(id)
+      const GetData = async () => {
+        await handleGetCompanies();
+        await handleGetCategories();
+        await handleGetCoupon(id);
+      }
+      GetData();      
     }, [id])
   
     return (
@@ -34,6 +46,8 @@ export default function CouponSharePage({ params }) {
           onShare={OnShareCoupon}
           companies={companies}
           categories={categories}
-       />
+          onMarkUsed_UnUsed={OnMarkUsed_UnUsed}
+          onFavorite={OnFavorite}
+        />
     )
   }

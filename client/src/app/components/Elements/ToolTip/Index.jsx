@@ -1,7 +1,6 @@
 import React from 'react'
 
 const ToolTip = ({children, tip, position = 'top'}) => {
-  // רשימת כיתות קבועה כדי להבטיח שTailwind לא ימחק אותן
   const positionClasses = {
     top: 'tooltip-top',
     bottom: 'tooltip-bottom', 

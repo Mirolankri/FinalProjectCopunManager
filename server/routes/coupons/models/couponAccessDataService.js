@@ -7,6 +7,7 @@ const { encrypt, generateCodeHash, decrypt } = require('../../../utils/encryptio
 const SharedCouponSchema = require('./mongoDB/SharedCouponSchema');
 const { GetCompaniesById } = require('./companiesAccessDataService');
 const CompaniesSchema = require('./mongoDB/CompaniesSchema');
+const { GetCategoriesById } = require('./categoriesAccessDataService');
 
 const CreateCoupon = async (couponData) => {
     if(DB === 'mongoDB'){
@@ -55,6 +56,17 @@ const GetMyCoupons = async (userId) => {
             coupons = await Promise.all(coupons.map(async (coupon) => {
                 let couponDoc = coupon.toObject();
                 if (couponDoc.code) couponDoc.code = decrypt(couponDoc.code);
+                couponDoc.storeName = '';
+                couponDoc.categoryName = '';
+                if(couponDoc.store){
+                    const store = await GetCompaniesById(couponDoc.store);
+                    couponDoc.storeName = store.name;
+                }
+                
+                if(couponDoc.category){
+                    const category = await GetCategoriesById(couponDoc.category);
+                    couponDoc.categoryName = category.name;
+                }
                 
                 const sharedCoupons = await SharedCouponSchema.find({couponId: couponDoc._id}).select('-__v');
                 const sharedCouponsData = sharedCoupons.map(doc => doc.toObject());

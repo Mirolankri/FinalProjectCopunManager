@@ -42,22 +42,16 @@ export function SelectSearch({
   const [open, setOpen] = React.useState(false)
   const [internalValue, setInternalValue] = React.useState("")
   const [searchValue, setSearchValue] = React.useState("")
-  console.log("externalValue", externalValue);
-  
-  // אם יש value חיצוני, נשתמש בו, אחרת נשתמש בפנימי
   const currentValue = externalValue !== undefined ? externalValue : internalValue
   const handleValueChange = externalValue !== undefined ? onChange : setInternalValue
   
-  // בדיקה אם הערך הנוכחי קיים ברשימה
   const isCustomValue = currentValue && !options.find(option => option.value === currentValue)
   
-  // סינון אפשרויות לפי חיפוש
   const filteredOptions = options.filter(option => 
     option.label.toLowerCase().includes(searchValue.toLowerCase()) ||
     option.value.toLowerCase().includes(searchValue.toLowerCase())
   )
   
-  // בדיקה אם יש התאמה מדויקת לחיפוש
   const hasExactMatch = filteredOptions.some(option => 
     option.label.toLowerCase() === searchValue.toLowerCase() ||
     option.value.toLowerCase() === searchValue.toLowerCase()
