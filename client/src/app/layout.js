@@ -21,13 +21,12 @@ export const metadata = {
   title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
   description: "קופונים? רק עם נקודת שליטה.",
   icons: {
-    icon: "/favicon.svg",
     apple: "/assets/icons/apple-touch-icon.png",
   },
   openGraph: {
     title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
     description: "קופונים? רק עם נקודת שליטה.",
-    url: "https://Coupoint.me",
+    url: "https://CouPoint.me",
     siteName: "CouPoint",
     images: [
       {

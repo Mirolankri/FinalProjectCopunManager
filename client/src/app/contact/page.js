@@ -18,6 +18,7 @@ import { Captions, LetterText, Mail, User } from "lucide-react";
 import ContactService from "./services/apiService";
 import { ErrorAlert } from "../components/Elements/Alert/ErrorAlert";
 import { Confetti } from "@/components/animate-ui/confetti/confetti";
+import Link from "next/link";
 
 const contactService = new ContactService();
 export default function Contact() {
@@ -53,7 +54,7 @@ export default function Contact() {
         </p>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-3 gap-8 mb-12">
+      <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mb-12">
         <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
           <div className="flex items-start gap-4">
             <div className="w-10 h-10 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center flex-shrink-0">
@@ -61,7 +62,9 @@ export default function Contact() {
             </div>
             <div>
               <h3 className="font-semibold mb-2">אימייל</h3>
-              <p className="text-gray-600 text-sm">support@Coupoint.me</p>
+              <p className="text-gray-600 text-sm">
+                <Link href="mailto:support@Coupoint.me" className="text-blue-600 hover:underline">support@Coupoint.me</Link>
+              </p>
               <p className="text-gray-500 text-sm mt-1">
                 זמן תגובה ממוצע: 24 שעות
               </p>
@@ -82,18 +85,7 @@ export default function Contact() {
           </div>
         </div>
 
-        <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
-          <div className="flex items-start gap-4">
-            <div className="w-10 h-10 bg-purple-100 text-purple-600 rounded-lg flex items-center justify-center flex-shrink-0">
-              <MapPinIcon className="w-5 h-5" />
-            </div>
-            <div>
-              <h3 className="font-semibold mb-2">כתובת</h3>
-              <p className="text-gray-600 text-sm">רחוב הברזל 1, תל אביב</p>
-              <p className="text-gray-500 text-sm mt-1">קומה 4,משרד 405</p>
-            </div>
-          </div>
-        </div>
+        
       </div>
       
     
