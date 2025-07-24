@@ -24,6 +24,7 @@ import initialRegisterForm from '../../helpers/initialForms/initialRegisterForm'
 import registerSchema from '../../helpers/models/joi/RegisterSchema'
 import Form from '@/app/components/Elements/Forms/components/Form'
 import mapUser from '../../helpers/normalization/mapUser'
+import { Password } from './Password/Password'
 
 const { password, ...rest } = registerSchema;
 const AccountPage = ({userData}) => {
@@ -81,94 +82,96 @@ const AccountPage = ({userData}) => {
               </div>
             </div>
             <div className="mt-6 rtl-grid">
-            <Form 
-                  title="" 
-                  SubmitButtonName='עדכון' 
-                  ResetButtonName='ביטול'
-                  onSubmit={onSubmit} 
-                  spacing={2}
-                  onReset={EditMode ? handleCancelEdit : null}
-                  onChange={validateForm}
-                  >
+            
             
               <div className="divide-y divide-gray-100">
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt className="text-sm/6 font-medium text-gray-900">שם מלא</dt>
-                  <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {EditMode && (
-                    <>
-                    <Input 
-                      variant="default"
-                      type="text"
-                      name="first"
-                      label="שם פרטי"
-                      required
-                      autoComplete="off"
-                      onChange={handleChange}
-                      data={value.data}
-                      error={value.errors}
-                      Icon={<UsersIcon />}
-                    />
-                    <Input 
-                      variant="default"
-                      type="text"
-                      name="last"
-                      label="שם משפחה"
-                      required
-                      autoComplete="off"
-                      onChange={handleChange}
-                      data={value.data}
-                      error={value.errors}
-                      Icon={<UsersIcon />}
-                    /></>
-                  )}
-                    {userData.name.first} {userData.name.last}
-                  </dd>
-                </div>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt className="text-sm/6 font-medium text-gray-900">טלפון</dt>
-                  <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {EditMode && (
-                    <Input 
-                    variant="default"
-                    type="tel"
-                    name="phone"
-                    label="מספר טלפון"
-                    required
-                    autoComplete="off"
-                    onChange={handleChange}
-                    data={value.data}
-                    error={value.errors}
-                    Icon={<PhoneIcon />}
-          
-                  />
+                <Form 
+                    title="" 
+                    SubmitButtonName='עדכון' 
+                    ResetButtonName='ביטול'
+                    onSubmit={onSubmit} 
+                    spacing={2}
+                    onReset={EditMode ? handleCancelEdit : null}
+                    onChange={validateForm}
+                    >
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm/6 font-medium text-gray-900">שם מלא</dt>
+                    <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                    {EditMode && (
+                      <>
+                      <Input 
+                        variant="default"
+                        type="text"
+                        name="first"
+                        label="שם פרטי"
+                        required
+                        autoComplete="off"
+                        onChange={handleChange}
+                        data={value.data}
+                        error={value.errors}
+                        Icon={<UsersIcon />}
+                      />
+                      <Input 
+                        variant="default"
+                        type="text"
+                        name="last"
+                        label="שם משפחה"
+                        required
+                        autoComplete="off"
+                        onChange={handleChange}
+                        data={value.data}
+                        error={value.errors}
+                        Icon={<UsersIcon />}
+                      /></>
                     )}
-                  {userData.phone}
-                  </dd>
-                </div>
-                <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
-                  <dt className="text-sm/6 font-medium text-gray-900">כתובת דואל</dt>
-                  <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
-                  {EditMode && (
-                    <Input 
-                    variant="default"
-                    type="email"
-                    name="email"
-                    label="כתובת אימייל"
-                    required
-                    autoComplete="off"
-                    onChange={handleChange}
-                    data={value.data}
-                    error={value.errors}
-                    Icon={<EnvelopeIcon />}
-          
-                  />)}
-                  {userData.email}
-                  </dd>
-                </div>
+                      {userData.name.first} {userData.name.last}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm/6 font-medium text-gray-900">טלפון</dt>
+                    <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                    {EditMode && (
+                      <Input 
+                      variant="default"
+                      type="tel"
+                      name="phone"
+                      label="מספר טלפון"
+                      required
+                      autoComplete="off"
+                      onChange={handleChange}
+                      data={value.data}
+                      error={value.errors}
+                      Icon={<PhoneIcon />}
+            
+                    />
+                      )}
+                    {userData.phone}
+                    </dd>
+                  </div>
+                  <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
+                    <dt className="text-sm/6 font-medium text-gray-900">כתובת דואל</dt>
+                    <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">
+                    {EditMode && (
+                      <Input 
+                      variant="default"
+                      type="email"
+                      name="email"
+                      label="כתובת אימייל"
+                      required
+                      autoComplete="off"
+                      onChange={handleChange}
+                      data={value.data}
+                      error={value.errors}
+                      Icon={<EnvelopeIcon />}
+            
+                    />)}
+                    {userData.email}
+                    </dd>
+                  </div>
+                </Form>
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-sm/6 font-medium text-gray-900">סיסמא</dt>
-                  <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">********</dd>
+                  <Password userData={userData} />
                 </div>
                 <div className="px-4 py-6 sm:grid sm:grid-cols-3 sm:gap-4 sm:px-0">
                   <dt className="text-sm/6 font-medium text-gray-900">סוג משתמש</dt>
@@ -182,8 +185,9 @@ const AccountPage = ({userData}) => {
                   <dt className="text-sm/6 font-medium text-gray-900">חשבון נוצר בתאריך</dt>
                   <dd className="mt-1 text-sm/6 text-gray-700 sm:col-span-2 sm:mt-0">{format(new Date(userData.createdAt), "dd/MM/yyyy")}</dd>
                 </div>
+
               </div>
-            </Form>
+              
             </div>
           </CardContent>
           <CardFooter className="items-start w-full">

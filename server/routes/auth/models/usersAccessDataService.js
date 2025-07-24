@@ -154,6 +154,22 @@ const UpdateUser = async ({userId, data}) => {
 
     return Promise.resolve('Not in mongoDB');
 };
+const updateUserPassword = async ({userId, data}) => {
+    if(DB === 'mongoDB'){
+        try {
+            const user = await UserSchema.findById(userId);
+            if (!user) throw new Error('לא נמצאו משתמשים');
+            user.password = data.password;
+            await user.save();
+            return Promise.resolve(user);
+        } catch (error) {            
+            error.status = 404;
+            return Promise.reject(error);
+        }
+    }
+
+    return Promise.resolve('Not in mongoDB');
+};
 const MakeAdmin = async (userId) => {
     if(DB === 'mongoDB'){
         try {
@@ -185,4 +201,4 @@ const DeleteUser = async (userId) => {
     return Promise.resolve('Not in mongoDB');
 };
 
-module.exports = { registerUser, loginUser, GetMe, GetMyUsers, UpdateUser, GetAllUsers, MakeAdmin, DeleteUser };
+module.exports = { registerUser, loginUser, GetMe, GetMyUsers, UpdateUser, GetAllUsers, MakeAdmin, DeleteUser,updateUserPassword };

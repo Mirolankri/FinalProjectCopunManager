@@ -65,6 +65,15 @@ class AuthService {
             return Promise.reject(error)
         }
     }
+    UpdateUserPassword = async ({userId,_body}) => {
+        try {
+            const { data } = await axios.put(`${apiUrl}/users/changepassword/${userId}`, _body)
+            return data
+        }
+        catch (error) {
+            return Promise.reject(error)
+        }
+    }
     GetMyUsers = async () => {
         try {
             const { data } = await axios.get(`${apiUrl}/users/my-users`)            

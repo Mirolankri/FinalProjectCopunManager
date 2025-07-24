@@ -2,7 +2,7 @@ require('dotenv').config();
 const express = require('express');
 const { handleError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
-const { GetMe, UpdateUser, GetMyUsers, GetAllUsers, MakeAdmin, DeleteUser, registerUser } = require('../../auth/models/usersAccessDataService');
+const { GetMe, UpdateUser, GetMyUsers, GetAllUsers, MakeAdmin, DeleteUser, registerUser, updateUserPassword } = require('../../auth/models/usersAccessDataService');
 const userUpdateValidation = require('../../auth/validations/Joi/userUpdateValidation');
 const { validateRegistration } = require('../../auth/validations/authValidationService');
 const normalizeUser = require('../../auth/helpers/normalizeUser');
@@ -118,6 +118,20 @@ router.put('/:userId',auth, async(req, res) => {
         if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
         updatedUser = await UpdateUser({userId: userId, data: req.body});
         return res.status(200).send(updatedUser);
+    } catch (error) {
+        return handleError(res, error.status || 500, error.message);
+    }
+});
+router.put('/changepassword/:userId',auth, async(req, res) => {
+    try {
+        const user = req.user;
+        const { userId } = req.params;
+        if(!user) throw new Error('משתמש לא נמצא');
+        let {password, verifyPassword} = req.body;
+        if(password !== verifyPassword) throw new Error('הסיסמאות לא תואמות');
+        password = generateUserPassword(password);
+        const updatedUser = await updateUserPassword({userId: userId, data: {password}});
+        return res.status(200).send({message: 'סיסמה עודכנה בהצלחה'});
     } catch (error) {
         return handleError(res, error.status || 500, error.message);
     }
