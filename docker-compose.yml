@@ -10,8 +10,43 @@ services:
             dockerfile: Dockerfile
         expose:
             - "3000"
+        ports:
+            - 3000:3000
         networks:
-            - newdocker_default
+            - coupoint_network
+    coupointbackend:
+        container_name: Coupoint-BackEnd
+        platform: linux/arm64
+        cap_add:
+            - NET_ADMIN
+            - SYS_MODULE
+        build: ./server
+        restart: always
+        expose:
+            - "5555"
+        ports:
+            - 5555:5555
+        env_file:
+            - ./server/.env
+        volumes:
+            - /etc/localtime:/etc/localtime
+        networks:
+            - coupoint_network
+    mongo:
+        container_name: Coupoint-MongoDB
+        image: mongo
+        ports:
+            - 27018:27017
+        volumes:
+            - mongodb:/data/db
+        environment:
+            MONGO_INITDB_ROOT_USERNAME: root
+            MONGO_INITDB_ROOT_PASSWORD: example
+        networks:
+            - coupoint_network
+volumes:
+ mongodb:
+
 networks:
-  newdocker_default:
+  coupoint_network:
     external: true

@@ -5,7 +5,7 @@ const loadCategorys = async () => {
     try {
         const CountData = await CategoriesSchema.countDocuments();
         if(CountData > 0) return;
-        await CategoriesSchema.deleteMany({});
+        // await CategoriesSchema.deleteMany({});
         const categorysData = categories.map(category => ({
             name: category.name,
             active: true

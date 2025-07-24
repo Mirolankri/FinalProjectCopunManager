@@ -22,36 +22,7 @@ export const metadata = {
   description: "קופונים? רק עם נקודת שליטה.",
   icons: {
     apple: "/assets/icons/apple-touch-icon.png",
-  },
-  openGraph: {
-    title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
-    description: "קופונים? רק עם נקודת שליטה.",
-    url: "https://CouPoint.me",
-    siteName: "CouPoint",
-    images: [
-      {
-        url: "/assets/icons/apple-touch-icon.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "he_IL",
-    type: "website",
-  },
-  twitter: {
-    title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
-    description: "קופונים? רק עם נקודת שליטה.",
-    card: "summary_large_image",
-    images: [
-      {
-        url: "/assets/icons/apple-touch-icon.png",
-        width: 1200,
-        height: 630,
-      },
-    ],
-    locale: "he_IL",
-    type: "website",
-  },
+  }
 };
 
 export default function RootLayout({ children }) {

@@ -1,5 +1,5 @@
 'use client'
-import React, { useEffect } from 'react'
+import React, { useEffect, Suspense } from 'react'
 import CouponPage from './Page/CouponPage'
 import useCoupon from './hooks/useCoupon';
 import { useUser } from '@/app/components/providers/UserProvider';
@@ -13,7 +13,7 @@ import useCompanies from './hooks/useCompanies';
 import Spinner from '../components/Elements/Spinner/Spinner';
 import useCategories from './hooks/useCategories';
 
-export default function Coupons() {
+function CouponsContent() {
   const {user} = useUser();
   const router = useRouter();
   const {setModal} = useModal();
@@ -79,4 +79,16 @@ export default function Coupons() {
   </div>
     </>
   )
+}
+
+export default function Coupons() {
+  return (
+    <Suspense fallback={
+      <div className="flex justify-center items-center min-h-screen">
+        <Spinner />
+      </div>
+    }>
+      <CouponsContent />
+    </Suspense>
+  );
 }

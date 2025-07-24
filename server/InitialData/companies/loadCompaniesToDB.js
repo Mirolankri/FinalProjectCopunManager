@@ -5,7 +5,7 @@ const loadCompanies = async () => {
     try {
         const CountData = await Company.countDocuments();
         if(CountData > 0) return;
-        await Company.deleteMany({});
+        // await Company.deleteMany({});
         const companiesData = companies.map(company => ({
             // id: parseInt(company.value === 'other' ? 999 : company.value),
             name: company.label,

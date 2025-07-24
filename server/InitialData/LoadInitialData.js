@@ -1,7 +1,7 @@
 const { loadCategorys } = require('./categories/loadCategorysToDB');
 const { loadCompanies } = require('./companies/loadCompaniesToDB');
 const { loadCoupon } = require('./coupon/loadCouponToDB');
-const { loadUsers } = require('./users/LoadUsersToDB');
+const { loadUsers } = require('./users/loadUsersToDB');
 
 const loadInitialData = async () => {
     try {
