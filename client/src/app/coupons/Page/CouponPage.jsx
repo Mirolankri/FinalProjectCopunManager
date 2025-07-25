@@ -7,8 +7,9 @@ import { GetValueLocalStorage, SetValueLocalStorage } from '@/app/services/local
 import ViewMode from './Layout/ViewMode'
 import { ShowFavorite } from './Layout/Filters/ShowFavorite'
 import { useUser } from '@/app/components/providers/UserProvider'
+import AddNewCouponBTN from '../components/btn/AddNewCouponBTN'
 
-const CouponPage = ({isLoading, coupons, error,onDelete,onEdit,onShare,companies,categories,onMarkUsed_UnUsed,onFavorite}) => {
+const CouponPage = ({isLoading, coupons, error,onDelete,onEdit,onShare,companies,categories,onMarkUsed_UnUsed,onFavorite,OnCreateCoupon}) => {
     const {user} = useUser();
     const [view, setView] = useState('grid');
     const [filteredCoupons, setFilteredCoupons] = useState(coupons);
@@ -39,7 +40,14 @@ const CouponPage = ({isLoading, coupons, error,onDelete,onEdit,onShare,companies
     };
     if (isLoading) return <Spinner/>
     if (error) return <ErrorPage error={error.message}/>
-    if(coupons && !coupons.length) return <ErrorPage error={"לא נמצאו קופונים"}/>
+    if(coupons && !coupons.length) 
+        return (<div className='flex flex-col items-center justify-between gap-5'>
+                <ErrorPage error={"לא נמצאו קופונים"}/>
+                <div className='flex items-center justify-center gap-2'>
+                    <div className='text-lg font-bold'>הוספת קופון חדש</div>
+                    <AddNewCouponBTN categories={categories} companies={companies} OnCreateCoupon={OnCreateCoupon}/>
+                </div>
+            </div>)
     if(!coupons)return <Spinner/>
     
     return (

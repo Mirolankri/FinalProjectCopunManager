@@ -35,8 +35,8 @@ const loginUser = async ({email, phone, password}) => {
             const nowTime = new Date();
 
             const user = await UserSchema.findOne({phone});
-            if(!user.active) throw new Error('משתמש לא נמצא');
-            if (!user) throw new Error('מספר טלפון או סיסמא אינם תקינים');
+            if (!user) throw new Error('מספר טלפון או סיסמא אינם תקינים במידה ולא נרשמתם יש לגשת למסך הרשמה');
+            if(!user.active) throw new Error('משתמש לא נמצא או לא פעיל');
 
             const validPassword = comparePassword(password, user.password);
             let counter = await AuditLoginUserSchema.findOne({userId: user._id});

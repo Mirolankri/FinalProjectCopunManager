@@ -25,7 +25,8 @@ export default function Home() {
         animate={HeroInView ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
         transition={{ duration: 0.6, ease: "easeOut" }}
       >
-      <div className="bg-gradient-to-r from-gray-500 to-gray-700 text-white py-20 rounded-xl">
+
+      <div className="bg-gradient-to-r from-blue-600 to-purple-600 text-white py-20 rounded-xl">
         <div className="container mx-auto px-4 text-center">
           <h1 className="text-4xl md:text-5xl font-bold mb-6">
             נהל את כל השוברים והקופונים שלך במקום אחד

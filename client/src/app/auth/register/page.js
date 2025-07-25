@@ -99,9 +99,9 @@ export default function Register() {
 
         />
       </Form>
-      <p className="mt-10 text-center text-sm/6 text-gray-500">
+      <p className="mt-10 text-center text-md/6 text-gray-500">
             יש לך חשבון?{' '}
-            <Link href="/auth/login" className="font-semibold text-gray-600 hover:text-gray-500">
+            <Link href="/auth/login" className="font-semibold text-gray-700 hover:text-gray-500 underline">
               התחבר
             </Link>
           </p>

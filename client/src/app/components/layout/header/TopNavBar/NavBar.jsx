@@ -27,14 +27,14 @@ export const NavBar = () => {
 
 
   return (
-    <nav className="fixed top-0 w-full z-80 bg-gray-600">
+    <nav className="fixed top-0 w-full z-80 bg-white shadow-md">
         <div className=" mx-auto max-w-7xl px-4 sm:px-6 lg:px-8">
           <div className="flex h-16 items-center justify-between">
             <div className="w-full flex items-center">
               <Link href="/" onClick={() => setMobileMenuOpen(false)}>
                 <div className="shrink-0 flex items-center gap-2">
-                  <GiftIcon className="size-8 text-white" />
-                  <div className="text-white">CouPoint</div>
+                  <GiftIcon className="size-8 text-black" />
+                  <div className="bg-clip-text textarea-xl text-transparent bg-gradient-to-r from-blue-600 to-purple-600">CouPoint</div>
                 </div>
               </Link>
               <div className="w-full hidden md:block">
@@ -49,7 +49,7 @@ export const NavBar = () => {
                       <Link
                         key={item.key}
                         href={item.href}
-                        className={`rounded-md px-3 text-center py-2 text-sm font-medium ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
+                        className={`rounded-md px-3 text-center py-2 text-sm font-medium ${item.current ? 'bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 text-white' : 'text-black hover:bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 hover:text-white'}`}
                         aria-current={item.current ? 'page' : undefined}
                       >
                         {item.name}
@@ -110,7 +110,7 @@ export const NavBar = () => {
               {/* <!-- Mobile menu button --> */}
               <button 
               type="button" 
-              className="relative cursor-pointer inline-flex items-center justify-center rounded-md bg-gray-800 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden" aria-controls="mobile-menu" aria-expanded="false"
+              className="relative cursor-pointer inline-flex items-center justify-center rounded-md bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 p-2 text-gray-400 hover:bg-gray-700 hover:text-white focus:ring-2 focus:ring-white focus:ring-offset-2 focus:ring-offset-gray-800 focus:outline-hidden" aria-controls="mobile-menu" aria-expanded="false"
               onClick={() => setMobileMenuOpen(!mobileMenuOpen)}>
                 <span className="absolute -inset-0.5"></span>
                 <span className="sr-only">Open main menu</span>
@@ -124,7 +124,7 @@ export const NavBar = () => {
         </div>
 
         <div className={`md:hidden ${mobileMenuOpen?'block':'hidden'}`}>
-          <div className="bg-gray-600">
+          <div className="bg-white">
             <div className="space-y-1 px-2 pt-2 pb-3 sm:px-3">
               {navigation.map((item) => {
                       if(!item.ShowInMenu) return null;
@@ -135,7 +135,7 @@ export const NavBar = () => {
                       <Link
                         key={item.key}
                         href={item.href}
-                        className={`block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
+                        className={`block rounded-md px-3 py-2 text-base font-medium text-black hover:bg-gray-700 hover:text-white ${item.current ? 'bg-gray-700 text-white' : 'text-black hover:bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 hover:text-white'}`}
                         aria-current={item.current ? 'page' : undefined}
                         onClick={() => {
                           setMobileMenuOpen(false);
@@ -155,7 +155,7 @@ export const NavBar = () => {
                       <Link
                         key={item.key}
                         href={item.href}
-                        className={`block rounded-md px-3  text-right py-2 text-sm font-medium ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
+                        className={`block rounded-md px-3 py-2 text-base font-medium text-black hover:bg-gray-700 hover:text-white ${item.current ? 'bg-gray-700 text-white' : 'text-black hover:bg-gradient-to-r from-blue-600 to-purple-600 opacity-70 hover:text-white'}`}
                         aria-current={item.current ? 'page' : undefined}
                         onClick={() => {
                           setMobileMenuOpen(false);
@@ -169,7 +169,7 @@ export const NavBar = () => {
               </div>
             </div>
           </div>
-          <div onClick={() => setMobileMenuOpen(false)} className="h-svh inset-0 bg-white/30 bg-opacity-25 backdrop-blur-sm" />
+          <div onClick={() => setMobileMenuOpen(false)} className="h-svh inset-0 bg-white/30 opacity-25 backdrop-blur-sm" />
             
           
         </div>

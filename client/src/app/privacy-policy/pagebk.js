@@ -48,12 +48,21 @@ const PrivacyPolicyPage = () => {
                     <li>שם מלא</li>
                     <li>כתובת דואר אלקטרוני</li>
                     <li>מספר טלפון</li>
+                    <li>תאריך לידה (לצורך אימות גיל)</li>
+                    <li>העדפות אישיות ותחומי עניין</li>
                   </ul>
                 </div>
-                
+                <div>
+                  <h3 className="text-lg font-medium text-gray-800 mb-2">מידע שימוש</h3>
+                  <ul className="list-disc list-inside text-gray-700 space-y-1">
+                    <li>פעילות במערכת (קופונים שנשמרו, חיפושים שבוצעו)</li>
+                    <li>זמני כניסה ויציאה מהמערכת</li>
+                    <li>מידע על המכשיר והדפדפן</li>
+                    <li>כתובת IP וגיאולוקציה כללית</li>
+                  </ul>
+                </div>
                 <div>
                   <h3 className="text-lg font-medium text-gray-800 mb-2">קופונים ושוברים</h3>
-                  <p className='text-red-500 mb-2'>המידע מוצפן מקצה לקצה ואנחנו לא רואים את המידע שלכם</p>
                   <ul className="list-disc list-inside text-gray-700 space-y-1">
                     <li>פרטי הקופונים והשוברים שאתם שומרים</li>
                     <li>תאריכי תפוגה וסטטוס השימוש</li>
@@ -91,6 +100,7 @@ const PrivacyPolicyPage = () => {
                 למעט במקרים הבאים:
               </p>
               <ul className="list-disc list-inside text-gray-700 space-y-2">
+                <li><strong>ספקי שירות:</strong> חברות שמסייעות לנו בהפעלת המערכת (אחסון, אבטחה, אנליטיקה)</li>
                 <li><strong>דרישות חוקיות:</strong> כאשר נדרש על פי חוק או צו בית משפט</li>
                 <li><strong>הגנה על זכויות:</strong> כדי להגן על הזכויות, הרכוש או הבטיחות שלנו או של אחרים</li>
                 <li><strong>העברת עסק:</strong> במקרה של מיזוג, רכישה או מכירת נכסים</li>
@@ -107,6 +117,7 @@ const PrivacyPolicyPage = () => {
               </p>
               <ul className="list-disc list-inside text-gray-700 space-y-2">
                 <li>הצפנת נתונים בזמן העברה ובמנוחה</li>
+                <li>אימות דו-שלבי לחשבונות משתמשים</li>
                 <li>גישה מוגבלת למידע על בסיס צורך לדעת</li>
                 <li>ניטור רציף לאיתור פעילות חשודה</li>
                 <li>גיבויים קבועים ותוכנית התאוששות מאסונות</li>
@@ -223,7 +234,10 @@ const PrivacyPolicyPage = () => {
                   לשאלות, בקשות או תלונות בנושא פרטיות, אנא פנו אלינו:
                 </p>
                 <div className="space-y-2 text-gray-700">
-                  <p><strong>דואר אלקטרוני:</strong> support@coupoint.com</p>
+                  <p><strong>דואר אלקטרוני:</strong> privacy@coupoint.com</p>
+                  <p><strong>טלפון:</strong> 03-1234567</p>
+                  <p><strong>כתובת:</strong> רחוב הטכנולוגיה 1, תל אביב</p>
+                  <p><strong>ממונה על הגנת הפרטיות:</strong> privacy-officer@coupoint.com</p>
                 </div>
               </div>
             </section>
@@ -235,7 +249,7 @@ const PrivacyPolicyPage = () => {
                   מדיניות פרטיות זו נכנסה לתוקף ב-{new Date().toLocaleDateString('he-IL')}
                 </p>
                 <p className="text-sm">
-                  © 2025 CouPoint. כל הזכויות שמורות.
+                  © 2024 CouPoint. כל הזכויות שמורות.
                 </p>
               </div>
             </section>

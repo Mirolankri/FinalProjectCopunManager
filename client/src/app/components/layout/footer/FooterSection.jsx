@@ -21,8 +21,8 @@ const FooterData = {
     ],
     copyright : "© 2025 CouPoint. All rights reserved",
     policies : [
-      { text: "מדיניות הפרטיות", href: "/" },
-      { text: "תנאי שימוש", href: "/" },
+      { text: "מדיניות הפרטיות", href: "/privacy-policy" },
+      { text: "תנאי שימוש", href: "/terms-of-use" },
     ],
     className : "",
 }

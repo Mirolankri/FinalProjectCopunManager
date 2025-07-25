@@ -18,6 +18,7 @@ const geistMono = Geist_Mono({
 });
 
 export const metadata = {
+  metadataBase: new URL('https://coupoint.me'),
   title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
   description: "קופונים? רק עם נקודת שליטה.",
   icons: {

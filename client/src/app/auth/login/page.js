@@ -69,10 +69,10 @@ export default function Login() {
 
         />
       </Form>
-      <p className="mt-10 text-center text-sm/6 text-gray-500">
+      <p className="mt-10 text-center text-md/6 text-gray-500">
             אין לך חשבון?{' '}
-            <Link href="/auth/register" className="font-semibold text-gray-600 hover:text-gray-500">
-              הרשם
+            <Link href="/auth/register" className="font-semibold text-gray-700 hover:text-gray-500 underline">
+              הרשמה
             </Link>
           </p>
     </Container>

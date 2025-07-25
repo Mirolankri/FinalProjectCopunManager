@@ -12,6 +12,7 @@ import CouponAddOrEdit from './components/CouponAddOrEdit';
 import useCompanies from './hooks/useCompanies';
 import Spinner from '../components/Elements/Spinner/Spinner';
 import useCategories from './hooks/useCategories';
+import AddNewCouponBTN from './components/btn/AddNewCouponBTN';
 
 function CouponsContent() {
   const {user} = useUser();
@@ -69,13 +70,10 @@ function CouponsContent() {
         categories={categories}
         onMarkUsed_UnUsed={OnMarkUsed_UnUsed}
         onFavorite={OnFavorite}
+        OnCreateCoupon={OnCreateCoupon}
     />
   <div className="fixed start-6 bottom-6 group">
-    <ToolTip tip="הוספת קופון חדש">
-      <Button onClick={() => setModal('הוספת קופון חדש', <CouponAddOrEdit type="add" categories={categories} companies={companies} OnSubmitCoupon={OnCreateCoupon}/>)} variant="circle">
-        <PlusIcon className="size-7 transition-transform group-hover:rotate-45" />
-      </Button>
-    </ToolTip>
+    <AddNewCouponBTN categories={categories} companies={companies} OnCreateCoupon={OnCreateCoupon}/>
   </div>
     </>
   )

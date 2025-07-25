@@ -1,7 +1,7 @@
 'use client'
+import React, { useEffect } from 'react'
 import Button from '@/app/components/Elements/Button/Index'
 import { XMarkIcon } from '@heroicons/react/24/outline'
-import React, { useEffect } from 'react'
 
 const Modal = ({title,body, setOpen}) => {
     useEffect(() => {
