@@ -8,6 +8,7 @@ const SharedCouponSchema = require('./mongoDB/SharedCouponSchema');
 const { GetCompaniesById } = require('./companiesAccessDataService');
 const CompaniesSchema = require('./mongoDB/CompaniesSchema');
 const { GetCategoriesById } = require('./categoriesAccessDataService');
+const CategoriesSchema = require('./mongoDB/CategoriesSchema');
 
 const CreateCoupon = async (couponData) => {
     if(DB === 'mongoDB'){
@@ -20,12 +21,20 @@ const CreateCoupon = async (couponData) => {
                 couponData.code = encrypt(couponData.code);
             }
             if (couponData.category && !mongoose.Types.ObjectId.isValid(couponData.category)) {
-                const newCompany = new CompaniesSchema({
+                const newCategory = new CategoriesSchema({
                     name: couponData.category,
                     active: true
                 });
+                await newCategory.save();
+                couponData.category = newCategory._id;
+            }
+            if (couponData.store && !mongoose.Types.ObjectId.isValid(couponData.store)) {
+                const newCompany = new CompaniesSchema({
+                    name: couponData.store,
+                    active: true
+                });
                 await newCompany.save();
-                couponData.category = newCompany._id;
+                couponData.store = newCompany._id;
             }
             
             
