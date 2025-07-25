@@ -3,9 +3,9 @@ const mongoose = require('mongoose');
 const CouponSchema = new mongoose.Schema({
     name: {
         type: String,
-        minLength: 2,
         maxLength: 256,
-        required: true,
+        required: false,
+        default: null,
         trim: true
     },
     code: {
@@ -28,17 +28,15 @@ const CouponSchema = new mongoose.Schema({
     },
     category: {
         type: String,
-        minLength: 2,
         maxLength: 256,
         required: false,
-        default: '',
         trim: true
     },
     description: {
         type: String,
-        minLength: 2,
         maxLength: 256,
-        default: '',
+        required: false,
+        default: null,
         trim: true
     },
     amount: {

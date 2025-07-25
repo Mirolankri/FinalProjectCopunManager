@@ -1,7 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const router = express.Router();
-const { handleError } = require('../../../utils/errorHandler');
+const { handleError, handleJoiError } = require('../../../utils/errorHandler');
 const auth = require('../../auth/services/authService');
 const { validateNewCoupon, validateSharedCoupon } = require('../validations/couponValidationService');
 const normalizeCoupon = require('../helpers/normalizeCoupon');
@@ -37,7 +37,8 @@ router.post('/', auth, async(req, res) => {
         // if(!user.isAdmin) throw new Error('אתה לא מורשה להוסיף קופון');
 
         const { error } = validateNewCoupon(couponData);
-        if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
+        if(error) return handleJoiError(error)
+        // if (error) return handleError(res, 400, `Joi Error: ${error.details[0].message}`);
         couponData = normalizeCoupon(couponData, CreateCouponTo);
         
         

@@ -16,7 +16,7 @@ const CouponDelete = ({coupon, onDelete}) => {
             <CircleAlert className="size-15 text-red-500"/>
         </div>
         <p className='text-lg'>האם אתה בטוח שברצונך למחוק את הקופון {coupon.name}?</p>
-        <div className="flex gap-2 justify-center items-center w-1/2 mx-auto">
+        <div className="flex gap-2 justify-center items-center w-full sm:w-1/2 mx-auto">
             <Button variant="outline" onClick={closeModal}>ביטול</Button>
             <Button className="bg-red-600  hover:bg-red-400" onClick={handleDelete}>כן, מחיקת קופון</Button>
         </div>

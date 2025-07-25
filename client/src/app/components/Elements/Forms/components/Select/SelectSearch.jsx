@@ -1,6 +1,6 @@
 "use client"
 
-import * as React from "react"
+import React, { useState } from "react"
 import { Check, ChevronsUpDown } from "lucide-react"
 
 import { cn } from "@/lib/utils"
@@ -20,9 +20,7 @@ import {
 } from "@/components/ui/popover"
 
 export function SelectSearch({
-  options = [
-    
-  ],
+  options = [],
   placeholder = "בחר אפשרות...",
   searchPlaceholder = "חפש...",
   emptyMessage = "לא נמצאו תוצאות",
@@ -39,22 +37,20 @@ export function SelectSearch({
   customInputMessage = "לחץ Enter להוספת ערך חדש"
 }) {
     
-  const [open, setOpen] = React.useState(false)
-  const [internalValue, setInternalValue] = React.useState("")
-  const [searchValue, setSearchValue] = React.useState("")
+  const [open, setOpen] = useState(false)
+  const [internalValue, setInternalValue] = useState("")
+  const [searchValue, setSearchValue] = useState("")
   const currentValue = externalValue !== undefined ? externalValue : internalValue
   const handleValueChange = externalValue !== undefined ? onChange : setInternalValue
   
   const isCustomValue = currentValue && !options.find(option => option.value === currentValue)
   
   const filteredOptions = options.filter(option => 
-    option.label.toLowerCase().includes(searchValue.toLowerCase()) ||
-    option.value.toLowerCase().includes(searchValue.toLowerCase())
-  )
+    option.label.toLowerCase().includes(searchValue.toLowerCase())
+  )    
   
   const hasExactMatch = filteredOptions.some(option => 
-    option.label.toLowerCase() === searchValue.toLowerCase() ||
-    option.value.toLowerCase() === searchValue.toLowerCase()
+    option.label.toLowerCase() === searchValue.toLowerCase()
   )
 
   return (
@@ -96,6 +92,7 @@ export function SelectSearch({
       >
         <Command>
           <CommandInput 
+            autoComplete="off"
             placeholder={searchPlaceholder} 
             className="h-9" 
             value={searchValue}
@@ -135,28 +132,30 @@ export function SelectSearch({
             ) : (
               <>
                 <CommandGroup>
-                  {filteredOptions.map((option) => (
-                    <CommandItem
-                      key={option.value}
-                      value={option.value}
-                      onSelect={(selectedValue) => {
-                        const newValue = selectedValue === currentValue ? "" : selectedValue
-                        if (handleValueChange) {
-                          handleValueChange(newValue, name)
-                        }
-                        setSearchValue("")
-                        setOpen(false)
-                      }}
-                    >
-                      {option.label}
-                      <Check
-                        className={cn(
-                          "ml-auto h-4 w-4",
-                          currentValue === option.value ? "opacity-100" : "opacity-0"
-                        )}
-                      />
-                    </CommandItem>
-                  ))}
+                  {filteredOptions.map((option) => {
+                    return (
+                      <CommandItem
+                        key={`${option.value}`}
+                        value={option.label}
+                        onSelect={(selectedValue) => {
+                          const newValue = option.value === currentValue ? "" : option.value
+                          if (handleValueChange) {
+                            handleValueChange(newValue, name)
+                          }
+                          setSearchValue("")
+                          setOpen(false)
+                        }}
+                      >
+                        {option.label}
+                        <Check
+                          className={cn(
+                            "ml-auto h-4 w-4",
+                            currentValue === option.value ? "opacity-100" : "opacity-0"
+                          )}
+                        />
+                      </CommandItem>
+                    );
+                  })}
                 </CommandGroup>
                 {allowCustomInput && searchValue.trim() && !hasExactMatch && (
                   <CommandGroup>

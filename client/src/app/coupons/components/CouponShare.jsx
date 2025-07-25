@@ -29,12 +29,12 @@ const CouponShare = ({coupon, onShare}) => {
     
     
   return (
-    <div className="flex flex-col gap-6 text-center">
+    <div className="flex flex-col gap-1 text-center">
         <div className="flex items-center justify-center">
             <Share2 className="size-12 text-blue-500"/>
         </div>
-        <p className='text-lg'>הינך עומד לשתף את הקופון {coupon.name}?</p>
-        <p className='text-lg'> על סך {coupon.amount}</p>
+        <div className='text-lg'>הינך עומד לשתף את הקופון {coupon?.name}?</div>
+        <div className='text-lg'> על סך {coupon.amount}</div>
         <div>
             <Form 
             title="" 
@@ -43,6 +43,7 @@ const CouponShare = ({coupon, onShare}) => {
             spacing={1}
             onReset={handleReset}
             onChange={validateForm}
+            className="p-0"
             >
             <Input 
             label="שם לשיתוף"

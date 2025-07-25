@@ -57,21 +57,62 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           data={value.data}
           error={value.errors}
           Icon={<Barcode />}
-          colSpan={2}
+          colSpan={1}
+
+        />
+        <Input 
+          variant="default"
+          type="text"
+          name="amount"
+          label="סכום השובר"
+          required
+          autoComplete="off"
+          onChange={handleChange}
+          data={value.data}
+          error={value.errors}
+          Icon={<Banknote />}
+          colSpan={1}
 
         />
         <Input 
           variant="default"
           type="text"
           name="name"
-          label="שם השובר"
-          required
+          label="כינוי לשובר"
           autoComplete="off"
           onChange={handleChange}
           data={value.data}
           error={value.errors}
           Icon={<TicketPercent />}
+          colSpan={1}
+
           
+        />
+        <Input 
+          variant="default"
+          type="text"
+          name="website"
+          label="אתר"
+          autoComplete="off"
+          onChange={handleChange}
+          data={value.data}
+          error={value.errors}
+          Icon={<Globe />}
+          colSpan={1}
+
+        />
+        
+        <Input 
+          variant="default"
+          type="text"
+          name="discount"
+          label="הנחה"          
+          onChange={handleChange}
+          data={value.data}
+          error={value.errors}
+          Icon={<Percent />}
+          colSpan={2}
+
         />
         <SelectSearch 
           options={companies}
@@ -86,19 +127,11 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           label={'חברה'}
           required={true}
           allowCustomInput={true}
+          colSpan={2}
+          
+          
         />
-        <Input 
-          variant="default"
-          type="text"
-          name="website"
-          label="אתר"
-          autoComplete="off"
-          onChange={handleChange}
-          data={value.data}
-          error={value.errors}
-          Icon={<Globe />}
-
-        />
+        
         
         <SelectSearch 
           options={categories}
@@ -111,32 +144,11 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           name="category"
           className="w-full"
           label={'קטגוריה'}
-          required={true}
+          required={false}
           allowCustomInput={true}
+          colSpan={2}
         />
-        <Input 
-          variant="default"
-          type="text"
-          name="amount"
-          label="סכום השובר"
-          required
-          autoComplete="off"
-          onChange={handleChange}
-          data={value.data}
-          error={value.errors}
-          Icon={<Banknote />}
-
-        />
-        <Input 
-          variant="default"
-          type="text"
-          name="discount"
-          label="הנחה"          
-          onChange={handleChange}
-          data={value.data}
-          error={value.errors}
-          Icon={<Percent />}
-        />
+        
         <Input 
           variant="default"
           type="date"
@@ -146,6 +158,7 @@ export default function CouponAddOrEdit({OnSubmitCoupon, coupon=null, type,compa
           data={value.data}
           error={value.errors}
           Icon={<CalendarCheck />}
+          colSpan={2}
         />
         <TextArea 
           name="description"

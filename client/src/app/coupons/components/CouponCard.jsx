@@ -166,9 +166,7 @@ export default function CouponCard({ coupon, onEdit, onDelete, onShare, companie
               
             </div>
             <div className="flex items-center gap-1">
-            {coupon.used ? (
-              <Badge color="bg-blue-100" className="bg-blue-50 text-blue-700">נוצל</Badge>
-              ) : isExpired(coupon.expiryDate) ? (
+            {coupon.used ? (<></>) : isExpired(coupon.expiryDate) ? (
               <Badge color="bg-red-100" className=" text-red-700">פג תוקף</Badge>
               ) : null
             }

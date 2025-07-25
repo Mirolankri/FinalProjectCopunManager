@@ -4,11 +4,11 @@ const validateCoupon = (coupon) => {
     const urlRegex = /(https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|www\.[a-zA-Z0-9][a-zA-Z0-9-]+[a-zA-Z0-9]\.[^\s]{2,}|https?:\/\/(?:www\.|(?!www))[a-zA-Z0-9]+\.[^\s]{2,}|www\.[a-zA-Z0-9]+\.[^\s]{2,})/;
 
     const schema = Joi.object({
-        name: Joi.string().min(2).max(256).required(),
+        name: Joi.string().min(3).max(256).allow(""),
         code: Joi.string().min(2).max(256).required(),
         store: Joi.string().min(2).max(256).required(),
         category: Joi.string().min(2).max(256).allow(''),
-        description: Joi.string().min(2).max(256).allow(''),
+        description: Joi.string().min(2).max(256).allow(""),
         amount: Joi.number().required(),
         discount: Joi.number(),
         used: Joi.boolean().default(false),

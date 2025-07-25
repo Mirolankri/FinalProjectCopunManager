@@ -19,17 +19,13 @@ const CreateCoupon = async (couponData) => {
             if (couponData.code) {
                 couponData.code = encrypt(couponData.code);
             }
-            // check couponData.category is objectId?
-            if (!mongoose.Types.ObjectId.isValid(couponData.category)) {
-                // const { _id } = await GetCompaniesById(couponData.category);
-            // if (!_id){
+            if (couponData.category && !mongoose.Types.ObjectId.isValid(couponData.category)) {
                 const newCompany = new CompaniesSchema({
                     name: couponData.category,
                     active: true
                 });
                 await newCompany.save();
                 couponData.category = newCompany._id;
-            // }
             }
             
             

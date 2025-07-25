@@ -21,6 +21,21 @@ const Form = ({
   }) => {
     const { className } = rest;
 
+    const gridColsClasses = {
+      1: 'grid-cols-1 md:grid-cols-1',
+      2: 'grid-cols-1 md:grid-cols-2',
+      3: 'grid-cols-1 md:grid-cols-3',
+      4: 'grid-cols-1 md:grid-cols-4',
+      5: 'grid-cols-1 md:grid-cols-5',
+      6: 'grid-cols-1 md:grid-cols-6',
+      7: 'grid-cols-1 md:grid-cols-7',
+      8: 'grid-cols-1 md:grid-cols-8',
+      9: 'grid-cols-1 md:grid-cols-9',
+      10: 'grid-cols-1 md:grid-cols-10',
+      11: 'grid-cols-1 md:grid-cols-11',
+      12: 'grid-cols-1 md:grid-cols-12'
+    };
+
   return (
     <div className={cn(`flex min-h-full flex-1 flex-col justify-center p-6`, className)}>
             {title && (
@@ -32,7 +47,7 @@ const Form = ({
             )}
         <div className="mt-5 sm:mx-auto sm:w-full ">
           <form className="space-y-6">
-            <div className={`grid grid-cols-1 md:grid-cols-${spacing} gap-4`}>
+            <div className={`grid ${gridColsClasses[spacing] || 'grid-cols-1 md:grid-cols-1'} gap-4`}>
             {children}
             </div>
             <div className="flex justify-center gap-2">

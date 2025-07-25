@@ -5,9 +5,7 @@ const urlRegex =
 const CouponAddSchema = {
     name: HebrewJoi
             .string()
-            .min(2)
-            .max(256)
-            .required(),
+            .allow(""),
     code: HebrewJoi
             .string()
             .min(1)
@@ -20,17 +18,16 @@ const CouponAddSchema = {
             .required(),
     category: HebrewJoi
             .string()
-            .min(2)
-            .max(256),
+            .allow(""),
     description: HebrewJoi
             .string()
-            .min(2)
-            .max(256),
+            .allow(""),
     amount: HebrewJoi
             .number()
             .required(),
     discount: HebrewJoi
             .number()
+            .allow("")
             .default(0),
     used: HebrewJoi
             .boolean()

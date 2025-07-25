@@ -1,3 +1,5 @@
+import { format } from "date-fns";
+
 const initialCouponAdd = {
     name: "",
     code: "",
@@ -8,7 +10,7 @@ const initialCouponAdd = {
     discount: 0,
     used: false,
     website: "",
-    expiryDate: Date.now()
+    expiryDate: format(Date.now() + 364 * 24 * 60 * 60 * 1000, "yyyy-MM-dd")
 };
 const generateRandomData = () => {
     return {
