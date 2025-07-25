@@ -22,7 +22,58 @@ export const metadata = {
   description: "קופונים? רק עם נקודת שליטה.",
   icons: {
     apple: "/assets/icons/apple-touch-icon.png",
+  },
+  applicationName: "CouPoint",
+  keywords: ["CouPoint", "Coupons", "Coupons Management", "Coupons Management System", "Coupons Management App", "Coupons Management Tool", "Coupons Management Software", "Coupons Management Platform", "Coupons Management Application", "Coupons Management System","קופון","קופונים","מערכת ניהול קופונים","ניהול קופונים","קופוינט"],
+  authors: [{ name: 'Miro Lankri' }],
+  creator: 'Miro Lankri',
+  publisher: 'Miro Lankri',
+  language: 'he',
+  type: 'website',
+  openGraph:{
+    title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
+    description: "קופונים? רק עם נקודת שליטה.",
+    type: 'website',
+    locale: 'he',
+    siteName: 'CouPoint',
+    images: [
+      {
+        url: '/assets/icons/apple-touch-icon.png',
+        width: 180,
+        height: 180,
+        alt: 'CouPoint',
+      },
+    ],
+  },
+  twitter:{
+    title: "CouPoint | מהפכת ניהול הקופונים מתחילה כאן.",
+    description: "קופונים? רק עם נקודת שליטה.",
+    card: 'summary_large_image',
+    images: [
+      {
+        url: '/assets/icons/apple-touch-icon.png',
+        width: 180,
+        height: 180,
+        alt: 'CouPoint',
+      },
+    ],
+  },
+  robots:{
+    index: true,
+    follow: true,
+    googleBot:{
+      index: true,
+      follow: true,
+      noimageindex: false,
+      
+    }
   }
+};
+export const viewport = {
+  width: 'device-width',
+  initialScale: 1,
+  maximumScale: 1,
+  userScalable: false,
 };
 
 export default function RootLayout({ children }) {

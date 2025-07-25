@@ -137,6 +137,9 @@ export const NavBar = () => {
                         href={item.href}
                         className={`block rounded-md px-3 py-2 text-base font-medium text-gray-300 hover:bg-gray-700 hover:text-white ${item.current ? 'bg-gray-700 text-white' : 'text-gray-300 hover:bg-gray-700 hover:text-white'}`}
                         aria-current={item.current ? 'page' : undefined}
+                        onClick={() => {
+                          setMobileMenuOpen(false);
+                        }}
                       >
                         {item.name}
                       </Link>

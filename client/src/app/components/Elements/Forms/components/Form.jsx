@@ -40,9 +40,9 @@ const Form = ({
     <div className={cn(`flex min-h-full flex-1 flex-col justify-center p-6`, className)}>
             {title && (
               <div className="sm:mx-auto sm:w-full sm:max-w-sm">
-              <h2 className="text-center text-2xl/9 tracking-tight text-gray-900">
+              <h1 className="text-center text-2xl/9 tracking-tight text-gray-900">
                 {title}
-              </h2>
+              </h1>
               </div>
             )}
         <div className="mt-5 sm:mx-auto sm:w-full ">

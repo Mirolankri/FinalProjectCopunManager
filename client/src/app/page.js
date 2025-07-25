@@ -6,6 +6,7 @@ import Button from "./components/Elements/Button/Index";
 import Link from "next/link";
 import { ArrowLeftIcon, ChartPieIcon, CheckIcon, GiftIcon, ShareIcon } from "@heroicons/react/24/outline";
 import { useRef } from "react";
+import { ShieldCheck } from "lucide-react";
 
 export default function Home() {
     const {user} = useUser();
@@ -35,8 +36,8 @@ export default function Home() {
           </p>
           <div className="max-w-2xs mx-auto">
             <Link href={`${user ? '/coupons' : '/auth/login'}`}>
-              <Button variant="outline" className="bg-white text-blue-600 hover:bg-blue-50">
-                התחל עכשיו
+              <Button variant="outline" className="bg-white ">
+                {user ? 'לקופונים שלי' : 'התחל עכשיו'}
                 <ArrowLeftIcon className="mr-2 w-5 h-5" />
               </Button>
             </Link>
@@ -57,6 +58,23 @@ export default function Home() {
               transition={{ duration: 0.6, ease: "easeOut" }}
             >
             <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
+              <div className="w-12 h-12 bg-green-100 text-green-600 rounded-lg flex items-center justify-center mb-4">
+                <ShieldCheck className="w-6 h-6" />
+              </div>
+              <h3 className="text-xl font-semibold mb-3">אבטחה ופרטיות</h3>
+              <p className="text-gray-600">
+              אצלנו המידע שלך מוגן בהצפנה מקצה לקצה ובאמצעי אבטחה מתקדמים.
+              פרטיותך חשובה לנו ואנו שומרים על סודיות מוחלטת.
+              </p>
+            </div>
+            </motion.div>
+            <motion.div
+              ref={FutureRef1}
+              initial={{ opacity: 0, y: 50 }}
+              animate={FutureInView1 ? { opacity: 1, y: 0 } : { opacity: 0, y: 50 }}
+              transition={{ duration: 0.6, ease: "easeOut" }}
+            >
+            <div className="bg-white p-6 rounded-xl shadow-sm hover:shadow-lg transition-all">
               <div className="w-12 h-12 bg-blue-100 text-blue-600 rounded-lg flex items-center justify-center mb-4">
                 <GiftIcon className="w-6 h-6" />
               </div>
@@ -66,6 +84,8 @@ export default function Home() {
               </p>
             </div>
             </motion.div>
+
+
             <motion.div
               ref={FutureRef2}
               initial={{ opacity: 0, y: 50 }}
@@ -142,7 +162,8 @@ export default function Home() {
       </div>
 
       {/* CTA Section */}
-      <div className="bg-gray-50 py-20">
+      {!user && (
+        <div className="bg-gray-50 py-20">
         <div className="container mx-auto px-4 text-center">
           <h2 className="text-3xl font-bold mb-6">מוכן להתחיל?</h2>
           <p className="text-xl text-gray-600 mb-8 max-w-2xl mx-auto">
@@ -159,6 +180,8 @@ export default function Home() {
           
         </div>
       </div>
+      )}
+      
     </div>
   );
 }
