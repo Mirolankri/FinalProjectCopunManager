@@ -5,7 +5,7 @@ import React from "react";
 
 const ViewMode = ({ view, onHandleViewChange }) => {
   return (
-    <div className="flex items-center gap-2">
+    <div className="flex items-center gap-2 z-[900]">
       <div>מצב תצוגה:</div>
       <div>
         <IconButton
